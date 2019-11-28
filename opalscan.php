@@ -84,7 +84,7 @@ if(is_admin()) { // make sure, the following code runs in back end
 		require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 	}
 
-		$vuln_score=array();
+		$plugin_vuln_score=0;
     // returns version of the plugin represented by $slug, from repository
 
     function getPluginVersionFromRepository($slug) {
@@ -95,7 +95,7 @@ if(is_admin()) { // make sure, the following code runs in back end
 */
 
 				$call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
-				$version = $call_api->version;
+
 			/*echo('<pre>');
 			print_r($plugins);
 			echo('</pre>');*/
@@ -106,7 +106,7 @@ if(is_admin()) { // make sure, the following code runs in back end
 								//	$last_updated =$plugin->last_updated;
 			        }*/
 
-			    return $version;
+			    return $call_api;
     }
 
     // dashboard widget's callback
@@ -114,18 +114,20 @@ if(is_admin()) { // make sure, the following code runs in back end
         $allPlugins = get_plugins(); // associative array of all installed plugins
         $activePlugins = get_option('active_plugins'); // simple array of active plugins
 
-        // building active plugins table
-        echo '<table width="100%">';
-        echo '<thead>';
-        echo '<tr>';
-        echo '<th width="20%" style="text-align:left">Plugin</th>';
-        echo '<th width="20%" style="text-align:left">currVer</th>';
-        echo '<th width="20%" style="text-align:left">repoVer</th>';
-				echo '<th width="20%" style="text-align:left">WARN</th>';
-        echo '</tr>';
-        echo '</thead>';
-        echo '<tbody>';
 
+$thead = <<<THEAD
+	<table width="100%">
+	<thead>
+	<tr>
+	<th width="20%" style="text-align:left">Plugin</th>
+	<th width="20%" style="text-align:left">currVer</th>
+	<th width="20%" style="text-align:left">repoVer</th>
+	<th width="20%" style="text-align:left">WARN</th>
+	</tr>
+	</thead>
+	<tbody>
+THEAD;
+echo $thead;
         // traversing $allPlugins array
         foreach($allPlugins as $key => $value) {
           //  if(in_array($key, $activePlugins)) { // display active only
@@ -133,16 +135,23 @@ if(is_admin()) { // make sure, the following code runs in back end
                 echo "<td>{$value['Name']}</td>";
                 echo "<td>{$value['Version']}</td>";
                 $slug = explode('/',$key)[0]; // get active plugin's slug
+
                 // get newest version of active plugin from repository
-                $repoVersion = getPluginVersionFromRepository($slug);
-                echo "<td>{$repoVersion}</td>";
-								if($repoVersion>$value['Version']){$issueflag = 'ISSUE';}else{$issueflag ='';}
+                $call_api = getPluginVersionFromRepository($slug);
+								$repoversion = $call_api->version;
+
+                echo "<td>{$repoversion}</td>";
+
+								if($repoversion>$value['Version']){		$issueflag = 'ISSUE';	$plugin_vuln_score +=1;
+								}else{$issueflag ='';}
+
 								 echo "<td>$issueflag</td>";
                 echo '</tr>';
           //  }
         }
         echo '</tbody>';
         echo '</table>';
+				echo '<b>Plugin Vulnerability Score = '.$plugin_vuln_score.'</b>';
     }
 
     // widget's registration
