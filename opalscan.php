@@ -31,7 +31,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		$vuln_score_php_version =
 		$vuln_score_sql_version =
 		$vuln_score_wp_version =
-		$vuln_score_https =
+		$vuln_score_ssl =
 		 0;
 
     // returns version of the plugin represented by $slug, from repository
@@ -137,12 +137,14 @@ echo $thead;
 			echo '<p><a class="button bigwhitebutton" href="'.$scanurl.'">SCAN</a></p>';
 			echo('<form method="post" id="log_export_form" >');
 			echo('<hr>');
-
+			$wp_version = get_bloginfo( 'version' );
 			$phpversion = phpversion();
 			$isSSL= is_ssl();
 
+			/* get SQL version */
 			$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-			$SQLversion = ' | MySQL: ' . mysqli_get_server_info($connection);
+			$SQLversion = mysqli_get_server_info($connection);
+			/***********/
 
 			echo 'PHP version '.$phpversion .' and SSL is '.$isSSL .' and SQL is '. $SQLversion;
 			echo('<hr>');
@@ -159,6 +161,12 @@ echo $thead;
 			$scannow = $_GET['scannow']; // has the button been pressed, soon to be replaced by AJAX.
 
 			if(isset($scannow)){
+				// display the scan
+				if (	$phpversion <7.2) echo('<p>PHP needs updating</p>');
+				if (	$SQLversion <5.7) echo('<p>SQL needs updating</p>');
+				if (	$isSSL<1) {$vuln_score_ssl = 1; echo('<p>SSL needs updating</p>');}
+				if (	$wp_version<5.3){ $vuln_score_wp_version =1; echo('<p>Wordpress needs updating</p>');}
+
 				echo('<div class="opalscanbarholder">Scanning <div class="opalscanbar"></div></div>');
 				displayVulnScan();
 			}
