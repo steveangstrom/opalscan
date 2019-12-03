@@ -2,12 +2,13 @@
 /** POPULATE the variables, arrays and data from a scane of the site **/
 if(is_admin()) { // make sure, the following code runs only in the back end
 
-	if (!function_exists('plugins_api')) {
-		require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
-	}
-
 
   function opalscan_get_scan(){
+
+		if (!function_exists('plugins_api')) {
+			require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+		}
+
 	    /** set the baselines for the scores **/
 		$scan_results = array(
 			"plugin_outated"=>0,
@@ -20,10 +21,10 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		);
 
 		// returns version of the plugin represented by $slug, from repository
-	/*	function getPluginVersionFromRepository($slug) {
+		function getPluginVersionFromRepo($slug) {
 			$call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
 		  return $call_api;
-		}*/
+		}
 		/** get some information **/
 
 		$scan_results["php_version"] =  phpversion();
@@ -40,7 +41,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		$activePlugins = get_option('active_plugins'); // simple array of active plugins
 
 		return $scan_results;
-	}
+	}// end opalscan_get_scan()
 
 
   function opalscan_show_scan(){

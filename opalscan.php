@@ -20,6 +20,19 @@ include_once('includes/phua_add_user_download_resource.php' );
 include_once('includes/phua_add_wp_head.php' );
 */
 /*************************************************/
+function opalscan_enqueue_scripts( ) {
+	//wp_enqueue_script('jquery-ui-datepicker');
+//	wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+	//wp_enqueue_script( 'datepicker_script', plugin_dir_url( __FILE__ ) . 'includes/datepicker.js' );
+
+//	wp_enqueue_script( 'log_search', plugin_dir_url( __FILE__ ) . 'includes/pher-logsearch-admin.js', array( 'jquery' ),false,true );
+//	wp_localize_script( 'log_search', 'ph_log_search', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),  ));
+	wp_register_style( 'opalscan_admin_css', plugin_dir_url( __FILE__ ) . '/includes/css/opalscanner_admin.css', false, '1.0.0' );
+	wp_enqueue_style( 'opalscan_admin_css' );
+}
+
+add_action('admin_enqueue_scripts', 'opalscan_enqueue_scripts');
+
 
 if(is_admin()) { // make sure, the following code runs only in the back end
 
@@ -112,20 +125,7 @@ echo $thead;
 			add_menu_page( 'Opal Site Scan', 'Opal Site Scan', 'manage_options', 'opal-site-scan', 'phua_admin_page_output' );
 			#add_action('admin_init', 'save_log_page_items', 10); // if you need to save something weird this might be useful.
 		}
-		/*
-		function opalscan_enqueue_scripts( ) {
-		wp_enqueue_script('jquery-ui-datepicker');
-			wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
-			wp_enqueue_script( 'datepicker_script', plugin_dir_url( __FILE__ ) . 'includes/datepicker.js' );
 
-			wp_enqueue_script( 'log_search', plugin_dir_url( __FILE__ ) . 'includes/pher-logsearch-admin.js', array( 'jquery' ),false,true );
-			wp_localize_script( 'log_search', 'ph_log_search', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),  ));
-			wp_register_style( 'phua_admin_css', plugin_dir_url( __FILE__ ) . '/includes/phua_logging_admin.css', false, '1.0.0' );
-			wp_enqueue_style( 'phua_admin_css' );
-		}
-
-		add_action('admin_enqueue_scripts', 'opalscan_enqueue_scripts');
-		*/
 
 		//add_action( 'wp_ajax_do_some_ajax', 'phua_log_ajax_output');
 
@@ -137,7 +137,7 @@ echo $thead;
 			//echo('<div class="opalscanbarholder">Scanning <div class="opalscanbar"></div></div>');
 			$scanurl=add_query_arg( 'scannow', 'true');
 			echo '<p><a class="button bigwhitebutton" href="'.$scanurl.'">SCAN</a></p>';
-			echo('<hr>');
+			echo('<hr>');	echo '<p><a class="button bigwhitebutton opalscannow">AJAX SCAN</a></p>';
 			echo opalscan_show_scan();
 
 			$wp_version = get_bloginfo( 'version' );
