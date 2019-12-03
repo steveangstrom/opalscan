@@ -4,8 +4,9 @@
   Plugin URI: OpalSphere.com
   Author: Opalsphere
   Version: 0.1
-  Author URI:http://pheriche.com
+  Author URI:http://opalsupport.com
  */
+ include_once('includes/opalscan-dashboard-widget.php' );
  /*
 GET active plugins.
 http://phasionistasa.co.za/kiwix/wordpress.stackexchange.com_en_all_2019-02/A/question/298251.html
@@ -100,7 +101,7 @@ echo $thead;
         }
         echo '</tbody>';
         echo '</table>';
-				echo '<h3>Plugin Vulnerability Score = '.$vuln_score_plugin_outdated + $vuln_score_plugin_noupdates .'</h3>';
+				echo '<h3>Plugin Vulnerability Score = '.$vuln_score_plugin_outdated .'</h3>';
     }
 
 
@@ -111,7 +112,7 @@ echo $thead;
 			#add_action('admin_init', 'save_log_page_items', 10); // if you need to save something weird this might be useful.
 		}
 		/*
-		function phua_enqueue_scripts( ) {
+		function opalscan_enqueue_scripts( ) {
 		wp_enqueue_script('jquery-ui-datepicker');
 			wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 			wp_enqueue_script( 'datepicker_script', plugin_dir_url( __FILE__ ) . 'includes/datepicker.js' );
@@ -122,7 +123,7 @@ echo $thead;
 			wp_enqueue_style( 'phua_admin_css' );
 		}
 
-		add_action('admin_enqueue_scripts', 'phua_enqueue_scripts');
+		add_action('admin_enqueue_scripts', 'opalscan_enqueue_scripts');
 		*/
 
 		//add_action( 'wp_ajax_do_some_ajax', 'phua_log_ajax_output');
@@ -175,15 +176,7 @@ echo $thead;
 		}
 
 
-	    // widget's registration
-	    function opalAddDashboardWidget() {
-	        wp_add_dashboard_widget(
-	            'active_plugins_versions', // widget's ID
-	            'Active Plugins Versions', // widget's title
-	            'activePluginsVersions'    // widget's callback (content)
-	        );
-	    }
-		  //  add_action('wp_dashboard_setup', 'opalAddDashboardWidget');
+
 
 
 }
