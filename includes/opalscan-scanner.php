@@ -54,5 +54,21 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		echo('</pre>');
   }
 
-
+	function opalscan_ajax_request() {
+	    // The $_REQUEST contains all the data sent via ajax
+	    if ( isset($_REQUEST) ) {
+	        $fruit = $_REQUEST['fruit'];
+	        // Let's take the data that was sent and do something with it
+	        if ( $fruit == 'Banana' ) {
+	            $fruit = 'Apple';
+	        }
+	        // Now we'll return it to the javascript function
+	        // Anything outputted will be returned in the response
+	        echo $fruit;
+	        // If you're debugging, it might be useful to see what was sent in the $_REQUEST
+	        // print_r($_REQUEST);
+	    }
+	   die();
+	}
+	add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
 }

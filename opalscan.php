@@ -25,8 +25,8 @@ function opalscan_enqueue_scripts( ) {
 //	wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 	//wp_enqueue_script( 'datepicker_script', plugin_dir_url( __FILE__ ) . 'includes/datepicker.js' );
 
-	wp_enqueue_script( 'opalscan_display', plugin_dir_url( __FILE__ ) . 'includes/js/opal-scan.js', array( 'jquery' ),false,true );
-	wp_localize_script( 'opalscan_display', 'scan_display', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),  ));
+	wp_enqueue_script( 'opalscan_ajax_display', plugin_dir_url( __FILE__ ) . 'includes/js/opal-scan.js', array( 'jquery' ),false,true );
+	wp_localize_script( 'opalscan_ajax_display', 'thescanobj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),  ));
 
 	wp_register_style( 'opalscan_admin_css', plugin_dir_url( __FILE__ ) . '/includes/css/opalscanner_admin.css', false, '1.0.0' );
 	wp_enqueue_style( 'opalscan_admin_css' );
@@ -141,16 +141,9 @@ echo $thead;
 			echo('<hr>');	echo '<p><a class="button bigwhitebutton opalscannow">AJAX SCAN</a></p>';
 			echo opalscan_show_scan();
 
-			$wp_version = get_bloginfo( 'version' );
-			$phpversion = phpversion();
-			$isSSL= is_ssl();
+			echo '<div id="opalscan_displayarea">scan goes here</div>';
 
-			/* get SQL version */
-			$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-			$SQLversion = mysqli_get_server_info($connection);
-			/***********/
 
-			echo 'PHP version '.$phpversion .' and SSL is '.$isSSL .' and SQL is '. $SQLversion;
 			echo('<hr>');
 
 			$time = strtotime("-1 year", time());
