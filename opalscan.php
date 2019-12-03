@@ -6,7 +6,8 @@
   Version: 0.1
   Author URI:http://opalsupport.com
  */
- include_once('includes/opalscan-dashboard-widget.php' );
+include_once('includes/opalscan-dashboard-widget.php' );
+include_once('includes/opalscan-scanner.php' );
  /*
 GET active plugins.
 http://phasionistasa.co.za/kiwix/wordpress.stackexchange.com_en_all_2019-02/A/question/298251.html
@@ -136,8 +137,9 @@ echo $thead;
 			//echo('<div class="opalscanbarholder">Scanning <div class="opalscanbar"></div></div>');
 			$scanurl=add_query_arg( 'scannow', 'true');
 			echo '<p><a class="button bigwhitebutton" href="'.$scanurl.'">SCAN</a></p>';
-			echo('<form method="post" id="log_export_form" >');
 			echo('<hr>');
+			echo opalscan_show_scan();
+
 			$wp_version = get_bloginfo( 'version' );
 			$phpversion = phpversion();
 			$isSSL= is_ssl();
