@@ -1,10 +1,11 @@
 jQuery(document).ready(function($) {
   $('.opalscannow').click(function() {
-    alert( "Handler for .click() called." );
+    //alert( "Handler for .click() called." );
+    $('#opalscanbarholder').addClass("lds-hourglass");
     doScan();
   });
     // We'll pass this variable to the PHP function example_ajax_request
-    var fruit = 'Banana';
+    var scan = 'startscan';
 
     // This does the ajax request
 
@@ -13,12 +14,13 @@ jQuery(document).ready(function($) {
         url: ajaxurl, // or example_ajax_obj.ajaxurl if using on frontend
         data: {
             'action': 'opalscan_ajax_request',
-            'fruit' : fruit
+            'scan' : scan
         },
         success:function(data) {
             // This outputs the result of the ajax request
             console.log(data);
-            $( "#opalscan_displayarea" ).html('SCAN PRETEND COMPLETED');
+            $('#opalscanbarholder').removeClass("lds-hourglass");
+            $( "#opalscan_displayarea" ).html(data);
 
         },
         error: function(errorThrown){

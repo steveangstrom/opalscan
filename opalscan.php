@@ -140,7 +140,7 @@ echo $thead;
 			echo '<p><a class="button bigwhitebutton" href="'.$scanurl.'">SCAN</a></p>';
 			echo('<hr>');	echo '<p><a class="button bigwhitebutton opalscannow">AJAX SCAN</a></p>';
 			echo opalscan_show_scan();
-
+			echo('<div id="opalscanbarholder"></div>');
 			echo '<div id="opalscan_displayarea">scan goes here</div>';
 
 
@@ -164,7 +164,7 @@ echo $thead;
 				if (	$isSSL<1) {$vuln_score_ssl = 1; echo('<p>SSL needs updating</p>');}
 				if (	$wp_version<5.3){ $vuln_score_wp_version =1; echo('<p>Wordpress needs updating</p>');}
 
-				echo('<div class="opalscanbarholder">Scanning <div class="opalscanbar"></div></div>');
+
 				displayVulnScan();
 			}
 

@@ -57,14 +57,14 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 	function opalscan_ajax_request() {
 	    // The $_REQUEST contains all the data sent via ajax
 	    if ( isset($_REQUEST) ) {
-	        $fruit = $_REQUEST['fruit'];
+	        $scan= $_REQUEST['scan'];
 	        // Let's take the data that was sent and do something with it
-	        if ( $fruit == 'Banana' ) {
-	            $fruit = 'Apple';
-	        }
+	        if ( $scan== 'startscan' ) {
+	            $scan = 'scan results are here yes, big list very sexy .. ';
+	        }else{$scan ='what up';}
 	        // Now we'll return it to the javascript function
 	        // Anything outputted will be returned in the response
-	        echo $fruit;
+	        echo $scan;
 	        // If you're debugging, it might be useful to see what was sent in the $_REQUEST
 	        // print_r($_REQUEST);
 	    }
