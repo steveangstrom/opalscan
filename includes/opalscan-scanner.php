@@ -68,8 +68,13 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
     }// end foreach
 
-    $scan_results["allPlugins"] =  $allPlugins; // addd all the changes and additions to the plugin array. 
+    $scan_results["allPlugins"] =  $allPlugins; // addd all the changes and additions to the plugin array.
 
+    $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
+    //fwrite($scanlog, $scan_results);
+    $logparse = print_r($scan_results, true);
+    fwrite($scanlog, $logparse);
+    fclose($scanlog);
 
 		return $scan_results;
 
@@ -85,10 +90,12 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     echo('<h2>Scan Results</h2>');
     echo('<h4>this scan is from the past, scan again to update</h4>');
 
-		$scan_results = opalscan_get_scan();
+	/*	$scan_results = opalscan_get_scan();
 		echo('<pre>');
 		print_r($scan_results);
-		echo('</pre>');
+		echo('</pre>');*/
+
+
   }
 
 
