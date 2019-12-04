@@ -18,6 +18,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 			"sql_version" =>0,
 			"wp_version" =>0,
 			"ssl" =>0,
+      "allPlugins"=>'',
 		);
 
 		// returns version of the plugin represented by $slug, from repository
@@ -26,6 +27,8 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		  return $call_api;
 		}
 		/** get some information **/
+    $allPlugins = get_plugins(); // associative array of all installed plugins
+    $activePlugins = get_option('active_plugins'); // simple array of active plugins
 
 		$scan_results["php_version"] =  phpversion();
 		$scan_results["sql_version"] =  mysqli_get_server_info(mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME));
@@ -37,30 +40,36 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		$SQLversion = mysqli_get_server_info($connection);
 		/***********/
 
-		$allPlugins = get_plugins(); // associative array of all installed plugins
-		$activePlugins = get_option('active_plugins'); // simple array of active plugins
+		//$activePlugins = get_option('active_plugins'); // simple array of active plugins
+    $scan_results["allPlugins"] = get_plugins();// associative array of all installed plugins
 
 		return $scan_results;
 	}// end opalscan_get_scan()
 
 
-  function opalscan_show_scan(){
+  function opalscan_show_scan(){ // show previous scan.
     echo('<h2>Scan Results</h2>');
     echo('<h4>this scan is from the past, scan again to update</h4>');
 
 		$scan_results = opalscan_get_scan();
 		echo('<pre>');
-		print_r($scan_results);
+		//print_r($scan_results);
 		echo('</pre>');
   }
+
+
+
 
 	function opalscan_ajax_request() {
 	    // The $_REQUEST contains all the data sent via ajax
 	    if ( isset($_REQUEST) ) {
 	        $scan= $_REQUEST['scan'];
+
+          	$scan_results = opalscan_get_scan(); // go get the scan results for a basic check. 
+
 	        // Let's take the data that was sent and do something with it
 	        if ( $scan== 'startscan' ) {
-	            $scan = 'scan results are here yes, big list very sexy .. ';
+	            $scan = '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"];
 	        }else{$scan ='what up';}
 	        // Now we'll return it to the javascript function
 	        // Anything outputted will be returned in the response
@@ -71,4 +80,11 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 	   die();
 	}
 	add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
+}
+
+function render_html_scan(){
+	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
+
+
+
 }
