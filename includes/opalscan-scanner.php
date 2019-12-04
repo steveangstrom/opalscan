@@ -11,9 +11,9 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 	    /** set the baselines for the scores **/
 		$scan_results = array(
-			"plugin_outated"=>0,
-			"plugin_noupdates"=>0,
-			"plugin_amount" =>0,
+			"plugin_outated"=>0,// is the installed plugin outdated?
+			"plugin_noupdates"=>0, // are there no recent updates?
+			"plugin_amount" =>0, // are there too many plugins?
 			"php_version" =>0,
 			"sql_version" =>0,
 			"wp_version" =>0,
@@ -35,21 +35,40 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$SQLversion = mysqli_get_server_info($connection);
 		/***********/
-    $allPlugins = $scan_results["allPlugins"] = get_plugins();// associative array of all installed plugins
+    $allPlugins =  get_plugins();// associative array of all installed plugins
 
-    /* Date and update status of plugins compared to repo */
-    $today= new DateTime();
-    $datetime2 = new DateTime('2009-10-13');
+
 
     // populate the update status array.
     foreach($allPlugins as $key => $value) {
       // scan each plugin for status.
       $slug = explode('/',$key)[0]; // get active plugin's slug
-      $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin.
+      $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
+      $repoversion = $call_api->version;
 
-    }
+      if($repoversion>$value['Version']){ // newer repo version available
+        $allPlugins[$key]['plugin_outdated']='Outdated '.$slug;
+      }
 
+      /* Date and update status of plugins compared to repo */
+      $today= new DateTime();
+      $datetime2 = new DateTime('2009-10-13');
 
+      $last_updated = $call_api->last_updated;
+      $last_updated_date = new DateTime($last_updated );
+      $interval = $today->diff($last_updated_date);
+      $intervalstring= $interval->format('%R%a');
+      $intervalINT=intval($intervalstring);
+
+      if ($intervalINT <= -365){
+        //also add a += to the overall score table perhaps.
+        $allPlugins[$key]['plugin_noupdates']='No recent updates for '.$slug;
+      }
+
+      //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
+    }// end foreach
+
+    $scan_results["allPlugins"] =  $allPlugins; // addd all the changes and additions to the plugin array. 
 
 
 		return $scan_results;
@@ -68,7 +87,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 		$scan_results = opalscan_get_scan();
 		echo('<pre>');
-		//print_r($scan_results);
+		print_r($scan_results);
 		echo('</pre>');
   }
 
