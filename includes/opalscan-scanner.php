@@ -3,7 +3,7 @@
 if(is_admin()) { // make sure, the following code runs only in the back end
 
 
-  function opalscan_get_scan(){
+  function opalscan_get_scan(){ // the main scan and data populating function
 
 		if (!function_exists('plugins_api')) {
 			require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
@@ -21,11 +21,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       "allPlugins"=>'',
 		);
 
-		// returns version of the plugin represented by $slug, from repository
-		function getPluginVersionFromRepo($slug) {
-			$call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
-		  return $call_api;
-		}
+
 		/** get some information **/
     $allPlugins = get_plugins(); // associative array of all installed plugins
     $activePlugins = get_option('active_plugins'); // simple array of active plugins
@@ -39,13 +35,32 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$SQLversion = mysqli_get_server_info($connection);
 		/***********/
+    $allPlugins = $scan_results["allPlugins"] = get_plugins();// associative array of all installed plugins
 
-		//$activePlugins = get_option('active_plugins'); // simple array of active plugins
-    $scan_results["allPlugins"] = get_plugins();// associative array of all installed plugins
+    /* Date and update status of plugins compared to repo */
+    $today= new DateTime();
+    $datetime2 = new DateTime('2009-10-13');
+
+    // populate the update status array.
+    foreach($allPlugins as $key => $value) {
+      // scan each plugin for status.
+      $slug = explode('/',$key)[0]; // get active plugin's slug
+      $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin.
+
+    }
+
+
+
 
 		return $scan_results;
-	}// end opalscan_get_scan()
 
+	}  //  ----------end opalscan_get_scan() ---------------------
+
+  // returns version of the plugin represented by $slug, from repository
+  function getPluginVersionFromRepo($slug) {
+    $call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
+    return $call_api;
+  }
 
   function opalscan_show_scan(){ // show previous scan.
     echo('<h2>Scan Results</h2>');
@@ -65,7 +80,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 	    if ( isset($_REQUEST) ) {
 	        $scan= $_REQUEST['scan'];
 
-          	$scan_results = opalscan_get_scan(); // go get the scan results for a basic check. 
+          	$scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
 
 	        // Let's take the data that was sent and do something with it
 	        if ( $scan== 'startscan' ) {
