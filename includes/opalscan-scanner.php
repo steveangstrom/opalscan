@@ -71,18 +71,20 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
     $scan_results["scanDate"] =  $today;
 
-
-    // NOW SAVE IT TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
-    $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
-    //fwrite($scanlog, $scan_results);
-    //$logparse = print_r($scan_results, true);
-    //$logparse = var_export($scan_results, true);
-    fwrite($scanlog, json_encode($scan_results));
-    fclose($scanlog);
+    opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
 
 		return $scan_results;
 
 	}  //  ----------end opalscan_get_scan() ---------------------
+
+function opal_save_to_log($scan_results){
+  // NOW SAVE IT TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
+  $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
+  fwrite($scanlog, json_encode($scan_results));
+  fclose($scanlog);
+
+}
+
 
   // returns version of the plugin represented by $slug, from repository
   function getPluginVersionFromRepo($slug) {
@@ -94,15 +96,10 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
   function opalscan_show_scan(){ // show previous scan. including summary
     echo('<h2>Scan Results</h2>');
-    echo('<h4>this scan is from the past, scan again to update</h4>');
-
     $raw_scan = file_get_contents(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt");
-    opalscan_render_html($raw_scan);
-//	$scan_results = opalscan_get_scan();
-	/*	echo('<pre>');
-		print_r($raw_scan);
-		echo('</pre>');
-*/
+
+    opalscan_render_html($raw_scan);// render the array as HTML table.
+
   }
 
 
@@ -130,19 +127,30 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 	add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
 }
 
+/****** RENDER THE DATA AS HTML ********/
 function opalscan_render_html($raw_scan){
 	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
+
+  $out='';
   $decoded_scan = json_decode($raw_scan,true);
 
+
   $log_date = strtotime($decoded_scan['scanDate']['date']);
+  $out.='<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
+  $out.=('<h4>this scan is from the past, scan again to update</h4>');
 
-  echo '<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
-//  echo '<h3>Scan Date '.$decoded_scan['scanDate']['date'].'</h3>';
-
-  echo('<pre>');
+  $allPlugins = $decoded_scan['allPlugins'];
+  $out.=('<table>');
+  $out.=('<thead><tr><th>Plugin</th><th>Installed Version</th><th>Available</th><th>WARN</th><th >Outdated</th></tr></thead>');
+  foreach($allPlugins as $key => $value) {
+      $out.='<tr><td>'.$value['Title'].'</td>';
+      $out.= '<td>'.$value['Version'].'</td></tr>';
+  }
+    $out.=('</table>');
+    $out.=('<pre>');
   //print_r($raw_scan);
-  print_r(  $decoded_scan);
-  echo('</pre>');
+    $out.=(  print_r($decoded_scan, true));
+    $out.=('</pre>');
 
-
+    echo $out;
 }

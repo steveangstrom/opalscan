@@ -132,19 +132,20 @@ echo $thead;
 
 
 		function phua_admin_page_output(){
-			echo '<div class="wrap"><div id="icon-edit-pages" class="icon32"></div><h2>Opal Site Scanner</h2>';
+			echo '<div class="wrap opalsitescannerpage"><h1>Opal Site Scanner</h1>';
 
 			?>
-<p>SiteScanner will check the status of your site, plugins, and platform to produce a report which you can analyse to help you keep your site safe, speedy and secure.</p><p>Our customers use this plugin to send us the details reports so we can advise and repair problems.
+<p>Site Scanner will check the status of your site, plugins, and platform to produce a report which you can analyse to help you keep your site safe, speedy and secure.<br>Our customers use this plugin to send us the details reports so we can advise and repair problems.
 </p>
 			<?php
 			//echo('<div class="opalscanbarholder">Scanning <div class="opalscanbar"></div></div>');
 			$scanurl=add_query_arg( 'scannow', 'true');
 	//		echo '<p><a class="button bigwhitebutton" href="'.$scanurl.'">SCAN</a></p>';
-			echo('<hr>');	echo '<p><a class="button bigwhitebutton opalscannow">AJAX SCAN</a></p>';
-			echo opalscan_show_scan();
+			echo('<hr>');	echo '<p><a class="button bigbutton opalscannow">SCAN YOUR SITE</a><a class="button bigbutton opalsend">SEND IT</a></p><hr>';
 			echo('<div id="opalscanbarholder"></div>');
 			echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.
+			echo opalscan_show_scan(); // show the previous scan on load.
+
 
 			echo('<hr>');
 

@@ -1,4 +1,14 @@
-.wp-core-ui .button.opalscannow{background:orange;}
+
+.opalsitescannerpage h1{font-size: 34px;}
+.opalsitescannerpage p{font-size: 16px;}
+
+.wp-core-ui .button.bigbutton{
+  font-size: 18px;padding: 5px 30px;border-width: 2px;border-radius: 5px;transition: all 0.3s;
+}
+.wp-core-ui .button.bigbutton.opalscannow{background:white;color:rgb(0, 113, 161);}
+.wp-core-ui .button.bigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
+
+.wp-core-ui .button.bigbutton.opalsend{margin-left:20px;}
 #opalscanbarholder{}
 
   .lds-hourglass {
