@@ -68,12 +68,16 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
     }// end foreach
 
-    $scan_results["allPlugins"] =  $allPlugins; // addd all the changes and additions to the plugin array.
+    $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
+    $scan_results["scanDate"] =  $today;
 
+
+    // NOW SAVE IT TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
     $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
     //fwrite($scanlog, $scan_results);
-    $logparse = print_r($scan_results, true);
-    fwrite($scanlog, $logparse);
+    //$logparse = print_r($scan_results, true);
+    //$logparse = var_export($scan_results, true);
+    fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
 
 		return $scan_results;
@@ -86,16 +90,19 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     return $call_api;
   }
 
-  function opalscan_show_scan(){ // show previous scan.
+
+
+  function opalscan_show_scan(){ // show previous scan. including summary
     echo('<h2>Scan Results</h2>');
     echo('<h4>this scan is from the past, scan again to update</h4>');
 
-	/*	$scan_results = opalscan_get_scan();
-		echo('<pre>');
-		print_r($scan_results);
-		echo('</pre>');*/
-
-
+    $raw_scan = file_get_contents(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt");
+    opalscan_render_html($raw_scan);
+//	$scan_results = opalscan_get_scan();
+	/*	echo('<pre>');
+		print_r($raw_scan);
+		echo('</pre>');
+*/
   }
 
 
@@ -123,9 +130,19 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 	add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
 }
 
-function render_html_scan(){
+function opalscan_render_html($raw_scan){
 	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
+  $decoded_scan = json_decode($raw_scan,true);
 
+  $log_date = strtotime($decoded_scan['scanDate']['date']);
+
+  echo '<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
+//  echo '<h3>Scan Date '.$decoded_scan['scanDate']['date'].'</h3>';
+
+  echo('<pre>');
+  //print_r($raw_scan);
+  print_r(  $decoded_scan);
+  echo('</pre>');
 
 
 }
