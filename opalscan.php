@@ -133,40 +133,21 @@ echo $thead;
 
 		function phua_admin_page_output(){
 			echo '<div class="wrap"><div id="icon-edit-pages" class="icon32"></div><h2>Opal Site Scanner</h2>';
-			// Test if the query exists at the URL
 
+			?>
+<p>SiteScanner will check the status of your site, plugins, and platform to produce a report which you can analyse to help you keep your site safe, speedy and secure.</p><p>Our customers use this plugin to send us the details reports so we can advise and repair problems.
+</p>
+			<?php
 			//echo('<div class="opalscanbarholder">Scanning <div class="opalscanbar"></div></div>');
 			$scanurl=add_query_arg( 'scannow', 'true');
-			echo '<p><a class="button bigwhitebutton" href="'.$scanurl.'">SCAN</a></p>';
+	//		echo '<p><a class="button bigwhitebutton" href="'.$scanurl.'">SCAN</a></p>';
 			echo('<hr>');	echo '<p><a class="button bigwhitebutton opalscannow">AJAX SCAN</a></p>';
 			echo opalscan_show_scan();
 			echo('<div id="opalscanbarholder"></div>');
-			echo '<div id="opalscan_displayarea">scan goes here</div>';
-
+			echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.
 
 			echo('<hr>');
 
-			$time = strtotime("-1 year", time());
-			$a_year_ago = date("Y-m-d", $time);
-			$today = date("Y-m-d");
-
-		/*
-		$screen = get_current_screen();
-		echo('<pre>');print_r($screen );echo('</pre>');
-		*/
-
-			$scannow = $_GET['scannow']; // has the button been pressed, soon to be replaced by AJAX.
-
-			if(isset($scannow)){
-				// display the scan
-				if (	$phpversion <7.2) echo('<p>PHP needs updating</p>');
-				if (	$SQLversion <5.7) echo('<p>SQL needs updating</p>');
-				if (	$isSSL<1) {$vuln_score_ssl = 1; echo('<p>SSL needs updating</p>');}
-				if (	$wp_version<5.3){ $vuln_score_wp_version =1; echo('<p>Wordpress needs updating</p>');}
-
-
-				displayVulnScan();
-			}
 
 				echo('</div>');// close the main edit page pane
 		}
