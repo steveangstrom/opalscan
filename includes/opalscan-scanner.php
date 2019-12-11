@@ -11,7 +11,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 	    /** set the baselines for the scores **/
 		$scan_results = array(
-			"plugin_outated"=>0,// is the installed plugin outdated?
+			"plugin_outdated"=>0,// is the installed plugin outdated?
 			"plugin_noupdates"=>0, // are there no recent updates?
 			"plugin_amount" =>0, // are there too many plugins?
 			"php_version" =>0,
@@ -34,20 +34,24 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		/* get SQL version */
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$SQLversion = mysqli_get_server_info($connection);
+
+
 		/***********/
     $allPlugins =  get_plugins();// associative array of all installed plugins
 
 
-
     // populate the update status array.
     foreach($allPlugins as $key => $value) {
+
+      $scan_results['plugin_amount']+=1;
       // scan each plugin for status.
       $slug = explode('/',$key)[0]; // get active plugin's slug
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
       $repoversion = $call_api->version;
 
       if($repoversion>$value['Version']){ // newer repo version available
-        $allPlugins[$key]['plugin_outdated']='Outdated '.$slug;
+        $allPlugins[$key]['plugin_outdated']= true;
+        $scan_results['plugin_outdated']+=1; // update the main tally  of  plugin_outdated.
       }
 
       /* Date and update status of plugins compared to repo */
@@ -62,7 +66,8 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
       if ($intervalINT <= -365){
         //also add a += to the overall score table perhaps.
-        $allPlugins[$key]['plugin_noupdates']='No recent updates for '.$slug;
+        $allPlugins[$key]['plugin_noupdates']=true;
+        $scan_results['plugin_noupdates']+=1; // update the main tally  of no updates.
       }
 
       //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
@@ -140,11 +145,13 @@ function opalscan_render_html($raw_scan){
   $out.=('<h4>this scan is from the past, scan again to update</h4>');
 
   $allPlugins = $decoded_scan['allPlugins'];
-  $out.=('<table>');
-  $out.=('<thead><tr><th>Plugin</th><th>Installed Version</th><th>Available</th><th>WARN</th><th >Outdated</th></tr></thead>');
+  $out.=('<table id="opalscan_results_table">');
+  $out.=('<thead><tr><th>Plugin</th> <th>Installed Version</th> <th>Outdated</th> <th>No Updates</th></tr></thead>');
   foreach($allPlugins as $key => $value) {
       $out.='<tr><td>'.$value['Title'].'</td>';
-      $out.= '<td>'.$value['Version'].'</td></tr>';
+      $out.= '<td>'.$value['Version'].'</td>';
+      $out.= '<td>'.$value['plugin_outdated'].'</td>';
+      $out.= '<td>'.$value['plugin_noupdates'].'</td></tr>';
   }
     $out.=('</table>');
     $out.=('<pre>');

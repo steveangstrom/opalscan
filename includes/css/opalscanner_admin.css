@@ -9,8 +9,13 @@
 .wp-core-ui .button.bigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
 .wp-core-ui .button.bigbutton.opalsend{margin-left:20px;}
-#opalscanbarholder{}
 
+#opalscan_results_table{
+  width:100%;
+}
+#opalscan_results_table td, #opalscan_results_table th{text-align:left; padding: 8px 15px;}
+#opalscan_results_table th{background: #dadada;}
+#opalscanbarholder{}
   .lds-hourglass {
     display: inline-block;
     position: relative;
