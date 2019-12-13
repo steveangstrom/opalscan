@@ -11,10 +11,35 @@
 .wp-core-ui .button.bigbutton.opalsend{margin-left:20px;}
 
 .opalscan_results_table{
-  width:100%;
+  width:100%; margin-top: 20px;
 }
 .opalscan_results_table td, .opalscan_results_table th{text-align:left; padding: 8px 15px;}
 .opalscan_results_table th{background: #dadada;}
+
+.opalsitescannerpage .score{display: block;position:relative;
+  width:150px;
+  height:40px;
+  background: #dadada;
+}
+
+.opalsitescannerpage .score span{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+}
+.opalsitescannerpage .score.s10{background: #fe0041;}
+.opalsitescannerpage .score.s20{background: #ff2c41;}
+.opalsitescannerpage .score.s30{background: #ff5041;}
+.opalsitescannerpage .score.s40{background: #ffa641;}
+.opalsitescannerpage .score.s50{background: #ffcc41;}
+.opalsitescannerpage .score.s60{background: #ffe341;}
+.opalsitescannerpage .score.s70{background: #fff141;}
+.opalsitescannerpage .score.s80{background: #fffb41;}
+.opalsitescannerpage .score.s90{background: #d9fb41;}
+.opalsitescannerpage .score.s100{background: #34fb41;}
+
 #opalscanbarholder{}
   .lds-hourglass {
     display: inline-block;

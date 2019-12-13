@@ -149,8 +149,10 @@ function opalscan_render_html($raw_scan, $livescan=true){
 	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
 
   $out='';
-  $decoded_scan = json_decode($raw_scan,true);
+  $score =100;
+  $scorewords=['Extremely bad','Extremely bad', 'Very bad','Bad','Adequate','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
 
+  $decoded_scan = json_decode($raw_scan,true);
 
   $log_date = strtotime($decoded_scan['scanDate']['date']);
   $out.='<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
@@ -164,6 +166,7 @@ function opalscan_render_html($raw_scan, $livescan=true){
   $out.= '<br>[plugin_noupdates]'.$decoded_scan['plugin_noupdates'];
   $out.= '<br>[plugin_amount]'.$decoded_scan['plugin_amount'];
   $out.= '<br>[plugin_active_amount]'.$decoded_scan['plugin_active_amount'];
+
   $out.= '<br>[php_version]'.$decoded_scan['php_version'];
   $out.= '<br>[sql_version]'.$decoded_scan['sql_version'];
   $out.= '<br>[wp_version]'.$decoded_scan['wp_version'];
@@ -171,15 +174,41 @@ function opalscan_render_html($raw_scan, $livescan=true){
   $out.= '<br>[ssl]'.$decoded_scan['ssl'];
 
 /* --- Do a Score ---*/
- $score = $decoded_scan['plugin_outdated'] + $decoded_scan['plugin_noupdates'] + ($decoded_scan['plugin_amount']/5);
-  $out.= '<div class = "opalscore">Score = '.$score.'</div>';
-/* --- describe plugin state -----*/
+  #Wp score
+  $wp_score = 10;
+
+  #Server score
+  $server_score = 10;
+
+  # plugin score
+  $inactive_plugin_total = $decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount'];
+  $plugin_score = $decoded_scan['plugin_outdated'] + $decoded_scan['plugin_noupdates'] + ($decoded_scan['plugin_amount']/2) + ($inactive_plugin_total/2) ;
+
+  # main score
+  $score -= ($wp_score + $plugin_score +  $server_score);
+  $score = round($score);
+
+  # Display Score
+  $out.= '<div class = "opalscore score s'.round($score/10).'0"><span>'.$score.'</span></div>';
+  $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);
+
+/* --- describe plugin state verbally -----*/
 
 
-/* --------*/
+/* -----SHOW TABLES ---*/
+  $out.=('<table class="opalscan_results_table">');
+  $out.=('<thead><tr><th>Element</th> <th>Installed Version</th><th>Status</th></tr></thead>');
+  $out.=('<tr><td>Wordpress Core</td><td>'.$decoded_scan['wp_version'].'</td><td>Outdated</td></tr>');
+  $out.=('<tr><td>Plug-ins</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Needs Attention</td></tr>');
+  $out.=('<tr><td>Web Server</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Needs Attention</td></tr>');
+  $out.=('<tr><td>Security</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Needs Attention</td></tr>');
+  $out.=('</table>');
+
+
   $allPlugins = $decoded_scan['allPlugins'];
   $out.=('<table class="opalscan_results_table">');
-  $out.=('<thead><tr><th>Plugin</th> <th>Installed Version</th> <th>Outdated</th> <th>No Updates</th></tr></thead>');
+  $out.=('<thead><tr><th>Plugin</th> <th>Installed Version</th> <th>Status</th> <th>Availability</th></tr></thead>');
+
   foreach($allPlugins as $key => $value) {
       $out.='<tr><td>'.$value['Title'].'</td>';
       $out.= '<td>'.$value['Version'].'</td>';
