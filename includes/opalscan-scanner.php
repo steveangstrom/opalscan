@@ -190,11 +190,12 @@ function opalscan_render_html($raw_scan, $livescan=true){
 
   # Display Score
   $out.= '<div class = "opalscore score s'.round($score/10).'0"><span>'.$score.'</span></div>';
+  $score_rating=$scorewords[round($score/10)-1];
   $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);
 
 /* --- describe plugin state verbally -----*/
-
-
+  $advice = "<h2>Security Advice</h2><p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as $score_rating and this means you are vulnerable to attacks, or your website may fail.<p> ";
+  $out.=  $advice ;
 /* -----SHOW TABLES ---*/
   $out.=('<table class="opalscan_results_table">');
   $out.=('<thead><tr><th>Element</th> <th>Installed Version</th><th>Status</th></tr></thead>');
