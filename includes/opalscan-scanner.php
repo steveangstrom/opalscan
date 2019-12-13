@@ -17,6 +17,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 			"php_version" =>0,
 			"sql_version" =>0,
 			"wp_version" =>0,
+      "wp_version_available" =>0,
 			"ssl" =>0,
       "allPlugins"=>'',
 		);
@@ -29,6 +30,15 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		$scan_results["php_version"] =  phpversion();
 		$scan_results["sql_version"] =  mysqli_get_server_info(mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME));
 		$scan_results["wp_version"] =   get_bloginfo( 'version' );
+
+    /* store the most recent available version of WP */
+    $url = 'https://api.wordpress.org/core/version-check/1.7/';
+    $response = wp_remote_get($url);
+    $json = $response['body'];
+    $obj = json_decode($json);
+    $scan_results["wp_version_available"] = $obj->offers[0]->version;
+    /*-----------*/
+
 		$scan_results["ssl"] =   is_ssl();
 
 		/* get SQL version */
@@ -133,7 +143,7 @@ function opal_save_to_log($scan_results){
 }
 
 /****** RENDER THE DATA AS HTML ********/
-function opalscan_render_html($raw_scan){
+function opalscan_render_html($raw_scan, $livescan=tru){
 	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
 
   $out='';
@@ -142,7 +152,23 @@ function opalscan_render_html($raw_scan){
 
   $log_date = strtotime($decoded_scan['scanDate']['date']);
   $out.='<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
-  $out.=('<h4>this scan is from the past, scan again to update</h4>');
+
+  if($livescan===false){
+      $out.='<h4>this scan is from the past, scan again to update</h4>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
+  }
+
+/* Debuggery */
+  $out.= '[plugin_outdated]'.$decoded_scan['plugin_outdated'];
+  $out.= '<br>[plugin_noupdates]'.$decoded_scan['plugin_noupdates'];
+  $out.= '<br>[plugin_amount]'.$decoded_scan['plugin_amount'];
+  $out.= '<br>[php_version]'.$decoded_scan['php_version'];
+  $out.= '<br>[sql_version]'.$decoded_scan['sql_version'];
+  $out.= '<br>[wp_version]'.$decoded_scan['wp_version'];
+  $out.= '<br>[wp_version_available]'.$decoded_scan['wp_version_available'];
+  $out.= '<br>[ssl]'.$decoded_scan['ssl'];
+
+/* --------*/
+
 
   $allPlugins = $decoded_scan['allPlugins'];
   $out.=('<table id="opalscan_results_table">');
