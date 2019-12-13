@@ -10,11 +10,11 @@
 
 .wp-core-ui .button.bigbutton.opalsend{margin-left:20px;}
 
-#opalscan_results_table{
+.opalscan_results_table{
   width:100%;
 }
-#opalscan_results_table td, #opalscan_results_table th{text-align:left; padding: 8px 15px;}
-#opalscan_results_table th{background: #dadada;}
+.opalscan_results_table td, .opalscan_results_table th{text-align:left; padding: 8px 15px;}
+.opalscan_results_table th{background: #dadada;}
 #opalscanbarholder{}
   .lds-hourglass {
     display: inline-block;

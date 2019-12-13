@@ -14,6 +14,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 			"plugin_outdated"=>0,// is the installed plugin outdated?
 			"plugin_noupdates"=>0, // are there no recent updates?
 			"plugin_amount" =>0, // are there too many plugins?
+      "plugin_active_amount" =>0, // are there too many plugins?
 			"php_version" =>0,
 			"sql_version" =>0,
 			"wp_version" =>0,
@@ -26,6 +27,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		/** get some information **/
     $allPlugins = get_plugins(); // associative array of all installed plugins
     $activePlugins = get_option('active_plugins'); // simple array of active plugins
+    $scan_results["plugin_active_amount"] = count($activePlugins);
 
 		$scan_results["php_version"] =  phpversion();
 		$scan_results["sql_version"] =  mysqli_get_server_info(mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME));
@@ -143,7 +145,7 @@ function opal_save_to_log($scan_results){
 }
 
 /****** RENDER THE DATA AS HTML ********/
-function opalscan_render_html($raw_scan, $livescan=tru){
+function opalscan_render_html($raw_scan, $livescan=true){
 	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
 
   $out='';
@@ -161,17 +163,22 @@ function opalscan_render_html($raw_scan, $livescan=tru){
   $out.= '[plugin_outdated]'.$decoded_scan['plugin_outdated'];
   $out.= '<br>[plugin_noupdates]'.$decoded_scan['plugin_noupdates'];
   $out.= '<br>[plugin_amount]'.$decoded_scan['plugin_amount'];
+  $out.= '<br>[plugin_active_amount]'.$decoded_scan['plugin_active_amount'];
   $out.= '<br>[php_version]'.$decoded_scan['php_version'];
   $out.= '<br>[sql_version]'.$decoded_scan['sql_version'];
   $out.= '<br>[wp_version]'.$decoded_scan['wp_version'];
   $out.= '<br>[wp_version_available]'.$decoded_scan['wp_version_available'];
   $out.= '<br>[ssl]'.$decoded_scan['ssl'];
 
+/* --- Do a Score ---*/
+ $score = $decoded_scan['plugin_outdated'] + $decoded_scan['plugin_noupdates'] + ($decoded_scan['plugin_amount']/5);
+  $out.= '<div class = "opalscore">Score = '.$score.'</div>';
+/* --- describe plugin state -----*/
+
+
 /* --------*/
-
-
   $allPlugins = $decoded_scan['allPlugins'];
-  $out.=('<table id="opalscan_results_table">');
+  $out.=('<table class="opalscan_results_table">');
   $out.=('<thead><tr><th>Plugin</th> <th>Installed Version</th> <th>Outdated</th> <th>No Updates</th></tr></thead>');
   foreach($allPlugins as $key => $value) {
       $out.='<tr><td>'.$value['Title'].'</td>';
