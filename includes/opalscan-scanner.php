@@ -184,7 +184,7 @@ function opalscan_render_html($raw_scan, $livescan=true){
   $inactive_plugin_total = $decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount'];
   $plugin_score = $decoded_scan['plugin_outdated'] + $decoded_scan['plugin_noupdates'] + ($decoded_scan['plugin_amount']/2) + ($inactive_plugin_total/2) ;
 
-  # main score
+  # TOTAL UP THE SCORE AND DESCRIBE IT -----------------------
   $score -= ($wp_score + $plugin_score +  $server_score);
   $score = round($score);
 
@@ -196,12 +196,13 @@ function opalscan_render_html($raw_scan, $livescan=true){
 /* --- describe plugin state verbally -----*/
   $advice = "<h2>Security Advice</h2><p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as $score_rating and this means you are vulnerable to attacks, or your website may fail.<p> ";
   $out.=  $advice ;
-/* -----SHOW TABLES ---*/
+
+/* -----RENDER THE SCORE RESULT TABLES ---*/
   $out.=('<table class="opalscan_results_table">');
   $out.=('<thead><tr><th>Element</th> <th>Installed Version</th><th>Status</th></tr></thead>');
   $out.=('<tr><td>Wordpress Core</td><td>'.$decoded_scan['wp_version'].'</td><td>Outdated</td></tr>');
   $out.=('<tr><td>Plug-ins</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Needs Attention</td></tr>');
-  $out.=('<tr><td>Web Server</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Needs Attention</td></tr>');
+  $out.=('<tr><td>Web Server</td><td>'.$decoded_scan['php_version'].'</td><td>Needs Attention</td></tr>');
   $out.=('<tr><td>Security</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Needs Attention</td></tr>');
   $out.=('</table>');
 
