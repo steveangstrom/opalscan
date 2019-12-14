@@ -189,7 +189,11 @@ function opalscan_render_html($raw_scan, $livescan=true){
   $score = round($score);
 
   # Display Score
-  $out.= '<div class = "opalscore score s'.round($score/10).'0"><span>'.$score.'</span></div>';
+  $out.= '<div class="opalscore_wrap">
+  <div class = "opalscore score s'.round($score/10).'0"><span>'.$score.'</span></div>
+  <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50">
+  </div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div>
+  </div>';
   $score_rating=$scorewords[round($score/10)-1];
   $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);
 
