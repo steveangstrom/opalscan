@@ -3,6 +3,7 @@
 if(is_admin()) { // make sure, the following code runs only in the back end
 include_once('opalscan-render.php' ); /* get the admin display methods */
 
+
   function opalscan_get_scan(){ // the main scan and data populating function
 
 		if (!function_exists('plugins_api')) {
@@ -22,7 +23,7 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
 			"ssl" =>0,
       "allPlugins"=>'',
       "wp_plugin_security"=>'',
-      "calculated_scores"=>'',
+      "scores"=>array('total'=>0,'wp'=>0,'plugins'=>0,'server'=>0),
 		);
 
 
@@ -91,6 +92,11 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
     $scan_results["scanDate"] =  $today;
 
+    /* ----- populate the log with the scores ----- */
+
+    $scan_results['scores']['wp'] = calculate_wp_score($scan_results);
+    $scan_results['scores']['plugins'] = calculate_plugin_score($scan_results);
+
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
 
 		return $scan_results;
@@ -124,13 +130,55 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
   }
 
 /* ----- Calculate Scores  ----- */
-  function calculate_plugin_score($in){
-    
 
+  function calculate_wp_score($scan_results){
+    $score = 0;
+    $wp_version = $scan_results['wp_version'];
+    $wp_version_available = $scan_results['wp_version_available'];
+  //  $score = $wp_version_available - $wp_version * 10;
+
+    $score = version_compare($wp_version_available, $wp_version);
+    return $score;
   }
 
-  function calculate_server_score($in){
 
+  function calculate_plugin_score($scan_results){
+    //$score = $scan_results['plugin_amount'];
+    $score = 0;
+
+    $p_amount = $scan_results['plugin_amount'];
+    $p_outdated = $scan_results['plugin_outdated'];
+    $p_noupdate = $scan_results['plugin_noupdates'];
+    $p_active = $scan_results['plugin_active_amount'];
+
+    if ($p_amount >10){
+      $score += $p_amount -10;
+    }
+
+    if ($p_outdated >0){
+      $score += $p_outdated * 2;
+    }
+
+    if ($p_noupdate >0){
+     $score += $p_noupdate * 2;
+    }
+
+    if ($p_amount > $p_active){
+      $score += $p_amount - $p_active; // inactive plugins
+    }
+    return $score;
+  }
+
+  function calculate_server_score(){
+    if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+        echo 'I am still PHP 4, my version: ' . PHP_VERSION . "\n";
+    }
+    if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+    echo 'I am at least PHP version 5.3.0, my version: ' . PHP_VERSION . "\n";
+    }
+    if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+        echo 'I am at least PHP version 7.0.0, my version: ' . PHP_VERSION . "\n";
+    }
 
   }
 
