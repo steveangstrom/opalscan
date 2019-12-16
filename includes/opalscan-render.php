@@ -60,9 +60,11 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.=  $advice ;
 
   /* -----RENDER THE SCORE RESULT TABLES ---*/
+    $out.=('<h2>Wordpress and Server</h2>');
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td> Status</td></tr>');
+    $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td> Status</td></tr>');
     $out.=('<tr><td>Plug-ins Installed</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Status</td></tr>');
     $out.=('<tr><td>Plug-ins Inactive</td><td>'.($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']).'</td><td>Status</td></tr>');
 
@@ -70,11 +72,13 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.=('<tr><td>Plug-ins Abandoned</td><td>'.$decoded_scan['plugin_noupdates'].'</td><td>Status</td></tr>');
     $out.=('<tr><td>Web Server</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>Status</td></tr>');
     $out.=('<tr><td>SQL Server</td><td>SQL Version '.$decoded_scan['sql_version'].'</td><td>Status</td></tr>');
-    $out.=('<tr><td>SSL Security</td><td>'.$decoded_scan['ssl'].'</td><td>Status</td></tr>');
+    $ssl = ($decoded_scan['ssl'] == 1) ? 'True' : 'False';
+    $out.=('<tr><td>SSL Security</td><td>'.$ssl.'</td><td>Status</td></tr>');
     $out.=('</table>');
 
 
     $allPlugins = $decoded_scan['allPlugins'];
+    $out.=('<h2>Plug-in Details</h2>');
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Plugin</th> <th>Installed Version</th> <th>Status</th> <th>Availability</th></tr></thead>');
 

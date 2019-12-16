@@ -21,7 +21,7 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
       "wp_version_available" =>0,
 			"ssl" =>0,
       "allPlugins"=>'',
-      "has_firewall"=>'',
+      "wp_plugin_security"=>'',
       "calculated_scores"=>'',
 		);
 
@@ -85,6 +85,9 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
       //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
     }// end foreach
 
+    //$plugin_security = detect_plugin_security($allPlugins); // done this way for memmory, so we're not duplicating a massive array around..
+    $scan_results['wp_plugin_security'] = detect_plugin_security($allPlugins);
+
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
     $scan_results["scanDate"] =  $today;
 
@@ -107,6 +110,20 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
     fclose($scanlog);
   }
 
+/* ----- currently unused  ----- */
+  function detect_plugin_security($allPlugins){
+    $needle = array('all-in-one-wp-security-and-firewall','better-wp-security','wp-cerber','wordfence');
+     if (in_array($needle, $allPlugins)) {
+       foreach ($allPlugins as $item) {
+     		if (is_array($item) && array_search($needle, $item)){
+          return true;
+        }
+     	}
+    }
+    return false;
+  }
+
+/* ----- Calculate Scores  ----- */
   function calculate_plugin_score($in){
 
 
