@@ -96,6 +96,7 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
 
     $scan_results['scores']['wp'] = calculate_wp_score($scan_results);
     $scan_results['scores']['plugins'] = calculate_plugin_score($scan_results);
+    $scan_results['scores']['server'] = calculate_server_score($scan_results);
 
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
 
@@ -138,6 +139,7 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
   //  $score = $wp_version_available - $wp_version * 10;
 
     $score = version_compare($wp_version_available, $wp_version);
+    $score *=3;
     return $score;
   }
 
@@ -169,17 +171,29 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
     return $score;
   }
 
-  function calculate_server_score(){
-    if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-        echo 'I am still PHP 4, my version: ' . PHP_VERSION . "\n";
-    }
-    if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
-    echo 'I am at least PHP version 5.3.0, my version: ' . PHP_VERSION . "\n";
-    }
-    if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
-        echo 'I am at least PHP version 7.0.0, my version: ' . PHP_VERSION . "\n";
-    }
 
+
+  function calculate_server_score($scan_results){
+
+    $score = 0;
+    $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
+    
+    $ssl = $scan_results['ssl'];
+    if ($ssl <1){ $score = 10;}
+
+    if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+      return $score + 50;
+    }
+    if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+      return $score +  30;
+    }
+    if (version_compare(PHP_VERSION, '7.0.0', '<')) {
+      return $score +  20;
+    }
+    if (version_compare(PHP_VERSION, '7.2.0', '<')) {
+      return $score +  10;
+    }
+    return $score +  0;
   }
 
 }
