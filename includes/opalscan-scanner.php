@@ -1,9 +1,7 @@
 <?php
 /** SCAN AND SCORE THE ATTRIBUTES - THEN STORE IN A RAW LOG  **/
-include_once('opalscan-render.php' ); /* get the admin display methods */
-
 if(is_admin()) { // make sure, the following code runs only in the back end
-
+include_once('opalscan-render.php' ); /* get the admin display methods */
 
   function opalscan_get_scan(){ // the main scan and data populating function
 
@@ -23,10 +21,13 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       "wp_version_available" =>0,
 			"ssl" =>0,
       "allPlugins"=>'',
+      "has_firewall"=>'',
+      "calculated_scores"=>'',
 		);
 
 
-		/** get some information **/
+		/** ----------------- Get some information about the site --------------------------**/
+
     $allPlugins = get_plugins(); // associative array of all installed plugins
     $activePlugins = get_option('active_plugins'); // simple array of active plugins
     $scan_results["plugin_active_amount"] = count($activePlugins);
@@ -49,14 +50,11 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$SQLversion = mysqli_get_server_info($connection);
 
-
 		/***********/
     $allPlugins =  get_plugins();// associative array of all installed plugins
 
-
-    // populate the update status array.
+    // populate the plugin updatedness status array.
     foreach($allPlugins as $key => $value) {
-
       $scan_results['plugin_amount']+=1;
       // scan each plugin for status.
       $slug = explode('/',$key)[0]; // get active plugin's slug
@@ -93,53 +91,30 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
 
 		return $scan_results;
-
 	}  //  ----------end opalscan_get_scan() ---------------------
 
-function opal_save_to_log($scan_results){
-  // NOW SAVE IT TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
-  $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
-  fwrite($scanlog, json_encode($scan_results));
-  fclose($scanlog);
 
-}
-
-
-  // returns version of the plugin represented by $slug, from repository
+  // utility function which returns the available version of the plugin represented by $slug, from repository
   function getPluginVersionFromRepo($slug) {
     $call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
     return $call_api;
   }
 
+  function opal_save_to_log($scan_results){
+    //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
+    $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
+    fwrite($scanlog, json_encode($scan_results));
+    fclose($scanlog);
+  }
 
+  function calculate_plugin_score($in){
 
-  function opalscan_show_scan(){ // show previous scan. including summary
-    echo('<h2>Scan Results</h2>');
-    $raw_scan = file_get_contents(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt");
-
-    opalscan_render_html($raw_scan);// render the array as HTML table.
 
   }
 
+  function calculate_server_score($in){
 
-	function opalscan_ajax_request() {
-	    // The $_REQUEST contains all the data sent via ajax
-	    if ( isset($_REQUEST) ) {
-	        $scan= $_REQUEST['scan'];
 
-          	$scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
+  }
 
-	        // Let's take the data that was sent and do something with it
-	        if ( $scan== 'startscan' ) {
-	            $scan = '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"];
-	        }else{$scan ='what up';}
-	        // Now we'll return it to the javascript function
-	        // Anything outputted will be returned in the response
-	        echo $scan;
-	        // If you're debugging, it might be useful to see what was sent in the $_REQUEST
-	        // print_r($_REQUEST);
-	    }
-	   die();
-	}
-	add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
 }
