@@ -36,16 +36,16 @@ background:#fafafa;
 display: inline-block;
 }
 
-.opalsitescannerpage .opalscore_wrap .s10{background: #fe0041;}
-.opalsitescannerpage .opalscore_wrap .s20{background: #ff2c41;}
-.opalsitescannerpage .opalscore_wrap .s30{background: #ff5041;}
-.opalsitescannerpage .opalscore_wrap .s40{background: #ffa641;}
-.opalsitescannerpage .opalscore_wrap .s50{background: #ffcc41;}
-.opalsitescannerpage .opalscore_wrap .s60{background: #ffe341;}
-.opalsitescannerpage .opalscore_wrap .s70{background: #fff141;}
-.opalsitescannerpage .opalscore_wrap .s80{background: #fffb41;}
-.opalsitescannerpage .opalscore_wrap .s90{background: #d9fb41;}
-.opalsitescannerpage .opalscore_wrap .s100{background: #34fb41;}
+.opalsitescannerpage .opalscore_wrap .s10{background: #ff021a;}
+.opalsitescannerpage .opalscore_wrap .s20{background: #ff3e06;}
+.opalsitescannerpage .opalscore_wrap .s30{background: #ff8103;}
+.opalsitescannerpage .opalscore_wrap .s40{background: #ffad02;}
+.opalsitescannerpage .opalscore_wrap .s50{background: #ffc702;}
+.opalsitescannerpage .opalscore_wrap .s60{background: #ffda00;}
+.opalsitescannerpage .opalscore_wrap .s70{background: #e8dd00;}
+.opalsitescannerpage .opalscore_wrap .s80{background: #d6e300;}
+.opalsitescannerpage .opalscore_wrap .s90{background: #98eb00;}
+.opalsitescannerpage .opalscore_wrap .s100{background: #50f800;}
 
 #opalscanbarholder{}
   .lds-hourglass {
