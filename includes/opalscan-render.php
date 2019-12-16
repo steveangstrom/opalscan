@@ -19,18 +19,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
         $out.='<h4>this scan is from the past, scan again to update</h4>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
     }
 
-  /* Debuggery */
-  /*  $out.= '[plugin_outdated]'.$decoded_scan['plugin_outdated'];
-    $out.= '<br>[plugin_noupdates]'.$decoded_scan['plugin_noupdates'];
-    $out.= '<br>[plugin_amount]'.$decoded_scan['plugin_amount'];
-    $out.= '<br>[plugin_active_amount]'.$decoded_scan['plugin_active_amount'];
 
-    $out.= '<br>[php_version]'.$decoded_scan['php_version'];
-    $out.= '<br>[sql_version]'.$decoded_scan['sql_version'];
-    $out.= '<br>[wp_version]'.$decoded_scan['wp_version'];
-    $out.= '<br>[wp_version_available]'.$decoded_scan['wp_version_available'];
-    $out.= '<br>[ssl]'.$decoded_scan['ssl'];
-*/
   /* --- Do a Score ---*/
     #Wp score
     $wp_score = 10;
@@ -47,7 +36,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $score = round($score);
 
     # Display Score
-    $out.= '<div class="opalscore_wrap">
+    $out.= '<div class="opalscanner_results">
     <div class="opal_tab_bar">
       <div class="opal_tab active">Summary</div><div class="opal_tab">Report</div>
     </div>';
@@ -55,9 +44,9 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
     $out.='<div class = "opal_pane">';
     $out.='<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
-    $out.='
-      <div class = "opalscore score s'.round($score/10).'0"><span>'.$score.'</span></div>
-      <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50"></div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div>';
+    $out.=' <div class="opalscore_wrap">
+      <div class = "opalscore score s'.round($score/10).'0"><span>SCORE '.$score.' / 100</span></div>
+      <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50"></div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div></div>';
 
     $score_rating=$scorewords[round($score/10)-1];
     $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);

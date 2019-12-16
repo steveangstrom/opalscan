@@ -125,7 +125,7 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
 
 /* ----- Calculate Scores  ----- */
   function calculate_plugin_score($in){
-
+    
 
   }
 
