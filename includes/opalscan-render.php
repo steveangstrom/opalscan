@@ -13,14 +13,14 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $decoded_scan = json_decode($raw_scan,true);
 
     $log_date = strtotime($decoded_scan['scanDate']['date']);
-    $out.='<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
+
 
     if($livescan===false){
         $out.='<h4>this scan is from the past, scan again to update</h4>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
     }
 
   /* Debuggery */
-    $out.= '[plugin_outdated]'.$decoded_scan['plugin_outdated'];
+  /*  $out.= '[plugin_outdated]'.$decoded_scan['plugin_outdated'];
     $out.= '<br>[plugin_noupdates]'.$decoded_scan['plugin_noupdates'];
     $out.= '<br>[plugin_amount]'.$decoded_scan['plugin_amount'];
     $out.= '<br>[plugin_active_amount]'.$decoded_scan['plugin_active_amount'];
@@ -30,7 +30,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.= '<br>[wp_version]'.$decoded_scan['wp_version'];
     $out.= '<br>[wp_version_available]'.$decoded_scan['wp_version_available'];
     $out.= '<br>[ssl]'.$decoded_scan['ssl'];
-
+*/
   /* --- Do a Score ---*/
     #Wp score
     $wp_score = 10;
@@ -48,16 +48,30 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
     # Display Score
     $out.= '<div class="opalscore_wrap">
-    <div class = "opalscore score s'.round($score/10).'0"><span>'.$score.'</span></div>
-    <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50">
-    </div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div>
+    <div class="opal_tab_bar">
+      <div class="opal_tab active">Summary</div><div class="opal_tab">Report</div>
     </div>';
+
+
+    $out.='<div class = "opal_pane">';
+    $out.='<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
+    $out.='
+      <div class = "opalscore score s'.round($score/10).'0"><span>'.$score.'</span></div>
+      <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50"></div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div>';
+
     $score_rating=$scorewords[round($score/10)-1];
     $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);
 
   /* --- describe plugin state verbally -----*/
-    $advice = "<h2>Security Advice</h2><p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as $score_rating and this means you are vulnerable to attacks, or your website may fail.<p> ";
+  $advice = '';
+    $advice .= "<h2>Security Advice</h2><p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as $score_rating and this means you are vulnerable to attacks, or your website may fail.</p> ";
+    $advice .= "<h3>Wordpress Needs Attention</h3><p>your website may fail.</p> ";
+    $advice .= "<h3>Plugins</h3><p>your website may fail.</p> ";
+    $advice .= "<h3>Web Server</h3><p>your website may fail.</p> ";
     $out.=  $advice ;
+
+    $out.= '</div>';// end summary tab
+
 
   /* -----RENDER THE SCORE RESULT TABLES ---*/
     $out.=('<h2>Wordpress and Server</h2>');
