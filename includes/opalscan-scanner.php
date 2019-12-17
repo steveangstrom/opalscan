@@ -83,17 +83,22 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
         $scan_results['plugin_noupdates']+=1; // update the main tally  of no updates.
       }
 
+      // is this a security plugin?
+      if ($slug == 'wordfence'){
+      //  $scan_results['wp_plugin_security'] = true;
+        $scan_results['wp_plugin_security'] =  detect_plugin_security($slug);
+      }
+
       //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
     }// end foreach
 
-    //$plugin_security = detect_plugin_security($allPlugins); // done this way for memmory, so we're not duplicating a massive array around..
-    $scan_results['wp_plugin_security'] = detect_plugin_security($allPlugins);
+
+    //$scan_results['wp_plugin_security'] = detect_plugin_security($allPlugins);    //$plugin_security - not working yet.
 
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
     $scan_results["scanDate"] =  $today;
 
-    /* ----- populate the log with the scores ----- */
-
+    /* ----- populate the log with the calculated and weighted scores as a cache ----- */
     $scan_results['scores']['wp'] = calculate_wp_score($scan_results);
     $scan_results['scores']['plugins'] = calculate_plugin_score($scan_results);
     $scan_results['scores']['server'] = calculate_server_score($scan_results);
@@ -106,7 +111,7 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
 
   // utility function which returns the available version of the plugin represented by $slug, from repository
   function getPluginVersionFromRepo($slug) {
-    $call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
+    $call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'tested' => true,) );
     return $call_api;
   }
 
@@ -118,14 +123,23 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
   }
 
 /* ----- currently unused  ----- */
-  function detect_plugin_security($allPlugins){
-    $needle = array('all-in-one-wp-security-and-firewall','better-wp-security','wp-cerber','wordfence');
-     if (in_array($needle, $allPlugins)) {
-       foreach ($allPlugins as $item) {
-     		if (is_array($item) && array_search($needle, $item)){
-          return true;
-        }
-     	}
+  function detect_plugin_security($slug){
+    $haystack = array(
+      'astra',
+      'all-in-one-wp-security-and-firewall',
+      'better-wp-security',
+      'defender-security',
+      'ninjafirewall',
+      'secupress',
+      'security-ninja',
+      'sucuri-scanner',
+      'wp-cerber',
+      'wp-simple-firewall',
+      'wordfence'
+    );
+
+    if (in_array($slug, $haystack)) {
+        return $slug;
     }
     return false;
   }
@@ -177,7 +191,7 @@ include_once('opalscan-render.php' ); /* get the admin display methods */
 
     $score = 0;
     $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
-    
+
     $ssl = $scan_results['ssl'];
     if ($ssl <1){ $score = 10;}
 

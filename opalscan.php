@@ -26,7 +26,8 @@ function opalscan_enqueue_scripts( ) {
 	//wp_enqueue_script( 'datepicker_script', plugin_dir_url( __FILE__ ) . 'includes/datepicker.js' );
 
 	wp_enqueue_script( 'opalscan_ajax_display', plugin_dir_url( __FILE__ ) . 'includes/js/opal-scan.js', array( 'jquery' ),false,true );
-	wp_localize_script( 'opalscan_ajax_display', 'thescanobj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),  ));
+	wp_localize_script( 'opalscan_ajax_display', 'thescanobj',
+	 array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'pluginpath' => plugin_dir_url( __FILE__ ) ,'bar' => 'test' ));
 
 	wp_register_style( 'opalscan_admin_css', plugin_dir_url( __FILE__ ) . '/includes/css/opalscanner_admin.css', false, '1.0.0' );
 	wp_enqueue_style( 'opalscan_admin_css' );
