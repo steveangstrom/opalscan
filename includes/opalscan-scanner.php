@@ -79,9 +79,21 @@ if(is_admin()) {
       $intervalstring= $interval->format('%R%a');
       $intervalINT=intval($intervalstring);
 
-      if ($intervalINT <= -365){
+
+      if ($intervalINT <= -950){
         //also add a += to the overall score table perhaps.
-        $allPlugins[$key]['plugin_noupdates']=true;
+        $allPlugins[$key]['plugin_noupdates']=36;
+        $scan_results['plugin_noupdates']+=1; // update the main tally  of no updates.
+      }elseif ($intervalINT <= -730){
+        $allPlugins[$key]['plugin_noupdates']=24;
+        $scan_results['plugin_noupdates']+=1; // update the main tally  of no updates.
+      }
+      elseif ($intervalINT <= -560){
+        $allPlugins[$key]['plugin_noupdates']=18;
+        $scan_results['plugin_noupdates']+=1; // update the main tally  of no updates.
+      }
+      elseif ($intervalINT <= -360){
+        $allPlugins[$key]['plugin_noupdates']=12;
         $scan_results['plugin_noupdates']+=1; // update the main tally  of no updates.
       }
 

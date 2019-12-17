@@ -114,8 +114,15 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     foreach($allPlugins as $key => $value) {
         $out.='<tr><td>'.$value['Title'].'</td>';
         $out.= '<td>'.$value['Version'].'</td>';
-        $out.= '<td>'.$value['plugin_outdated'].'</td>';
-        $out.= '<td>'.$value['plugin_noupdates'].'</td></tr>';
+
+        $outstatus = $value['plugin_outdated']? 'Needs Update' : 'Current';
+        $out.= '<td>'.$outstatus.'</td>';
+
+      //  $updstatus = $value['plugin_noupdates']? 'Abandoned' : 'Ok';
+      $updstatus = 'OK';
+      if ($value['plugin_noupdates'] >20){$updstatus = 'Abandoned!';}
+      if ($value['plugin_noupdates'] >10){$updstatus = 'Outdated';}
+        $out.= '<td>'.$updstatus.'</td></tr>';
     }
       $out.=('</table>');
 
