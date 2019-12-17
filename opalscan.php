@@ -29,15 +29,6 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 	}
 
-		$vuln_score_plugin_outdated =
-		$vuln_score_plugin_noupdates =
-		$vuln_score_plugin_amount =
-		$vuln_score_php_version =
-		$vuln_score_sql_version =
-		$vuln_score_wp_version =
-		$vuln_score_ssl =
-		 0;
-
     // returns version of the plugin represented by $slug, from repository
     function getPluginVersionFromRepository($slug) {
 				$call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
@@ -51,30 +42,19 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 			#add_action('admin_init', 'save_log_page_items', 10); // if you need to save something weird this might be useful.
 		}
 
-
-		//add_action( 'wp_ajax_do_some_ajax', 'phua_log_ajax_output');
-
-
 		function phua_admin_page_output(){
 			echo '<div class="wrap opalsitescannerpage"><h1>Opal Site Scanner</h1>';
-
 			?>
 <p>Site Scanner will check the status of your site, plugins, and platform to produce a report which you can analyse to help you keep your site safe, speedy and secure.<br>Our customers use this plugin to send us the details reports so we can advise and repair problems.
 </p>
 			<?php
-			//echo('<div class="opalscanbarholder">Scanning <div class="opalscanbar"></div></div>');
 			$scanurl=add_query_arg( 'scannow', 'true');
-	//		echo '<p><a class="button bigwhitebutton" href="'.$scanurl.'">SCAN</a></p>';
 			echo('<hr>');	echo '<p><a class="button bigbutton opalscannow">SCAN YOUR SITE</a><a class="button bigbutton opalsend">SEND IT</a></p><hr>';
 			echo('<div id="opalscanbarholder"></div>');
 			echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.
 			echo opalscan_show_scan(); // show the previous scan on load.
-
-
 			echo('<hr>');
-
-
-				echo('</div>');// close the main edit page pane
+			echo('</div>');// close the main edit page pane
 		}
 
 

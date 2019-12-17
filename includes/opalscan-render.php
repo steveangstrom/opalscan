@@ -67,7 +67,10 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.=('<h2>Wordpress and Server</h2>');
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
-    $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td> Status</td></tr>');
+    $wpstatus = 'OK';
+    if ($decoded_scan['scores']['wp']>0){$wpstatus = 'Attention';}
+    if ($decoded_scan['scores']['wp']>10){$wpstatus = 'Urgent';}
+    $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td>'.$wpstatus.'</td></tr>');
     $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td> Status</td></tr>');
     $out.=('<tr><td>Plug-ins Installed</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Status</td></tr>');
     $out.=('<tr><td>Plug-ins Inactive</td><td>'.($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']).'</td><td>Status</td></tr>');

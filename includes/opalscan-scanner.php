@@ -14,18 +14,18 @@ if(is_admin()) {
 
 	    /** set the baselines for the scores **/
 		$scan_results = array(
-			"plugin_outdated"=>0,// is the installed plugin outdated?
-			"plugin_noupdates"=>0, // are there no recent updates?
-			"plugin_amount" =>0, // are there too many plugins?
-      "plugin_active_amount" =>0, // are there too many plugins?
-			"php_version" =>0,
-			"sql_version" =>0,
-			"wp_version" =>0,
-      "wp_version_available" =>0,
-			"ssl" =>0,
-      "allPlugins"=>'',
-      "wp_plugin_security"=>'',
-      "scores"=>array('total'=>0,'wp'=>0,'plugins'=>0,'server'=>0),
+			'plugin_outdated'=>0,// is the installed plugin outdated?
+			'plugin_noupdates'=>0, // are there no recent updates?
+			'plugin_amount' =>0, // are there too many plugins?
+      'plugin_active_amount' =>0, // are there too many plugins?
+			'php_version' =>0,
+			'sql_version' =>0,
+			'wp_version' =>0,
+      'wp_version_available' =>0,
+			'ssl' =>0,
+      'allPlugins'=>'',
+      'wp_plugin_security'=>'',
+      'scores'=>array('total'=>0,'wp'=>0,'plugins'=>0,'server'=>0),
 		);
 
 
