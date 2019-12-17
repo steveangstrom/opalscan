@@ -19,3 +19,14 @@ If plugins on the repo are older than 1 year then Advise
 If plugins on the repo have not been updated in >2 years then strongly Advise
 
 */
+function opal_advice(){
+
+  $advice = '';
+  // $advice .= "<h2>Security Advice</h2><p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as $score_rating and this means you are vulnerable to attacks, or your website may fail.</p> ";
+  $advice .= "<h2>Security Advice</h2><p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as SCORE GOES HERE and this means you are vulnerable to attacks, or your website may fail.</p> ";
+  $advice .= "<h3>Wordpress Needs Attention</h3><p>your website may fail.</p> ";
+  $advice .= "<h3>Plugins</h3><p>your website may fail.</p> ";
+  $advice .= "<h3>Web Server</h3><p>your website may fail.</p> ";
+ return $advice ;
+
+}

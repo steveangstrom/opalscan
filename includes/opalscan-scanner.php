@@ -1,8 +1,10 @@
 <?php
-/** SCAN AND SCORE THE ATTRIBUTES - THEN STORE IN A RAW LOG  **/
-if(is_admin()) { // make sure, the following code runs only in the back end
-include_once('opalscan-render.php' ); /* get the admin display methods */
+/** SCAN AND SCORE THE ATTRIBUTES & STORE IN A RAW LOG  **/
 
+if(is_admin()) {
+
+  include_once('opalscan-render.php' ); # get the admin display methods
+  include_once('opalscan-advice.php' ); # textualised advice in human form
 
   function opalscan_get_scan(){ // the main scan and data populating function
 

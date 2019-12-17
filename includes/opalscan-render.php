@@ -59,7 +59,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $advice .= "<h3>Plugins</h3><p>your website may fail.</p> ";
     $advice .= "<h3>Web Server</h3><p>your website may fail.</p> ";
     $out.=  $advice ;*/
-
+    $out .= opal_advice();
     $out.= '</div>';// end summary tab
 
 
