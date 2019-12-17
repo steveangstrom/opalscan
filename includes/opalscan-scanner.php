@@ -191,25 +191,25 @@ if(is_admin()) {
 
   function calculate_server_score($scan_results){
 
-    $score = 0;
+  /*  $score = 0;
     $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
 
     $ssl = $scan_results['ssl'];
-    if ($ssl <1){ $score = 10;}
+    if ($ssl <1){ $score = 10;}*/
 
     if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-      return $score + 50;
+      return 50;
     }
     if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-      return $score +  30;
-    }
-    if (version_compare(PHP_VERSION, '7.0.0', '<')) {
-      return $score +  20;
+      return 30;
     }
     if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-      return $score +  10;
+      return 20;
     }
-    return $score +  0;
+    if (version_compare(PHP_VERSION, '7.3.0', '<')) {
+      return  10;
+    }
+    return 0;
   }
 
 }

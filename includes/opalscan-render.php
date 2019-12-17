@@ -71,16 +71,44 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     if ($decoded_scan['scores']['wp']>0){$wpstatus = 'Attention';}
     if ($decoded_scan['scores']['wp']>10){$wpstatus = 'Urgent';}
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td>'.$wpstatus.'</td></tr>');
-    $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td> Status</td></tr>');
-    $out.=('<tr><td>Plug-ins Installed</td><td>'.$decoded_scan['plugin_amount'].'</td><td>Status</td></tr>');
-    $out.=('<tr><td>Plug-ins Inactive</td><td>'.($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']).'</td><td>Status</td></tr>');
 
-    $out.=('<tr><td>Plug-ins Outdated</td><td>'.$decoded_scan['plugin_outdated'].'</td><td>Status</td></tr>');
-    $out.=('<tr><td>Plug-ins Abandoned</td><td>'.$decoded_scan['plugin_noupdates'].'</td><td>Status</td></tr>');
-    $out.=('<tr><td>Web Server</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>Status</td></tr>');
-    $out.=('<tr><td>SQL Server</td><td>SQL Version '.$decoded_scan['sql_version'].'</td><td>Status</td></tr>');
+    if (strlen($decoded_scan['wp_plugin_security'])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
+    $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
+
+    $pstatus = 'OK';
+    if ($decoded_scan['plugin_amount']>10){$pstatus = 'Attention';}
+    if ($decoded_scan['plugin_amount']>15){$pstatus = 'Urgent';}
+    $out.=('<tr><td>Plug-ins Installed</td><td>'.$decoded_scan['plugin_amount'].'</td><td>'.$pstatus.'</td></tr>');
+
+    $pinstatus = 'OK';
+    if ($decoded_scan['plugin_active_amount']>3){$pinstatus = 'Attention';}
+    if ($decoded_scan['plugin_active_amount']>6){$pinstatus = 'Urgent';}
+    $out.=('<tr><td>Plug-ins Inactive</td><td>'.($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']).'</td><td>'.$pinstatus.'</td></tr>');
+
+    $pupinstatus = 'OK';
+    if ($decoded_scan['plugin_outdated']>3){$pupinstatus = 'Attention';}
+    if ($decoded_scan['plugin_outdated']>6){$pupinstatus = 'Urgent';}
+    $out.=('<tr><td>Plug-ins Outdated</td><td>'.$decoded_scan['plugin_outdated'].'</td><td>'.$pupinstatus.'</td></tr>');
+
+    $pabinstatus = 'OK';
+    if ($decoded_scan['plugin_noupdates']>3){$pabinstatus = 'Attention';}
+    if ($decoded_scan['plugin_noupdates']>6){$pabinstatus = 'Urgent';}
+    $out.=('<tr><td>Plug-ins Abandoned</td><td>'.$decoded_scan['plugin_noupdates'].'</td><td>'.$pabinstatus.'</td></tr>');
+
+    $phpstatus = 'OK';
+    if ($decoded_scan['scores']['server']>10){$phpstatus = 'Attention';}
+    if ($decoded_scan['scores']['server']>20){$phpstatus = 'Urgent';}
+    $out.=('<tr><td>Web Server</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>'.$phpstatus.'</td></tr>');
+
+    $sqlstatus = 'OK';
+    //if ($decoded_scan['sql_version']==0){$phpstatus = 'Attention';}
+    $out.=('<tr><td>SQL Server</td><td>SQL Version '.$decoded_scan['sql_version'].'</td><td>'.$sqlstatus.'</td></tr>');
+
+
     $ssl = ($decoded_scan['ssl'] == 1) ? 'True' : 'False';
-    $out.=('<tr><td>SSL Security</td><td>'.$ssl.'</td><td>Status</td></tr>');
+    $sslstatus = ($decoded_scan['ssl'] == 1) ? 'OK' : 'Attention';
+    $out.=('<tr><td>SSL Security</td><td>'.$ssl.'</td><td>'.$sslstatus.'</td></tr>');
+    
     $out.=('</table>');
 
 
