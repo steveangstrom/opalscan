@@ -32,11 +32,12 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     # Display Score
     $out.= '<div class="opalscanner_results">
     <div class="opal_tab_bar">
-      <div class="opal_tab active">Summary</div><div class="opal_tab">Report</div>
+      <div class="opal_tab active" data-tab="opalsummary">Summary</div>
+      <div class="opal_tab" data-tab="opalreport">Report</div>
     </div>';
 
 
-    $out.='<div class = "opal_pane">';
+    $out.='<div id = "opalsummary" class= "opal_pane active">';
     $out.='<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
 
         if($livescan===false){
@@ -50,20 +51,13 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $score_rating=$scorewords[round($score/10)-1];
     $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);
 
-  //  $out .= opal_advice();
-
   /* --- describe plugin state verbally -----*/
-/*  $advice = '';
-    $advice .= "<h2>Security Advice</h2><p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as $score_rating and this means you are vulnerable to attacks, or your website may fail.</p> ";
-    $advice .= "<h3>Wordpress Needs Attention</h3><p>your website may fail.</p> ";
-    $advice .= "<h3>Plugins</h3><p>your website may fail.</p> ";
-    $advice .= "<h3>Web Server</h3><p>your website may fail.</p> ";
-    $out.=  $advice ;*/
     $out .= opal_advice();
-    $out.= '</div>';// end summary tab
+    $out.= '</div>';// end summary tab content
 
 
   /* -----RENDER THE SCORE RESULT TABLES ---*/
+    $out.='<div id = "opalreport" class = "opal_pane">';
     $out.=('<h2>Wordpress and Server</h2>');
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
@@ -108,7 +102,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $ssl = ($decoded_scan['ssl'] == 1) ? 'True' : 'False';
     $sslstatus = ($decoded_scan['ssl'] == 1) ? 'OK' : 'Attention';
     $out.=('<tr><td>SSL Security</td><td>'.$ssl.'</td><td>'.$sslstatus.'</td></tr>');
-    
+
     $out.=('</table>');
 
 
@@ -124,6 +118,9 @@ if(is_admin()) { // make sure, the following code runs only in the back end
         $out.= '<td>'.$value['plugin_noupdates'].'</td></tr>';
     }
       $out.=('</table>');
+
+      $out.='</div>'; //  END OF report pane
+
       $out.=('<pre>');
     //print_r($raw_scan);
       $out.=(  print_r($decoded_scan, true));

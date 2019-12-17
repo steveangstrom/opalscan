@@ -19,8 +19,14 @@
 
 /* ----- Tabs and panes  ----- */
 
-.opal_pane{padding:20px;background:#fff;
-  border:2px solid #0071a1;  }
+.opal_pane{
+  padding:20px;background:#fff;
+  border:2px solid #0071a1;
+  display: none;
+ }
+.opal_pane.active{
+	display: inherit;
+}
 
 .opal_tab_bar{
   width:100%;

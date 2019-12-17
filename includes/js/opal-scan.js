@@ -1,6 +1,20 @@
 jQuery(document).ready(function($) {
-
 var path = thescanobj.pluginpath+'includes/media/';
+
+/****** TABS ************/
+
+$('.opal_tab').click(function(){
+  var tab_id = $(this).attr('data-tab');
+
+  $('.opal_tab').removeClass('active');
+  $('.opal_pane').removeClass('active');
+
+  $(this).addClass('active');
+  $("#"+tab_id).addClass('active');
+})
+
+/****************/
+
 $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'notify.mp3" type="audio/mpeg"><source src="'+path+'notify.wav" type="audio/wav"></audio>').appendTo('body');
 //console.log('dis be path = '+thescanobj.pluginpath);
 
