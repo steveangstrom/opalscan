@@ -8,22 +8,9 @@
  */
 include_once('includes/opalscan-dashboard-widget.php' );
 include_once('includes/opalscan-scanner.php' );
- /*
-GET active plugins.
-http://phasionistasa.co.za/kiwix/wordpress.stackexchange.com_en_all_2019-02/A/question/298251.html
 
-
-include_once('includes/phua_add_wp_signon.php' );
-include_once('includes/phua_add_user_register.php' );
-include_once('includes/phua_add_org_expired.php' );
-include_once('includes/phua_add_user_download_resource.php' );
-include_once('includes/phua_add_wp_head.php' );
-*/
 /*************************************************/
 function opalscan_enqueue_scripts( ) {
-	//wp_enqueue_script('jquery-ui-datepicker');
-//	wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
-	//wp_enqueue_script( 'datepicker_script', plugin_dir_url( __FILE__ ) . 'includes/datepicker.js' );
 
 	wp_enqueue_script( 'opalscan_ajax_display', plugin_dir_url( __FILE__ ) . 'includes/js/opal-scan.js', array( 'jquery' ),false,true );
 	wp_localize_script( 'opalscan_ajax_display', 'thescanobj',
@@ -56,70 +43,6 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 				$call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
 			  return $call_api;
     }
-
-    // dashboard widget's callback
-    function displayVulnScan() {
-        $allPlugins = get_plugins(); // associative array of all installed plugins
-        $activePlugins = get_option('active_plugins'); // simple array of active plugins
-
-				$today= new DateTime();
-				$datetime2 = new DateTime('2009-10-13');
-
-$thead = <<<THEAD
-	<table width="100%">
-	<thead>
-	<tr>
-	<th width="20%" style="text-align:left">Plugin</th>
-	<th width="20%" style="text-align:left">Installed Version</th>
-	<th width="20%" style="text-align:left">Available</th>
-	<th width="20%" style="text-align:left">WARN</th>
-	<th width="20%" style="text-align:left">Outdated</th>
-	</tr>
-	</thead>
-	<tbody>
-THEAD;
-echo $thead;
-
-        // traversing $allPlugins array
-        foreach($allPlugins as $key => $value) {
-          //  if(in_array($key, $activePlugins)) { // display active only
-                echo '<tr>';
-                echo "<td>{$value['Name']}</td>";
-                echo "<td>{$value['Version']}</td>";
-                $slug = explode('/',$key)[0]; // get active plugin's slug
-
-                // get newest version of active plugin from repository
-                $call_api = getPluginVersionFromRepository($slug);
-								$repoversion = $call_api->version;
-								$last_updated = $call_api->last_updated;
-
-								$last_updated_date = new DateTime($last_updated );
-                echo "<td>{$repoversion}</td>";
-
-								if($repoversion>$value['Version']){
-									$issueflag = 'ISSUE';
-									$vuln_score_plugin_outdated +=1;
-								}else{$issueflag ='';}
-
-								 echo "<td>$issueflag</td>";
-								 $interval = $today->diff($last_updated_date);
-								 $intervalstring= $interval->format('%R%a');
-								 $intervalINT=intval($intervalstring);
-
-								 if ($intervalINT <= -365){
-									 $datewarn="WARN";
-									 $vuln_score_plugin_noupdates +=1;
-								 }else{$datewarn="";}
-
-								 echo '<td>'.$intervalstring.' '.$datewarn.'</td>';
-                echo '</tr>';
-          //  }
-        }
-        echo '</tbody>';
-        echo '</table>';
-				echo '<h3>Plugin Vulnerability Score = '.$vuln_score_plugin_outdated .'</h3>';
-    }
-
 
 
 		add_action('admin_menu', 'register_opalscan_menu');
