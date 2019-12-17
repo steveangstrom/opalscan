@@ -4,11 +4,13 @@
 
 .wp-core-ui .button.bigbutton{
   font-size: 18px;padding: 5px 30px;border-width: 2px;border-radius: 5px;transition: all 0.3s;
+  text-transform: uppercase;
 }
 .wp-core-ui .button.bigbutton.opalscannow{background:white;color:rgb(0, 113, 161);}
 .wp-core-ui .button.bigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
-.wp-core-ui .button.bigbutton.opalsend{margin-left:20px;}
+.wp-core-ui .button.bigbutton.opalsend{margin-left:20px;float:right;background: aliceblue;}
+.wp-core-ui .button.bigbutton.opalsend:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
 .opalscan_results_table{
   width:100%; margin-top: 20px;
@@ -20,7 +22,8 @@
 /* ----- Tabs and panes  ----- */
 
 .opal_pane{
-  padding:20px;background:#fff;
+  padding: 40px;
+  background:#fff;
   border:2px solid #0071a1;
   display: none;
  }

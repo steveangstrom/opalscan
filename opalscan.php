@@ -45,11 +45,11 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		function phua_admin_page_output(){
 			echo '<div class="wrap opalsitescannerpage"><h1>Opal Site Scanner</h1>';
 			?>
-<p>Site Scanner will check the status of your site, plugins, and platform to produce a report which you can analyse to help you keep your site safe, speedy and secure.<br>Our customers use this plugin to send us the details reports so we can advise and repair problems.
+<p>Site Scanner will check the status of your site, plugins, and platform to produce a report which you can analyse to help you keep your site safe, speedy and secure. Our customers use this plugin to send reports so that we can advise and repair problems.
 </p>
 			<?php
 			$scanurl=add_query_arg( 'scannow', 'true');
-			echo('<hr>');	echo '<p><a class="button bigbutton opalscannow">SCAN YOUR SITE</a><a class="button bigbutton opalsend">SEND IT</a></p><hr>';
+			echo('<hr>');	echo '<p><a class="button bigbutton opalscannow">Scan your site</a><a class="button bigbutton opalsend">Send Report To Opal Support</a></p><hr>';
 			echo('<div id="opalscanbarholder"></div>');
 			echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.
 			echo opalscan_show_scan(); // show the previous scan on load.
