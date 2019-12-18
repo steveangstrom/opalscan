@@ -28,6 +28,9 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     # TOTAL UP THE SCORE AND DESCRIBE IT -----------------------
     $score -= ($wp_score + $plugin_score +  $server_score);
     $score = round($score);
+    # Display Score
+    $out.= '<div class="opal_status">status goes here </div>';
+
 
     # Display Score
     $out.= '<div class="opalscanner_results">
@@ -139,28 +142,40 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 
   function opalscan_show_scan(){ // show previous scan. including summary
-    echo('<h2>Scan Results</h2>');
+  //  echo('<h2>Scan Results</h2>');
     $raw_scan = file_get_contents(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt");
     opalscan_render_html($raw_scan);// render the array as HTML table.
   }
 
 
+/*
+  NOTE ;
+  to make the AJAX for the scan be more interactive, every loop of the ELSE scan of the repo, call this and
+  increment a status bar, possibly even pass something about what is being scanned..
+
+*/
+
   function opalscan_ajax_request() {
       // The $_REQUEST contains all the data sent via ajax
-      if ( isset($_REQUEST) ) {
+      if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
-
-            $scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
-
+          $scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
           // Let's take the data that was sent and do something with it
           if ( $scan== 'startscan' ) {
               $scan = '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"];
-          }else{$scan ='what up';}
+              echo $scan; // json encode this instead so it can be parsed on the JS side as the scan
+          }
+      if ( isset($_REQUEST['status']) ) {
+        // do the scanner update with the status
+        $status = 'we at 120 percent done with the scan!';
+          echo $status;// json encode this instead so it can be parsed on the JS side as the status.
+      }
+
           // Now we'll return it to the javascript function
           // Anything outputted will be returned in the response
-          echo $scan;
+
           // If you're debugging, it might be useful to see what was sent in the $_REQUEST
-          // print_r($_REQUEST);
+           //print_r($_REQUEST);
       }
      die();
   }

@@ -18,7 +18,14 @@
 .opalscan_results_table td, .opalscan_results_table th{text-align:left; padding: 8px 15px;}
 .opalscan_results_table th{background: #dadada;}
 
-
+.opalsitescannerpage .opal_status{
+  display: block;
+  padding:20px;
+  background: #4a514a;
+  color:#dadFda;
+  font-size: 16px;
+  margin:20px 0;
+}
 /* ----- Tabs and panes  ----- */
 
 .opal_pane{
@@ -85,7 +92,10 @@
 
 /* ----- score ----- */
 
-.opalscore_wrap{position: relative;width:50%;}
+.opalscore_wrap{
+  position: relative;width:50%;
+  max-width: 400px;
+}
 .opalscore_wrap .deco{
   width:10%;height:20px;
   background:#fafafa;
