@@ -39,12 +39,17 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
             'status' : status
         },
         success:function(data) {
-            // This outputs the result of the ajax request
+
             var structureddata = jQuery.parseJSON(data);
+
+            if (structureddata.scansuccess ==true){
               $('#opalalertaudio')[0].play();
-            console.log(data);
-            $('#opalscanbarholder').removeClass("lds-hourglass");
-            $( "#opalscan_displayarea" ).html(structureddata.html);
+              console.log(data);
+              $('#opalscanbarholder').removeClass("lds-hourglass");
+              $( "#opalscan_displayarea" ).html(structureddata.html);
+            }
+
+
 
         },
         error: function(errorThrown){

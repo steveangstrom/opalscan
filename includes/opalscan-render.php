@@ -161,10 +161,10 @@ if(is_admin()) { // make sure, the following code runs only in the back end
           $scan= $_REQUEST['scan'];
 
           $scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
-          // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates  
+          // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
           if ( $scan== 'startscan' ) {
               $out['html']=  '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"]; // basic out html test
-              $out['success']= true;
+              $out['scansuccess']= true;
               echo json_encode($out);
           }
 
