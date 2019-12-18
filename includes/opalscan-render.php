@@ -155,11 +155,13 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 */
 
-  function opalscan_ajax_request($status='') {
+  function opalscan_ajax_request() {
       // The $_REQUEST contains all the data sent via ajax
+
+
       if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
-
+          
           $scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
           // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
           if ( $scan== 'startscan' ) {
@@ -167,7 +169,6 @@ if(is_admin()) { // make sure, the following code runs only in the back end
               $out['scansuccess']= true;
               echo json_encode($out);
           }
-
 
           // Now we'll return it to the javascript function
           // Anything outputted will be returned in the response

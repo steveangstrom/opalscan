@@ -61,6 +61,9 @@ if(is_admin()) {
       $scan_results['plugin_amount']+=1;
       // scan each plugin for status.
       $slug = explode('/',$key)[0]; // get active plugin's slug
+
+    //  opalscan_ajax_statusupdater($status='scanning '.$slug);
+
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
       $repoversion = $call_api->version;
 
