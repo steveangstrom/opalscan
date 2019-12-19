@@ -129,7 +129,7 @@ if(is_admin()) {
     $scan_results['scores']['server'] = calculate_server_score($scan_results);
 
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
-    unlink(plugin_dir_path( __DIR__ ) . 'reports/scanstatus.txt'); // empty the scan status file. 
+    unlink(plugin_dir_path( __DIR__ ) . 'reports/scanstatus.txt'); // empty the scan status file.
 		return $scan_results;
 	}  //  ----------end opalscan_get_scan() ---------------------
 
@@ -140,9 +140,13 @@ if(is_admin()) {
     return $call_api;
   }
 
-  function opal_update_status($status,$progress, $total){ // writes the current scan status to a file.
-    $status = $status .' '.$progress. ' of '.$total;
-    file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $status);
+  function opal_update_status($slug,$progress, $total){ // writes the current scan status to a file.
+  //  $status = $status .' '.$progress. ' of '.$total;
+  $status_array['slug']= $slug;
+  $status_array['progress']= $progress;
+  $status_array['total']= $total;
+    $JSON_status = json_encode($status_array);
+    file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $JSON_status);
   }
 
   function opal_save_to_log($scan_results){
