@@ -31,9 +31,10 @@
 
 .opalsitescannerpage .opal_status .statusbar{
   position:absolute;
-  width:40%;
+  width:1%;
   height:100%;
   background: #567c8b;
+  transition: width 0.2s;
 }
 
 .opalsitescannerpage .opal_status .statusmessage {
