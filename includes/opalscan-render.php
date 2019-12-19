@@ -129,20 +129,24 @@ if(is_admin()) { // make sure, the following code runs only in the back end
         $out.= '<td>'.$updstatus.'</td></tr>';
     }
       $out.=('</table>');
-
       $out.='</div>'; //  END OF report pane
 
-      $out.=('<pre>');
-    //print_r($raw_scan);
-      $out.=(  print_r($decoded_scan, true));
-      $out.=('</pre>');
 
-      echo $out;
+
+      # if this is a display of an old log then print it, otherwise we are in an AJAX situation, so return it.
+      if ($livescan==false){
+        $out.=('<pre>');
+        $out.=( print_r($decoded_scan, true));
+        $out.=('</pre>');
+        echo $out;
+      }else{
+        return $out;
+      }
+
   }
 
 
-  function opalscan_show_scan(){ // show previous scan. including summary
-  //  echo('<h2>Scan Results</h2>');
+  function opalscan_show_scan(){ // show previous scan, from the log  including summary
     $raw_scan = file_get_contents(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt");
     opalscan_render_html($raw_scan);// render the array as HTML table.
   }
@@ -163,9 +167,12 @@ if(is_admin()) { // make sure, the following code runs only in the back end
           $scan= $_REQUEST['scan'];
 
           $scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
+          $rendered_scan = opalscan_render_html($scan_results, true);
+
           // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
           if ( $scan== 'startscan' ) {
-              $out['html']=  '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"]; // basic out html test
+            //  $out['html']=  '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"]; // basic out html test
+              $out['html']= $rendered_scan;
               $out['scansuccess']= true;
               echo json_encode($out);
           }
