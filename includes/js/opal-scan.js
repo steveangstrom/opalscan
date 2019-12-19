@@ -3,9 +3,8 @@ var path = thescanobj.pluginpath+'includes/media/';
 
 /****** TABS ************/
 
-$('.opal_tab').click(function(){
+$(document).on('click','.opal_tab', function(e) {
   var tab_id = $(this).attr('data-tab');
-
   $('.opal_tab').removeClass('active');
   $('.opal_pane').removeClass('active');
 
@@ -40,20 +39,17 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
         },
         success:function(data) {
           $('#opalalertaudio')[0].play();
-          console.log(data);
+        //  console.log(data);
           $('#opalscanbarholder').removeClass("lds-hourglass");
           $( "#opalscan_displayarea" ).html(data);
           /*
             var structureddata = jQuery.parseJSON(data);
-
             if (structureddata.scansuccess ==true){
               $('#opalalertaudio')[0].play();
               console.log(data);
               $('#opalscanbarholder').removeClass("lds-hourglass");
               $( "#opalscan_displayarea" ).html(structureddata.html);
             }*/
-
-
         },
         error: function(errorThrown){
             console.log(errorThrown);
