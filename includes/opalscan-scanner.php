@@ -9,6 +9,7 @@ if(is_admin()) {
   function opalscan_get_scan(){ // the main scan and data populating function
   //  global $allPlugins;
 
+
 		if (!function_exists('plugins_api')) {
 			require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 		}
@@ -58,7 +59,7 @@ if(is_admin()) {
 
     $allPlugins =  get_plugins();// associative array of all installed plugins
     $how_many_plugins = count($allPlugins);
-    $p=1;
+    $progress=1;
 
     // populate the plugin updatedness status array.
     foreach($allPlugins as $key => $value) {
@@ -67,10 +68,9 @@ if(is_admin()) {
       $slug = explode('/',$key)[0]; // get active plugin's slug
 
       // write the status to a file.
-      $scan_percent= ' | Completed '.$p.' of '.$how_many_plugins;
-      opal_update_status($slug, $scan_percent);
-    //  opal_statusbar($status='test');//////////////
-      $p++;
+    //  $scan_percent= ' | Completed '.$p.' of '.$how_many_plugins;
+      opal_update_status($slug, $progress, $how_many_plugins);
+      $progress++;
 
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
       $repoversion = $call_api->version;
@@ -129,7 +129,7 @@ if(is_admin()) {
     $scan_results['scores']['server'] = calculate_server_score($scan_results);
 
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
-
+    unlink(plugin_dir_path( __DIR__ ) . 'reports/scanstatus.txt'); // empty the scan status file. 
 		return $scan_results;
 	}  //  ----------end opalscan_get_scan() ---------------------
 
@@ -140,8 +140,8 @@ if(is_admin()) {
     return $call_api;
   }
 
-  function opal_update_status($status,$percent){ // writes the current scan status to a file.
-    $status = $status .' '.$percent;
+  function opal_update_status($status,$progress, $total){ // writes the current scan status to a file.
+    $status = $status .' '.$progress. ' of '.$total;
     file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $status);
   }
 
@@ -150,6 +150,7 @@ if(is_admin()) {
     $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
+
   }
 
 /* ----- currently unused  ----- */

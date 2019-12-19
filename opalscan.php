@@ -38,7 +38,6 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		add_action('admin_menu', 'register_opalscan_menu');
 		function register_opalscan_menu() {
 			add_menu_page( 'Opal Site Scan', 'Opal Site Scan', 'manage_options', 'opal-site-scan', 'phua_admin_page_output' );
-			#add_action('admin_init', 'save_log_page_items', 10); // if you need to save something weird this might be useful.
 		}
 
 		function phua_admin_page_output(){

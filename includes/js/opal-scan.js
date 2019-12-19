@@ -19,7 +19,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 
   $('.opalscannow').click(function() {
     $('#opalscanbarholder').addClass("lds-hourglass");
-    $("#opalscanbarholder").after('<div class="opal_status">status goes here </div>');///  ADD THIS status display zone.
+    $("#opalscanbarholder").after('<div class="opal_status">Waiting for status ...</div>');///  ADD THIS status display zone.
     $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); });
     doScan();
   });
@@ -32,7 +32,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
   function doScan(){
     //  console.log('dis be path = '+thescanobj.pluginpath);
 
-    window.setInterval(function(){  check_status();}, 250);
+    window.setInterval(function(){  check_status();}, 250); // got check to see whats happening on the server.
 
       $.ajax({
         url: ajaxurl,
@@ -65,7 +65,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 
 function check_status(){
   $.get( "https://testingzone.local/wp-content/plugins/opalscanner/reports/scanstatus.txt", function( data ) {
-    //console.log(data);
+    //console.log(pluginpath);
   $('.opal_status ').html(data);
   });
 }
