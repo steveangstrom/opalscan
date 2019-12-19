@@ -19,7 +19,8 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 
   $('.opalscannow').click(function() {
     $('#opalscanbarholder').addClass("lds-hourglass");
-    $( "#opalscanner_results" ).remove();
+    $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); })
+  //  $( "#opalscanner_results" ).remove();
     doScan();
   });
 
