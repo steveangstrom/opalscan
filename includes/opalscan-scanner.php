@@ -65,6 +65,10 @@ if(is_admin()) {
       $slug = explode('/',$key)[0]; // get active plugin's slug
 
     //  opalscan_statusupdater('test');
+    //opal_statusbar('test');
+    opal_update_status($slug);
+    // write the status to a file.
+
 
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
       $repoversion = $call_api->version;
@@ -132,6 +136,10 @@ if(is_admin()) {
   function getPluginVersionFromRepo($slug) {
     $call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'tested' => true,) );
     return $call_api;
+  }
+
+  function opal_update_status($status){ // writes the current scan status to a file.
+    file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $status);
   }
 
   function opal_save_to_log($scan_results){

@@ -32,7 +32,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
   function doScan(){
     //  console.log('dis be path = '+thescanobj.pluginpath);
       $.ajax({
-        url: ajaxurl, // or example_ajax_obj.ajaxurl if using on frontend
+        url: ajaxurl,
         data: {
             'action': 'opalscan_ajax_request',
             'scan' : scan,
@@ -45,7 +45,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
         $('#opalscanbarholder').removeClass("lds-hourglass");
         $( "#opalscan_displayarea" ).html(data);
           /*
-          // removed for JSON reasons. 
+          // removed for JSON reasons.
             var structureddata = jQuery.parseJSON(data);
             if (structureddata.scansuccess ==true){
               $( "#opalscan_displayarea" ).html(structureddata.html);
@@ -56,5 +56,26 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
         }
     });
   } /* END DO SCAN */
+
+
+
+/**************************/
+function watchstatus(){
+    console.log('status watching start');
+  $.ajax({
+    url: ajaxurl,
+    data: {
+        'action': 'opalstatus'
+    },
+    success:function(data) {
+      //alert ('status is go ');
+      console.log(data);
+    },
+    error: function(errorThrown){
+        console.log(errorThrown);
+    }
+  });
+} /* END DO status */
+
 
 });

@@ -190,6 +190,10 @@ if(is_admin()) { // make sure, the following code runs only in the back end
   }
   add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
 
+function opal_statusbar($status='test'){
+  echo $status;
+}
+//add_action( 'wp_ajax_opal_statusbar', 'opalstatus' );
 
 /********** this is the function that uipdates the status display *********/
 /*  function opalscan_statusupdater($status='') {
