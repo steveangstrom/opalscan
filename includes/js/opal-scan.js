@@ -32,7 +32,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
   function doScan(){
     //  console.log('dis be path = '+thescanobj.pluginpath);
 
-    window.setInterval(function(){  check_status();}, 250); // got check to see whats happening on the server.
+    var statustimer = window.setInterval(function(){  check_status();}, 250); // got check to see whats happening on the server.
 
       $.ajax({
         url: ajaxurl,
@@ -42,6 +42,8 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
           //  'allPlugins' : allPlugins
         },
         success:function(data) {
+         clearTimeout(statustimer); // stop looking for status. 
+
           $('#opalalertaudio')[0].play();
         //  console.log(data);
         $('.opal_status ').remove();
