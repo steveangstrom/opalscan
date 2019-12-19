@@ -64,9 +64,9 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
   } /* END DO SCAN */
 
 function check_status(){
-  console.log('update of status');
   $.get( "https://testingzone.local/wp-content/plugins/opalscanner/reports/scanstatus.txt", function( data ) {
-    console.log(data);
+    //console.log(data);
+  $('.opal_status ').html(data);
   });
 }
 
