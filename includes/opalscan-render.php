@@ -161,7 +161,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
       if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
-          
+
           $scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
           // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
           if ( $scan== 'startscan' ) {
@@ -180,4 +180,23 @@ if(is_admin()) { // make sure, the following code runs only in the back end
   }
   add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
 
+
+/********** this is the function that uipdates the status display *********/
+/*  function opalscan_statusupdater($status='') {
+      $out ='this is a test from the place beyond';
+      echo $out;
+      die();
+  }
+  add_action( 'wp_ajax_scanstatusupdate', 'opalscan_statusupdater' );
+*/
+
+
+
+/**
+
+https://stackoverflow.com/questions/14918462/get-response-from-php-file-using-ajax
+
+https://wisdmlabs.com/blog/create-real-time-progress-bar-using-jquery-ui-ajax/
+
+****/
 }

@@ -25,8 +25,6 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 
     // We'll pass this variable to the PHP function
     var scan = 'startscan';
-
-
 /**************** AJAX FUNCTION ******************************************************************/
 
   function doScan(){
@@ -36,7 +34,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
         data: {
             'action': 'opalscan_ajax_request',
             'scan' : scan,
-            'status' : status
+          //  'allPlugins' : allPlugins
         },
         success:function(data) {
 
@@ -48,14 +46,11 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
               $('#opalscanbarholder').removeClass("lds-hourglass");
               $( "#opalscan_displayarea" ).html(structureddata.html);
             }
-
-
-
         },
         error: function(errorThrown){
             console.log(errorThrown);
         }
     });
-  } /* END AJAX */
+  } /* END DO SCAN */
 
 });

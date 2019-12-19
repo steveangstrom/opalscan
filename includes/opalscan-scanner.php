@@ -7,6 +7,7 @@ if(is_admin()) {
   include_once('opalscan-advice.php' ); # textualised advice in human form
 
   function opalscan_get_scan(){ // the main scan and data populating function
+  //  global $allPlugins;
 
 		if (!function_exists('plugins_api')) {
 			require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
@@ -54,6 +55,7 @@ if(is_admin()) {
 		$SQLversion = mysqli_get_server_info($connection);
 
 		/***********/
+
     $allPlugins =  get_plugins();// associative array of all installed plugins
 
     // populate the plugin updatedness status array.
@@ -62,7 +64,7 @@ if(is_admin()) {
       // scan each plugin for status.
       $slug = explode('/',$key)[0]; // get active plugin's slug
 
-    //  opalscan_ajax_statusupdater($status='scanning '.$slug);
+    //  opalscan_statusupdater('test');
 
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
       $repoversion = $call_api->version;
