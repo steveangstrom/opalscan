@@ -20,11 +20,27 @@
 
 .opalsitescannerpage .opal_status{
   display: block;
-  padding:20px;
+  /*padding:20px;*/
   background: #4a514a;
   color:#dadFda;
   font-size: 16px;
   margin:20px 0;
+  position: relative;
+  height:60px;width:100%;
+}
+
+.opalsitescannerpage .opal_status .statusbar{
+  position:absolute;
+  width:40%;
+  height:100%;
+  background: #567c8b;
+}
+
+.opalsitescannerpage .opal_status .statusmessage {
+padding:20px;
+position: absolute;
+top:0;
+left:0;
 }
 /* ----- Tabs and panes  ----- */
 

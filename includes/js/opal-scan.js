@@ -19,7 +19,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 
   $('.opalscannow').click(function() {
     $('#opalscanbarholder').addClass("lds-hourglass");
-    $("#opalscanbarholder").after('<div class="opal_status">Waiting for status ...</div>');///  ADD THIS status display zone.
+    $("#opalscanbarholder").after('<div class="opal_status"><div class="statusbar"></div><div class="statusmessage">Waiting for status ...</div></div>');///  ADD THIS status display zone.
     $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); });
     doScan();
   });
@@ -66,7 +66,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 function check_status(){
   $.get( "https://testingzone.local/wp-content/plugins/opalscanner/reports/scanstatus.txt", function( data ) {
     //console.log(pluginpath);
-  $('.opal_status ').html(data);
+  $('.opal_status .statusmessage').html(data);
   });
 }
 
