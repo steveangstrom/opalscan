@@ -3,14 +3,14 @@
 if(is_admin()) { // make sure, the following code runs only in the back end
 
   /****** RENDER THE DATA AS HTML ********/
-  function opalscan_render_html($raw_scan, $livescan=false){
+  function opalscan_render_html($JSON_scan, $livescan=false){
   	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
 
     $out='';
     $score =100;
     $scorewords=['Extremely bad','Extremely bad', 'Very bad','Bad','Adequate','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
 
-    $decoded_scan = json_decode($raw_scan,true);
+    $decoded_scan = json_decode($JSON_scan,true);
 
     $log_date = strtotime($decoded_scan['scanDate']['date']);
 
@@ -33,7 +33,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 
     # Display Score
-    $out.= '<div class="opalscanner_results">
+    $out.= '<div id = "opalscanner_results" class="opalscanner_results">
     <div class="opal_tab_bar">
       <div class="opal_tab active" data-tab="opalsummary">Summary</div>
       <div class="opal_tab" data-tab="opalreport">Report</div>
@@ -147,8 +147,8 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 
   function opalscan_show_scan(){ // show previous scan, from the log  including summary
-    $raw_scan = file_get_contents(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt");
-    opalscan_render_html($raw_scan);// render the array as HTML table.
+    $JSON_scan = file_get_contents(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt");
+    opalscan_render_html($JSON_scan);// render the array as HTML table.
   }
 
 
@@ -166,15 +166,18 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
 
-          $scan_results = opalscan_get_scan(); // go get the scan results for a basic check.
-          $rendered_scan = opalscan_render_html($scan_results, true);
+          $JSON_results = opalscan_get_scan(); // go get the scan results for a basic check.
+          $decoded_scan = json_encode($JSON_results);
+          $rendered_scan = opalscan_render_html($decoded_scan, true);
 
           // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
           if ( $scan== 'startscan' ) {
             //  $out['html']=  '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"]; // basic out html test
-              $out['html']= $rendered_scan;
-              $out['scansuccess']= true;
-              echo json_encode($out);
+            /*  $out['html']= $rendered_scan;
+              $out['scansuccess']= true;*/
+              echo ($rendered_scan);
+
+              #echo $out;
           }
 
           // Now we'll return it to the javascript function

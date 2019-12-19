@@ -47,11 +47,11 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 <p>Site Scanner will check the status of your site, plugins, and platform to produce a report which you can analyse to help you keep your site safe, speedy and secure. Our customers use this plugin to send reports so that we can advise and repair problems.
 </p>
 			<?php
-			$scanurl=add_query_arg( 'scannow', 'true');
+			//$scanurl=add_query_arg( 'scannow', 'true');
 			echo('<hr>');	echo '<p><a class="button bigbutton opalscannow">Scan your site</a><a class="button bigbutton opalsend">Send Report To Opal Support</a></p><hr>';
 			echo('<div id="opalscanbarholder"></div>');
 			echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.
-			echo opalscan_show_scan(); // show the previous scan on load.
+			 opalscan_show_scan(); // show the previous scan on load.
 			echo('<hr>');
 			echo('</div>');// close the main edit page pane
 		}
