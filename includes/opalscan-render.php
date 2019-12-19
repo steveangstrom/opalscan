@@ -172,12 +172,14 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
           // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
           if ( $scan== 'startscan' ) {
-            //  $out['html']=  '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"]; // basic out html test
-            /*  $out['html']= $rendered_scan;
-              $out['scansuccess']= true;*/
-              echo ($rendered_scan);
+          // echo ($rendered_scan); // raw rendered. // works with raw version, no JSON
+        //  echo $out;
 
-              #echo $out;
+
+        //  $out['html']=  '<h2>scan results</h2> <p>are here yes,</p> <p><b>big</b> list very sexy .. </p>'.$scan_results["php_version"]; // basic out html test
+          $out['html']= $rendered_scan;
+          $out['scansuccess']= true;
+	        echo json_encode($out);
           }
 
           // Now we'll return it to the javascript function

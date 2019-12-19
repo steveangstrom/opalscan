@@ -43,13 +43,15 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
         //  console.log(data);
         $('.opal_status ').remove();
         $('#opalscanbarholder').removeClass("lds-hourglass");
-        $( "#opalscan_displayarea" ).html(data);
-          /*
+
+      //  $( "#opalscan_displayarea" ).html(data); // this works with raw HTML data.
+
           // removed for JSON reasons.
+console.log(data);
             var structureddata = jQuery.parseJSON(data);
             if (structureddata.scansuccess ==true){
               $( "#opalscan_displayarea" ).html(structureddata.html);
-            }*/
+            }
         },
         error: function(errorThrown){
             console.log(errorThrown);
