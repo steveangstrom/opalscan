@@ -31,6 +31,9 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 
   function doScan(){
     //  console.log('dis be path = '+thescanobj.pluginpath);
+
+    window.setInterval(function(){  check_status();}, 250);
+
       $.ajax({
         url: ajaxurl,
         data: {
@@ -47,7 +50,8 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
       //  $( "#opalscan_displayarea" ).html(data); // this works with raw HTML data.
 
           // removed for JSON reasons.
-console.log(data);
+          //console.log(data);
+
             var structureddata = jQuery.parseJSON(data);
             if (structureddata.scansuccess ==true){
               $( "#opalscan_displayarea" ).html(structureddata.html);
@@ -59,7 +63,12 @@ console.log(data);
     });
   } /* END DO SCAN */
 
-
+function check_status(){
+  console.log('update of status');
+  $.get( "https://testingzone.local/wp-content/plugins/opalscanner/reports/scanstatus.txt", function( data ) {
+    console.log(data);
+  });
+}
 
 /**************************/
 function watchstatus(){
