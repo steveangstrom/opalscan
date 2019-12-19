@@ -19,8 +19,8 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 
   $('.opalscannow').click(function() {
     $('#opalscanbarholder').addClass("lds-hourglass");
-    $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); })
-  //  $( "#opalscanner_results" ).remove();
+    $("#opalscanbarholder").after('<div class="opal_status">status goes here </div>');///  ADD THIS status display zone.
+    $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); });
     doScan();
   });
 
@@ -41,14 +41,13 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
         success:function(data) {
           $('#opalalertaudio')[0].play();
         //  console.log(data);
-          $('#opalscanbarholder').removeClass("lds-hourglass");
-          $( "#opalscan_displayarea" ).html(data);
+        $('.opal_status ').remove();
+        $('#opalscanbarholder').removeClass("lds-hourglass");
+        $( "#opalscan_displayarea" ).html(data);
           /*
+          // removed for JSON reasons. 
             var structureddata = jQuery.parseJSON(data);
             if (structureddata.scansuccess ==true){
-              $('#opalalertaudio')[0].play();
-              console.log(data);
-              $('#opalscanbarholder').removeClass("lds-hourglass");
               $( "#opalscan_displayarea" ).html(structureddata.html);
             }*/
         },

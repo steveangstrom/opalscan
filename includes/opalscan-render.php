@@ -29,7 +29,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $score -= ($wp_score + $plugin_score +  $server_score);
     $score = round($score);
     # Display Score
-    $out.= '<div class="opal_status">status goes here </div>';
+  //  $out.= '<div class="opal_status">status goes here </div>';
 
 
     # Display Score
