@@ -192,8 +192,9 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 function opal_statusbar($status='test'){
   echo $status;
+  die();
 }
-//add_action( 'wp_ajax_opal_statusbar', 'opalstatus' );
+add_action( 'wp_ajax_opal_statusbar', 'opalstatus' );
 
 /********** this is the function that uipdates the status display *********/
 /*  function opalscan_statusupdater($status='') {

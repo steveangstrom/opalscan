@@ -57,6 +57,8 @@ if(is_admin()) {
 		/***********/
 
     $allPlugins =  get_plugins();// associative array of all installed plugins
+    $how_many_plugins = count($allPlugins);
+    $p=1;
 
     // populate the plugin updatedness status array.
     foreach($allPlugins as $key => $value) {
@@ -64,11 +66,11 @@ if(is_admin()) {
       // scan each plugin for status.
       $slug = explode('/',$key)[0]; // get active plugin's slug
 
-    //  opalscan_statusupdater('test');
-    //opal_statusbar('test');
-    opal_update_status($slug);
-    // write the status to a file.
-
+      // write the status to a file.
+      $scan_percent= ' | Completed '.$p.' of '.$how_many_plugins;
+      opal_update_status($slug, $scan_percent);
+    //  opal_statusbar($status='test');//////////////
+      $p++;
 
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
       $repoversion = $call_api->version;
@@ -138,7 +140,8 @@ if(is_admin()) {
     return $call_api;
   }
 
-  function opal_update_status($status){ // writes the current scan status to a file.
+  function opal_update_status($status,$percent){ // writes the current scan status to a file.
+    $status = $status .' '.$percent;
     file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $status);
   }
 
