@@ -48,7 +48,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 </p>
 			<?php
 			//$scanurl=add_query_arg( 'scannow', 'true');
-			echo('<hr>');	echo '<p><a class="button bigbutton opalscannow">Scan your site</a><a class="button bigbutton opalsend">Send Report To Opal Support</a></p><hr>';
+			echo('<hr>');	echo '<p><a class="button bigbutton opalscannow">Scan your site</a><a class="button bigbutton opalsend">Send Report</a></p><hr>';
 			echo('<div id="opalscanbarholder"></div>');
 			//echo '<div class="opal_status"><div class="statusbar"></div><div class="statusmessage">Waiting for status ...</div></div>' ; // temporary for styling
 			echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.

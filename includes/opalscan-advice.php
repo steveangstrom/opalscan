@@ -22,14 +22,14 @@ If plugins on the repo have not been updated in >2 years then strongly Advise
 
 
 function opal_summary($score){
-  $score_words=['Extremely bad','Extremely bad', 'Very bad','Bad','Adequate','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
+  $score_words=['Extremely bad','Extremely bad', 'Very bad','Bad','Insecure','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
   $attentionphrases=[
-  'is extremely vulnerable and needs urgent attention in all areas urgently',
-  'is very vulnerable and needs attention in many areas urgently',
-  'is very vulnerable and needs attention in several areas',
-  'has many problems and needs attention in several areas',
-  'has problems and needs attention in several areas',
-  'has problems and needs attention in several areas',
+  'is extremely vulnerable to attack and data loss and needs urgent attention in all areas.',
+  'is very vulnerable to attack and data loss  and needs attention in many areas urgently',
+  'is very vulnerable to attack and data loss and needs attention in several areas',
+  'has many security and core code update problems and needs attention in several areas',
+  'has security and update problems and needs attention in several crucial areas',
+  'has security and update problems and needs attention in several areas',
   'has some problems and needs attention',
   'needs attention to prevent issues',
   'is OK but some areas need attention',
@@ -73,8 +73,10 @@ $what_to_do_words =[
 
   $advice .=  $issues_words[round($score/10)-1];
 
+if ($score <70){
   $advice .='</p><p>If you feel confident you may update all components detailed in the <a class="opal_tabber_link" data-tab="opalreport">Full Report</a> yourself but we caution that updating multiple components synchronously without testing often reveals code incompatibilities which may render your site inoperable. If you decide to proceed yourself please back up your site and data before proceeding.
-  If you would like additional help, or advice, you may wish to <a>send the report to us for analysis</a>.</p>';
+  If you would like additional help, or advice, you may wish to <a>send the report to us for analysis</a>.';
+}
   #  <p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as $score_rating and this means you are vulnerable to attacks, or your website may fail.</p> ";
 
 /*
@@ -82,6 +84,6 @@ $what_to_do_words =[
   $advice .= "<h2>Wordpress</h2><p>your website may fail.</p> ";
   $advice .= "<h2>Plugins</h2><p>your website may fail.</p> ";
   $advice .= "<h2>Web Server</h2><p>your website may fail.</p> ";*/
-  $advice .= '<a class="button bigbutton opalsend">Send Report To Opal Support</a></div>';
+  $advice .= '</p><a class="button bigbutton opalsend">Send Report</a></div>';
  return $advice ;
 }

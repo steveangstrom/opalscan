@@ -15,7 +15,8 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
 
 $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'notify.mp3" type="audio/mpeg"><source src="'+path+'notify.wav" type="audio/wav"></audio>').appendTo('body');
 //console.log('dis be path = '+thescanobj.pluginpath);
-  $(document).on('click','.opalscannow', function(e) {
+
+  $(document).on('click','.opalscannow, .opaldoscan', function(e) {
     $('#opalscanbarholder').addClass("lds-hourglass");
     $("#opalscanbarholder").after('<div class="opal_status"><div class="statusbar"></div><div class="statusmessage">Waiting for status ...</div></div>');///  ADD THIS status display zone.
     $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); });

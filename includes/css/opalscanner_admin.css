@@ -1,7 +1,7 @@
 
 .opalsitescannerpage h1{font-size: 34px;}
 .opalsitescannerpage p{font-size: 16px;}
-
+.opalsitescannerpage .opaldoscan{cursor: pointer;}
 /*   BUTTONS */
 .wp-core-ui .button.bigbutton{
   font-size: 18px;padding: 5px 30px;border-width: 2px;border-radius: 5px;transition: all 0.3s;
@@ -48,9 +48,7 @@ left:0;
 
 /* ----- Tabs and panes  ----- */
 .opal_tabber_link{
-/*a link which triggers a tab, but is outside the tab bar.*/
   cursor: pointer;
-
 }
 .opal_pane{
   padding: 20px 20px 60px 20px;
@@ -156,7 +154,7 @@ left:0;
 
 /***** content styles *****/
 .opalscanner_results h2{font-size: 30px;font-weight: normal; line-height:normal; margin:20px 0 0.3em 0;}
-.opalscanner_results p{ line-height:normal; margin:0 0 0.3em 0;}
+.opalscanner_results p{ line-height:normal; margin:0 0 0.7em 0;}
 .opalscanner_results .opal_dimmed{ color:#7d8fa1;}
 /*****  TABLE STYLES *****/
 .opalscan_results_table{
@@ -198,4 +196,26 @@ left:0;
     100% {
       transform: rotate(1800deg);
     }
+  }
+
+
+  @media screen and (max-width: 630px) {
+
+    .wp-core-ui .button.bigbutton.opalsend{float: none;margin: 0px;}
+    .opal_tab_bar  .opal_tab,
+    .opal_tab_bar .opal_tab.active, {
+      display: block;
+      margin:10px;
+      border-radius: 5px;
+      border-bottom-color: 2px solid #0071a1!important;
+      line-height: normal;
+      padding:10px;
+    }
+    .opal_tab_bar {height:auto; padding:20px 0 0 0; margin: 0px 0 -2px 0;clear:both;
+      min-width: 330px;
+    }
+    .opalscore_wrap {
+        width: 100%;
+      }
+
   }
