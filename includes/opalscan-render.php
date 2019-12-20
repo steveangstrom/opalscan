@@ -8,18 +8,18 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
     $out='';
     $score =100;
-    $scorewords=['Extremely bad','Extremely bad', 'Very bad','Bad','Adequate','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
+    //$scorewords=['Extremely bad','Extremely bad', 'Very bad','Bad','Adequate','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
 
     $decoded_scan = json_decode($JSON_scan,true);
 
     $log_date = strtotime($decoded_scan['scanDate']['date']);
+/*
 
-  /* --- Do a Score ---*/
     #Wp score
-    $wp_score = 10;
+    $wp_score = 0;
 
     #Server score
-    $server_score = 10;
+    $server_score = 0;
 
     # plugin score
     $inactive_plugin_total = $decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount'];
@@ -28,6 +28,9 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     # TOTAL UP THE SCORE AND DESCRIBE IT -----------------------
     $score -= ($wp_score + $plugin_score +  $server_score);
     $score = round($score);
+    */
+    $score = opal_do_score($decoded_scan);
+
     # Display Score
   //  $out.= '<div class="opal_status">status goes here </div>';
 
@@ -54,14 +57,15 @@ if(is_admin()) { // make sure, the following code runs only in the back end
         <div class = "opalscore score s'.round($score/10).'0"><span>SCORE '.$score.'%</span></div>
         <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50"></div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div></div>';
 
-      $score_rating=$scorewords[round($score/10)-1];
+      //$score_rating=$scorewords[round($score/10)-1];
     //  $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);
 
-    $out.='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.$scorewords[round($score/10)-1].'</h2><p>test test</p></div>';
+    //$out.='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.$scorewords[round($score/10)-1].'</h2><p>test test</p></div>';
+    $out .= opal_summary($score);
     $out.='</div>';#end summary wrapper
 
   /* --- describe plugin state verbally -----*/
-    $out .= opal_advice();
+    $out .= opal_advice($decoded_scan);
     $out.= '</div>';// end summary tab content
 
 

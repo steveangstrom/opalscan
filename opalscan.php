@@ -6,6 +6,7 @@
   Version: 0.1
   Author URI:http://opalsupport.com
  */
+include_once('includes/opalscan-calculate-score.php' );
 include_once('includes/opalscan-dashboard-widget.php' );
 include_once('includes/opalscan-scanner.php' );
 
