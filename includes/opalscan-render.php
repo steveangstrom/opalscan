@@ -39,12 +39,11 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       <div class="opal_tab" data-tab="opalreport">Report</div>
     </div>';
 
-
     $out.='<div id = "opalsummary" class= "opal_pane active">';
-    $out.='<h3>Scan Date '.date('l dS \o\f F Y h:i:s A', $log_date).'</h3>';
 
+    $scandate = date('dS \o\f F Y g:i A', $log_date);
         if($livescan===false){
-            $out.='<p>Showing previous scan, <a>scan again</a> to update</p>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
+            $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a>scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
         }
 
     $out.=' <div class="opalscore_wrap">

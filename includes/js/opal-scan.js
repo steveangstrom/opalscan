@@ -2,7 +2,6 @@ jQuery(document).ready(function($) {
 var path = thescanobj.pluginpath+'includes/media/';
 
 /****** TABS ************/
-
 $(document).on('click','.opal_tab', function(e) {
   var tab_id = $(this).attr('data-tab');
   $('.opal_tab').removeClass('active');
@@ -16,8 +15,7 @@ $(document).on('click','.opal_tab', function(e) {
 
 $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'notify.mp3" type="audio/mpeg"><source src="'+path+'notify.wav" type="audio/wav"></audio>').appendTo('body');
 //console.log('dis be path = '+thescanobj.pluginpath);
-
-  $('.opalscannow').click(function() {
+  $(document).on('click','.opalscannow', function(e) {
     $('#opalscanbarholder').addClass("lds-hourglass");
     $("#opalscanbarholder").after('<div class="opal_status"><div class="statusbar"></div><div class="statusmessage">Waiting for status ...</div></div>');///  ADD THIS status display zone.
     $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); });
@@ -42,7 +40,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
           //  'allPlugins' : allPlugins
         },
         success:function(data) {
-         clearTimeout(statustimer); // stop looking for status. 
+         clearTimeout(statustimer); // stop looking for status.
 
           $('#opalalertaudio')[0].play();
         //  console.log(data);
@@ -73,7 +71,7 @@ function check_status(){
     var progress = structureddata.progress;
     var percent = progress * (100/total);
     $('.opal_status .statusbar').width(percent+'%');
-    $('.opal_status .statusmessage').html(structureddata.slug );
+    $('.opal_status .statusmessage').html('[ '+progress+' of '+total+' ] '+structureddata.slug );
   });
 }
 
