@@ -13,27 +13,8 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $decoded_scan = json_decode($JSON_scan,true);
 
     $log_date = strtotime($decoded_scan['scanDate']['date']);
-/*
 
-    #Wp score
-    $wp_score = 0;
-
-    #Server score
-    $server_score = 0;
-
-    # plugin score
-    $inactive_plugin_total = $decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount'];
-    $plugin_score = $decoded_scan['plugin_outdated'] + $decoded_scan['plugin_noupdates'] + ($decoded_scan['plugin_amount']/2) + ($inactive_plugin_total/2) ;
-
-    # TOTAL UP THE SCORE AND DESCRIBE IT -----------------------
-    $score -= ($wp_score + $plugin_score +  $server_score);
-    $score = round($score);
-    */
     $score = opal_do_score($decoded_scan);
-
-    # Display Score
-  //  $out.= '<div class="opal_status">status goes here </div>';
-
 
     # Display results
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">
@@ -65,7 +46,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.='</div>';#end summary wrapper
 
   /* --- describe plugin state verbally -----*/
-    $out .= opal_advice($decoded_scan);
+    $out .= opal_advice($decoded_scan, $score);
     $out.= '</div>';// end summary tab content
 
 

@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 var path = thescanobj.pluginpath+'includes/media/';
 
 /****** TABS ************/
-$(document).on('click','.opal_tab', function(e) {
+$(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
   var tab_id = $(this).attr('data-tab');
   $('.opal_tab').removeClass('active');
   $('.opal_pane').removeClass('active');

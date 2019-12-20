@@ -47,9 +47,13 @@ left:0;
 }
 
 /* ----- Tabs and panes  ----- */
+.opal_tabber_link{
+/*a link which triggers a tab, but is outside the tab bar.*/
+  cursor: pointer;
 
+}
 .opal_pane{
-  padding: 20px;
+  padding: 20px 20px 60px 20px;
   background:#fff;
   border:2px solid #0071a1;
   display: none;
@@ -72,8 +76,8 @@ left:0;
   display: inline-block;
   padding: 10px 30px;
   border:2px solid  rgba(200,200,200,0);
-  background: #ccc;
-  color:#aaa;
+/*  background: #ccc;
+  color:#aaa;*/
   margin-right: 4px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -83,6 +87,11 @@ left:0;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s;
+
+  background: #eee;
+  color:#6592a6;
+  border-color: #6592a6;
+
 }
 .opal_tab_bar .opal_tab.active,
 .opal_tab_bar .opal_tab.active:hover{
@@ -92,7 +101,7 @@ left:0;
    color:#0071a1;
 }
 .opal_tab_bar .opal_tab:hover{
-  background: #eee;
+  background: #f9f9fb;
   color:#6592a6;
   border-color: #6592a6;
 }
