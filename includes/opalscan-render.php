@@ -32,7 +32,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
   //  $out.= '<div class="opal_status">status goes here </div>';
 
 
-    # Display Score
+    # Display results
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">
     <div class="opal_tab_bar">
       <div class="opal_tab active" data-tab="opalsummary">Summary</div>
@@ -46,12 +46,19 @@ if(is_admin()) { // make sure, the following code runs only in the back end
             $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a>scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
         }
 
-    $out.=' <div class="opalscore_wrap">
-      <div class = "opalscore score s'.round($score/10).'0"><span>SCORE '.$score.'%</span></div>
-      <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50"></div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div></div>';
 
-    $score_rating=$scorewords[round($score/10)-1];
-    $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);
+/****** top score and summary block *****/
+    $out.='<div class="summary_wrap">';
+
+      $out.='<div class="opalscore_wrap">
+        <div class = "opalscore score s'.round($score/10).'0"><span>SCORE '.$score.'%</span></div>
+        <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50"></div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div></div>';
+
+      $score_rating=$scorewords[round($score/10)-1];
+    //  $out.= 'Your site scored '.$score.' out of a possible 100.   Your site safety is rated as '.$scorewords[round($score/10)-1].'   ... ' . round($score/10);
+
+    $out.='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.$scorewords[round($score/10)-1].'</h2><p>test test</p></div>';
+    $out.='</div>';#end summary wrapper
 
   /* --- describe plugin state verbally -----*/
     $out .= opal_advice();
