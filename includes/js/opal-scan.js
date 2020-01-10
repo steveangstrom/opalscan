@@ -11,11 +11,31 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
   $("#"+tab_id).addClass('active');
 })
 
-/****************/
-/*Send mail*/
+
+/*-----------------Send mail---------------------------------*/
 $(document).on('click','.opalsend', function(e) {
-alert ('send');
+  console.log ('send');
+  doReportMail();
 })
+
+function doReportMail(){
+    var mailaction = 'sendmail';
+  $.ajax({
+      url: ajaxurl,
+      data: {
+          'action': 'opalreportmail',
+          'mailaction' : mailaction
+      },
+      success:function(data) {
+          console.log(data);
+      },
+      error: function(errorThrown){
+          console.log(errorThrown);
+      }
+  });
+
+} /* mail */
+
 /*****************/
 
 $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'notify.mp3" type="audio/mpeg"><source src="'+path+'notify.wav" type="audio/wav"></audio>').appendTo('body');
