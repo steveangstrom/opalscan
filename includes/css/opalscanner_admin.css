@@ -4,17 +4,23 @@
 .opalsitescannerpage .opaldoscan{cursor: pointer;}
 /*   BUTTONS */
 .wp-core-ui .button.bigbutton{
-  font-size: 18px;padding: 5px 30px;border-width: 2px;border-radius: 5px;transition: all 0.3s;
+  font-size: 18px;
+  padding: 5px 30px;
+  border-width: 2px;
+  border-radius: 5px;
+  transition: all 0.3s;
   text-transform: uppercase;
 }
 .wp-core-ui .button.bigbutton.opalscannow{background:#0071a1;color:#fcfdf9;}
 .wp-core-ui .button.bigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
-.wp-core-ui .button.bigbutton.opalsend{margin-left:20px;float:right;background: aliceblue;}
+/*
+.wp-core-ui .button.bigbutton.opalsend{display:none;}
+.wp-core-ui .button.bigbutton.opalsend.report-available{display: inline-block;}*/
+.wp-core-ui .button.bigbutton.opalsend{margin-left:20px;background: aliceblue;}
 .wp-core-ui .button.bigbutton.opalsend:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
 /******************************/
-
 .opalsitescannerpage .opal_status{
   display: block;
   background: #4a514a;

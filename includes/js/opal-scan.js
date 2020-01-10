@@ -16,6 +16,8 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
 $(document).on('click','.opalsend', function(e) {
   console.log ('send');
   doReportMail();
+  //$('#opalscanbarholder').addClass("lds-hourglass");
+
 })
 
 function doReportMail(){

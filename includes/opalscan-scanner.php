@@ -32,6 +32,7 @@ if(is_admin()) {
 
 
 		/** ----------------- Get some information about the site --------------------------**/
+  $scan_results["opalscanner_version"] = '0.1'; 
 
     $allPlugins = get_plugins(); // associative array of all installed plugins
     $activePlugins = get_option('active_plugins'); // simple array of active plugins

@@ -38,7 +38,9 @@ function opal_summary($score){
 
   $out='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.$score_words[round($score/10)-1].'</h2>';
   $out.='<p>Your site scored '.$score.' out of a possible 100. This means your site '.$attentionphrases[round($score/10)-1].'</p>';
+
   $out.='</div>';
+
   return $out;
 }
 
@@ -84,7 +86,8 @@ if ($score <70){
   $advice .= "<h2>Wordpress</h2><p>your website may fail.</p> ";
   $advice .= "<h2>Plugins</h2><p>your website may fail.</p> ";
   $advice .= "<h2>Web Server</h2><p>your website may fail.</p> ";*/
-  $advice .= '</p><a class="button bigbutton opalsend">Send Report</a></div>';
+  //<a class="button bigbutton opalsend">Send Report</a>
+  $advice .= '</p></div>';
 
   $advice .= '<div><h2>Summary Report</h2><p>table here of actionable items</p></div>';
  return $advice ;
