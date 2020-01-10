@@ -46,6 +46,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.='</div>';#end summary wrapper
 
   /* --- describe plugin state verbally -----*/
+  # this function is passed the entire decoded scan. 
     $out .= opal_advice($decoded_scan, $score);
     $out.= '</div>';// end summary tab content
 

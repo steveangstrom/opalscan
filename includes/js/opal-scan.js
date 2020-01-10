@@ -12,6 +12,11 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
 })
 
 /****************/
+/*Send mail*/
+$(document).on('click','.opalsend', function(e) {
+alert ('send');
+})
+/*****************/
 
 $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'notify.mp3" type="audio/mpeg"><source src="'+path+'notify.wav" type="audio/wav"></audio>').appendTo('body');
 //console.log('dis be path = '+thescanobj.pluginpath);
@@ -30,7 +35,6 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
 
   function doScan(){
     //  console.log('dis be path = '+thescanobj.pluginpath);
-
     var statustimer = window.setInterval(function(){  check_status();}, 250); // got check to see whats happening on the server.
 
       $.ajax({

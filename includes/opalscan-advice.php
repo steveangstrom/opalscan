@@ -20,7 +20,7 @@ If plugins on the repo have not been updated in >2 years then strongly Advise
 
 */
 
-
+# just a basic assessment of the overal score. the score total is worked out in the function opal_do_score() \includes\opalscan-calculate-score.php
 function opal_summary($score){
   $score_words=['Extremely bad','Extremely bad', 'Very bad','Bad','Insecure','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
   $attentionphrases=[
@@ -85,5 +85,7 @@ if ($score <70){
   $advice .= "<h2>Plugins</h2><p>your website may fail.</p> ";
   $advice .= "<h2>Web Server</h2><p>your website may fail.</p> ";*/
   $advice .= '</p><a class="button bigbutton opalsend">Send Report</a></div>';
+
+  $advice .= '<div><h2>Summary Report</h2><p>table here of actionable items</p></div>';
  return $advice ;
 }

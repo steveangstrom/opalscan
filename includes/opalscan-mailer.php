@@ -1,7 +1,12 @@
 <?php
 function opal_send_report($location, $address){
-  
-  $attachments = array(WP_CONTENT_DIR . '/uploads/file_to_attach.zip');
-   $headers = 'From: My Name <myname@mydomain.com>' . "\r\n";
-   wp_mail('test@test.com', 'subject', 'message', $headers, $attachments);
+/*
+  $attachments = array(plugin_dir_url( __FILE__ ) . 'reports/scanlog.txt');
+   $headers = 'From: My Name <pheriche@pheriche.com>' . "\r\n";
+   $message = 'this is the test message that I am testing the testy plugin of';
+   wp_mail('steve@pheriche.com', 'subject', $message, $headers, $attachments);
+*/
+echo 'yes';
+
+exit;
 }
