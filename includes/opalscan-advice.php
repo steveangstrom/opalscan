@@ -19,7 +19,6 @@ If plugins on the repo are older than 1 year then Advise
 If plugins on the repo have not been updated in >2 years then strongly Advise
 
 */
-
 # just a basic assessment of the overal score. the score total is worked out in the function opal_do_score() \includes\opalscan-calculate-score.php
 function opal_summary($score){
   $score_words=['Extremely bad','Extremely bad', 'Very bad','Bad','Insecure','Needs Attention','Needs Attention','Good','Very Good','Excellent'];

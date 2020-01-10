@@ -1,4 +1,3 @@
-
 <?php
 if(is_admin()) { // make sure, the following code runs only in the back end
 
@@ -186,23 +185,4 @@ function opal_statusbar($status='test'){
   die();
 }
 add_action( 'wp_ajax_opal_statusbar', 'opalstatus' );
-
-/********** this is the function that uipdates the status display *********/
-/*  function opalscan_statusupdater($status='') {
-      $out ='this is a test from the place beyond';
-      echo $out;
-      die();
-  }
-  add_action( 'wp_ajax_scanstatusupdate', 'opalscan_statusupdater' );
-*/
-
-
-
-/**
-
-https://stackoverflow.com/questions/14918462/get-response-from-php-file-using-ajax
-
-https://wisdmlabs.com/blog/create-real-time-progress-bar-using-jquery-ui-ajax/
-
-****/
 }

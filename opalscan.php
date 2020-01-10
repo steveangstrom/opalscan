@@ -57,5 +57,4 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 			echo('<hr>');
 			echo('</div>');// close the main edit page pane
 		}
-
 }

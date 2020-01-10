@@ -1,8 +1,5 @@
 <?php
-/** SCAN AND SCORE THE ATTRIBUTES & STORE IN A RAW LOG  **/
-
 if(is_admin()) {
-
   include_once('opalscan-render.php' ); # get the admin display methods
   include_once('opalscan-advice.php' ); # textualised advice in human form
 
@@ -32,7 +29,7 @@ if(is_admin()) {
 
 
 		/** ----------------- Get some information about the site --------------------------**/
-  $scan_results["opalscanner_version"] = '0.1'; 
+  $scan_results["opalscanner_version"] = '0.1';
 
     $allPlugins = get_plugins(); // associative array of all installed plugins
     $activePlugins = get_option('active_plugins'); // simple array of active plugins
