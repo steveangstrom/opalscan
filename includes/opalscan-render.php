@@ -46,7 +46,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.='</div>';#end summary wrapper
 
   /* --- describe plugin state verbally -----*/
-  # this function is passed the entire decoded scan. 
+  # this function is passed the entire decoded scan.
     $out .= opal_advice($decoded_scan, $score);
     $out.= '</div>';// end summary tab content
 
@@ -136,11 +136,21 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       }
 
   }
-
+  function opalscan_noprevious_html(){
+    $out = 'test';
+return $out;
+  }
 
   function opalscan_show_scan(){ // show previous scan, from the log  including summary
-    $JSON_scan = file_get_contents(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt");
-    opalscan_render_html($JSON_scan);// render the array as HTML table.
+    $logfile=plugin_dir_path( __DIR__ ) . 'reports/scanlog.txt';
+    if (file_exists($logfile)) {
+      $JSON_scan = file_get_contents($logfile);
+      opalscan_render_html($JSON_scan);// render the array as HTML table.
+    } else {
+      //  file_put_contents($filename, '');
+    }
+    //$JSON_scan = file_get_contents(plugin_dir_path( __DIR__ ) . 'reports/scanlog.txt');
+
   }
 
 

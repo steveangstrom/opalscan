@@ -45,7 +45,10 @@ position: absolute;
 top:0;
 left:0;
 }
-
+.opalscanner_results {
+    max-width: 1200px;
+    margin: auto;
+}
 /* ----- Tabs and panes  ----- */
 .opal_tabber_link{
   cursor: pointer;

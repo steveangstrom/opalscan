@@ -1,6 +1,5 @@
 <?php
 function opalreportmail() {
-    // The $_REQUEST contains all the data sent via ajax
     if ( isset($_REQUEST) ) {
         $mailaction = $_REQUEST['mailaction'];
         if ( $mailaction == 'sendreport' ) {
