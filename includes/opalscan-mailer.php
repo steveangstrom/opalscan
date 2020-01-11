@@ -3,11 +3,12 @@ function opalreportmail() {
     if ( isset($_REQUEST) ) {
         $mailaction = $_REQUEST['mailaction'];
         if ( $mailaction == 'sendmail' ) {
-          $attachments = array(plugin_dir_url( __DIR__  ) . 'reports/scanlog.txt');
+          $attfile = plugin_dir_path( __DIR__  ) . 'reports/scanlog.txt';
+          $attachments = array($attfile);
            $headers = 'From: My Name <pheriche@pheriche.com>' . "\r\n";
-           $message = 'this is the test message that I am testing the testy plugin of';
+           $message = 'this is the test message that I am testing the testy plugin of '.$attfile;
            $mailout = wp_mail('steve@pheriche.com', 'subject', $message, $headers, $attachments);
-          echo 'we just tried to send a mail, this is step one ,' .$mailout;
+          echo 'we just tried to send a mail,'. $attfile.', this did it send ' .$mailout;
         }
       #
 
