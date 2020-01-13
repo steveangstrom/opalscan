@@ -41,10 +41,11 @@
 
 
 /******************************/
+
 .opalscanner_results,
 #scanbarcontrols {
     max-width: 1300px;
-    margin: auto;
+    margin: 20px auto;
 }
 
 /********/

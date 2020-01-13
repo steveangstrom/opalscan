@@ -104,7 +104,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
         $out.='<tr><td>'.$value['Title'].'</td>';
         $out.= '<td>'.$value['Version'].'</td>';
 
-        $outstatus = $value['plugin_outdated']? 'Needs Update' : 'Current';
+        $outstatus = $value['plugin_outdated']? 'Needs Update' : 'Most Recent';
         $out.= '<td>'.$outstatus.'</td>';
 
       //  $updstatus = $value['plugin_noupdates']? 'Abandoned' : 'Ok';
