@@ -19,6 +19,7 @@ if(is_admin()) {
       'plugin_active_amount' =>0, // are there too many plugins?
 			'php_version' =>0,
 			'sql_version' =>0,
+      'sql_size'=>0,
 			'wp_version' =>0,
       'wp_version_available' =>0,
 			'ssl' =>0,
@@ -54,7 +55,12 @@ if(is_admin()) {
 		$SQLversion = mysqli_get_server_info($connection);
 
 		/***********/
+    $dbSize = calculate_database_size();
+    $dbsizestring = $dbSize['size'];
+    //$dbsizestring.=$dbSize['size'].$dbSize['type'];
+    $scan_results["sql_size"] = $dbsizestring;
 
+    /*********/
     $allPlugins =  get_plugins();// associative array of all installed plugins
     $how_many_plugins = count($allPlugins);
     $progress=1;
@@ -242,4 +248,26 @@ if(is_admin()) {
     return 0;
   }
 
+}
+
+function fileSizeInfo($filesize) {
+    $bytes = array('KB', 'KB', 'MB', 'GB', 'TB');
+    if ($filesize < 1024)
+        $filesize = 1;
+    for ($i = 0; $filesize > 1024; $i++)
+        $filesize /= 1024;
+
+    $dbSizeInfo['size'] = round($filesize, 3);
+    $dbSizeInfo['type'] = $bytes[$i];
+
+    return $dbSizeInfo;
+}
+
+function calculate_database_size() {
+    global $wpdb;
+    $dbsize = 0;
+    $rows = $wpdb->get_results("SHOW table STATUS");
+    foreach($rows as $row)
+        $dbsize += $row->Data_length + $row->Index_length;
+    return fileSizeInfo($dbsize);
 }

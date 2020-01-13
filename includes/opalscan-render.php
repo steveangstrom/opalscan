@@ -213,25 +213,24 @@ function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
 
 function opalscan_render_summarytable($decoded_scan){
     $out=('<table class="opalscan_results_table">');
-    //$out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
-    //$out .= $decoded_scan['plugin_outdated'];
+
     if ($decoded_scan['scores']['wp']>2){
-      $out.='<tr><td class="inform wpcore">Your Wordpress core is out of date</td><td></td></tr>';
+      $out.='<tr><td class="inform wpcore">Your Wordpress core is out of date</td></tr>';
     }
     if (strlen($decoded_scan['wp_plugin_security'])<2){
-      $out.='<tr><td class="inform wpcore">Your Wordpress does not seem to ahve a security plugin</td><td></td></tr>';
+      $out.='<tr><td class="inform wpcore">Your Wordpress does not seem to ahve a security plugin</td></tr>';
     }
-    $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_outdated'].' outdated plugins</td><td>DANGER</td></tr>';
-    $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td><td>DANGER</td></tr>';
+    $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_outdated'].' outdated plugins</td></tr>';
+    $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td></tr>';
     if($decoded_scan['ssl']>0){
-      $out.='<tr><td class="inform server">Your server does not have a security certificate</td><td>DANGER</td></tr>';
+      $out.='<tr><td class="inform server">Your server does not have a security certificate</td></tr>';
     }
     if($decoded_scan['scores']['server']>1){
-      $out.='<tr><td class="inform server">Your server core components are outdated</td><td></td></tr>';
+      $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
     }
 
     $out.=('</table>');
-    $out.=('<p><a>View the full detailed Report</a></p>');
+    $out.=('<p><a data-tab="opalreport" class="opal_tabber_link">View the full detailed Report</a></p>');
     $out.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
     return $out;
 }
