@@ -3,7 +3,7 @@ function opalreportmail() {
     if ( isset($_REQUEST) ) {
         $mailaction = $_REQUEST['mailaction'];
         if ( $mailaction == 'sendmail' ) {
-          $attfile = plugin_dir_path( __DIR__  ) . 'reports/scanlog.txt';
+          $attfile = plugin_dir_path( __DIR__  ) . 'reports/opalscan.log';
           $attachments = array($attfile);
            $headers = 'From: My Name <pheriche@pheriche.com>' . "\r\n";
            $message = 'this is the test message that I am testing the testy plugin of '.$attfile;
@@ -12,7 +12,7 @@ function opalreportmail() {
         }
       #
 
-    //  echo 'we just tried to send a mail, this is step one , the url = '.plugin_dir_url( __DIR__  ) . 'reports/scanlog.txt';
+    //  echo 'we just tried to send a mail, this is step one , the url = '.plugin_dir_url( __DIR__  ) . 'reports/opalscan.log';
     }
    die();
 }

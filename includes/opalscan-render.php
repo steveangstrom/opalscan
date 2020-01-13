@@ -136,7 +136,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
   }
 
   function opalscan_show_scan(){ // show previous scan, from the log  including summary
-    $logfile=plugin_dir_path( __DIR__ ) . 'reports/scanlog.txt';
+    $logfile=plugin_dir_path( __DIR__ ) . 'reports/opalscan.log';
     if (file_exists($logfile)) {
       $JSON_scan = file_get_contents($logfile);
       opalscan_render_html($JSON_scan);// render the array as HTML table.

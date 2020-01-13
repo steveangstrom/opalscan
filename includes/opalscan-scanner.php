@@ -149,7 +149,7 @@ if(is_admin()) {
 
   function opal_save_to_log($scan_results){
     //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
-    $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
+    $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/opalscan.log", "w"); // store a raw copy.
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
   }
