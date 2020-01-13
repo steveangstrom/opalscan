@@ -88,7 +88,7 @@ if ($score <70){
   //<a class="button bigbutton opalsend">Send Report</a>
   $advice .= '</p></div>';
 
-  $advice .= '<div><h2>Summary Report</h2><p>Here is a brief summary of the key issues we found</p></div>';
+  $advice .= '<div class="opaladvice_wrap"><h2>Summary Report</h2><p>Here is a brief summary of the key issues we found</p></div>';
   $advice .= opalscan_render_summarytable($decoded_scan);
  return $advice ;
 }

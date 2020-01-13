@@ -133,7 +133,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       # if this is a display of an old log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
         $out.=('<pre>');
-        $out.=( print_r($decoded_scan, true));
+      //  $out.=( print_r($decoded_scan, true));
         $out.=('</pre>');
         echo $out;
       }else{
@@ -212,7 +212,7 @@ function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
 }
 
 function opalscan_render_summarytable($decoded_scan){
-    $out=('<table class="opalscan_results_table">');
+    $out=('<table class="opalscan_results_table opalbigtable">');
 
     if ($decoded_scan['scores']['wp']>2){
       $out.='<tr><td class="inform wpcore">Your Wordpress core is out of date</td></tr>';
