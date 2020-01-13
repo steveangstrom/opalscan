@@ -1,4 +1,4 @@
-
+.opalhide{display:none!important;}
 .opalsitescannerpage h1{font-size: 34px;}
 .opalsitescannerpage p{font-size: 16px;}
 .opalsitescannerpage .opaldoscan{cursor: pointer;}
@@ -17,10 +17,38 @@
 /*
 .wp-core-ui .button.bigbutton.opalsend{display:none;}
 .wp-core-ui .button.bigbutton.opalsend.report-available{display: inline-block;}*/
-.wp-core-ui .button.bigbutton.opalsend{margin-left:20px;background: aliceblue;}
+.wp-core-ui .button.bigbutton.opalsend{margin-left:20px;background: #74d583;border-color:#74d583; color:#173e25}
 .wp-core-ui .button.bigbutton.opalsend:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
+/** button icons **/
+.wp-core-ui .button.bigbutton:after{
+      font-family: dashicons;
+      display: inline-block;
+      line-height: 30px;
+      font-weight: 400;
+      width: 20px;
+      height: 20px;
+      margin: 3px 0 0px 20px;
+      float: right;
+      font-size: 30px;
+  }
+.wp-core-ui .button.bigbutton.opalscannow:after{
+  content: "\f311";
+}
+.wp-core-ui .button.bigbutton.opalsend:after{
+  content: "\f465";
+}
+
+
 /******************************/
+.opalscanner_results,
+#scanbarcontrols {
+    max-width: 1300px;
+    margin: auto;
+}
+
+/********/
+
 .opalsitescannerpage .opal_status{
   display: block;
   background: #4a514a;
@@ -51,11 +79,10 @@ position: absolute;
 top:0;
 left:0;
 }
-.opalscanner_results {
-    max-width: 1200px;
-    margin: auto;
-}
+
+
 /* ----- Tabs and panes  ----- */
+
 .opal_tabber_link{
   cursor: pointer;
 }
@@ -164,6 +191,7 @@ left:0;
 .opalscanner_results h2{font-size: 30px;font-weight: normal; line-height:normal; margin:20px 0 0.3em 0;}
 .opalscanner_results p{ line-height:normal; margin:0 0 0.7em 0;}
 .opalscanner_results .opal_dimmed{ color:#7d8fa1;}
+
 /*****  TABLE STYLES *****/
 .opalscan_results_table{
   width:100%; margin-top: 20px;
@@ -171,14 +199,19 @@ left:0;
 .opalscan_results_table td, .opalscan_results_table th{text-align:left; padding: 8px 15px;}
 .opalscan_results_table th{background: #dadada;}
 
-
+.opalscan_results_table tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}/*
+.opalscan_results_table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}*/
 /*****  SPINNY LOADER *****/
 
   .lds-hourglass {
     display: inline-block;
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
   }
   .lds-hourglass:after {
     content: " ";
@@ -188,8 +221,8 @@ left:0;
     height: 0;
     margin: 8px;
     box-sizing: border-box;
-    border: 32px solid #38a7dd;
-    border-color: #38a7dd transparent #e18686 transparent;
+    border: 20px solid #38a7dd;
+    border-color: #0073aa transparent #567c8b transparent;
     animation: lds-hourglass 1.2s infinite;
   }
   @keyframes lds-hourglass {

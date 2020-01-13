@@ -41,11 +41,12 @@ function doReportMail(){
 /*****************/
 
 $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'notify.mp3" type="audio/mpeg"><source src="'+path+'notify.wav" type="audio/wav"></audio>').appendTo('body');
-//console.log('dis be path = '+thescanobj.pluginpath);
+
 
   $(document).on('click','.opalscannow, .opaldoscan', function(e) {
-    $('#opalscanbarholder').addClass("lds-hourglass");
-    $("#opalscanbarholder").after('<div class="opal_status"><div class="statusbar"></div><div class="statusmessage">Waiting for status ...</div></div>');///  ADD THIS status display zone.
+    $('.opalspinnerlocation').addClass("lds-hourglass");
+    $('.opalsend').addClass('opalhide'); // hide the send buttons while in action.
+    $(".opalspinnerlocation").after('<div class="opal_status"><div class="statusbar"></div><div class="statusmessage">Waiting for status ...</div></div>');///  ADD THIS status display zone.
     $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); });
     doScan();
   });
@@ -68,11 +69,11 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
         },
         success:function(data) {
          clearTimeout(statustimer); // stop looking for status.
-
+         $('.opalsend').removeClass('opalhide');
           $('#opalalertaudio')[0].play();
         //  console.log(data);
         $('.opal_status ').remove();
-        $('#opalscanbarholder').removeClass("lds-hourglass");
+        $('.opalspinnerlocation').removeClass("lds-hourglass");
 
       //  $( "#opalscan_displayarea" ).html(data); // this works with raw HTML data.
 

@@ -152,7 +152,6 @@ if(is_admin()) {
     $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/scanlog.txt", "w"); // store a raw copy.
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
-
   }
 
 /* ----- currently unused  ----- */

@@ -10,16 +10,14 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     //$scorewords=['Extremely bad','Extremely bad', 'Very bad','Bad','Adequate','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
 
     $decoded_scan = json_decode($JSON_scan,true);
-
     $log_date = strtotime($decoded_scan['scanDate']['date']);
-
     $score = opal_do_score($decoded_scan);
 
     # Display results
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">
     <div class="opal_tab_bar">
       <div class="opal_tab active" data-tab="opalsummary">Summary</div>
-      <div class="opal_tab" data-tab="opalreport">Report</div>
+      <div class="opal_tab" data-tab="opalreport">Full Report</div>
     </div>';
 
     $out.='<div id = "opalsummary" class= "opal_pane active">';
@@ -134,7 +132,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
   }
   function opalscan_noprevious_html(){
     $out = 'test';
-return $out;
+    return $out;
   }
 
   function opalscan_show_scan(){ // show previous scan, from the log  including summary
@@ -145,8 +143,6 @@ return $out;
     } else {
       //  file_put_contents($filename, '');
     }
-    //$JSON_scan = file_get_contents(plugin_dir_path( __DIR__ ) . 'reports/scanlog.txt');
-
   }
 
 
