@@ -14,12 +14,12 @@
 .wp-core-ui .button.bigbutton.opalscannow{background:#0071a1;color:#fcfdf9;}
 .wp-core-ui .button.bigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
-/*
-.wp-core-ui .button.bigbutton.opalsend{display:none;}
-.wp-core-ui .button.bigbutton.opalsend.report-available{display: inline-block;}*/
-.wp-core-ui .button.bigbutton.opalsend{margin-left:20px;background: #74d583;border-color:#74d583; color:#173e25}
-.wp-core-ui .button.bigbutton.opalsend:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
+
+.wp-core-ui .button.bigbutton.opalsend{display:none;}
+
+.wp-core-ui .button.bigbutton.opalsend.logpresent{margin-left:20px;background: #74d583;border-color:#74d583; color:#173e25;display: inline-block;}
+.wp-core-ui .button.bigbutton.opalsend.logpresent:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 /** button icons **/
 .wp-core-ui .button.bigbutton:after{
       font-family: dashicons;
@@ -220,7 +220,7 @@ left:0;
     border-radius: 50%;
     width: 0;
     height: 0;
-    margin: 8px;
+    margin: 5px 0px 0 20px;
     box-sizing: border-box;
     border: 20px solid #38a7dd;
     border-color: #0073aa transparent #567c8b transparent;

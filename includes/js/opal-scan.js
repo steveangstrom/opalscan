@@ -68,9 +68,10 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
           //  'allPlugins' : allPlugins
         },
         success:function(data) {
-         clearTimeout(statustimer); // stop looking for status.
-         $('.opalsend').removeClass('opalhide');
-          $('#opalalertaudio')[0].play();
+        clearTimeout(statustimer); // stop looking for status.
+        $('.opalsend').removeClass('opalhide');
+        $('.opalsend').addClass('logpresent');// there should be a log available to send if success. 
+        $('#opalalertaudio')[0].play();
         //  console.log(data);
         $('.opal_status ').remove();
         $('.opalspinnerlocation').removeClass("lds-hourglass");
