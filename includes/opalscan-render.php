@@ -50,18 +50,23 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.=('<h2>Wordpress and Server</h2>');
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
-    $wpstatus = 'OK';
+
+   /*$wpstatus = 'OK';
     if ($decoded_scan['scores']['wp']>0){$wpstatus = 'Attention';}
     if ($decoded_scan['scores']['wp']>10){$wpstatus = 'Urgent';}
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td>'.$wpstatus.'</td></tr>');
+*/
+    $out.=opal_rendertablerow('Wordpress Core Version',$decoded_scan['wp_version'],$decoded_scan['scores']['wp'], 0, 10 );
 
     if (strlen($decoded_scan['wp_plugin_security'])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
     $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
 
-    $pstatus = 'OK';
+    /*$pstatus = 'OK';
     if ($decoded_scan['plugin_amount']>10){$pstatus = 'Attention';}
     if ($decoded_scan['plugin_amount']>15){$pstatus = 'Urgent';}
     $out.=('<tr><td>Plug-ins Installed</td><td>'.$decoded_scan['plugin_amount'].'</td><td>'.$pstatus.'</td></tr>');
+    */
+    $out.=opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 );
 
     $pinstatus = 'OK';
     if ($decoded_scan['plugin_active_amount']>3){$pinstatus = 'Attention';}
@@ -81,12 +86,18 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $phpstatus = 'OK';
     if ($decoded_scan['scores']['server']>10){$phpstatus = 'Attention';}
     if ($decoded_scan['scores']['server']>20){$phpstatus = 'Urgent';}
-    $out.=('<tr><td>Web Server</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>'.$phpstatus.'</td></tr>');
+    $out.=('<tr><td>Web Server PHP</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>'.$phpstatus.'</td></tr>');
 
     $sqlstatus = 'OK';
-    //if ($decoded_scan['sql_version']==0){$phpstatus = 'Attention';}
+    //if ($decoded_scan['sql_version']==0){$sqlstatus = 'Attention';}
     $out.=('<tr><td>SQL Server</td><td>SQL Version '.$decoded_scan['sql_version'].'</td><td>'.$sqlstatus.'</td></tr>');
 
+    $databasesize = 'OK';
+    $dbSize= $decoded_scan['sql_size'];
+    $status='OK';
+    if ($dbSize > 30){$status = 'Attention';}
+    if ($dbSize > 80){$status = 'Urgent';}
+    $out.=('<tr><td>SQL Database Size</td><td> '.$dbSize.' MB</td><td> '.$status.' </td></tr>');
 
     $ssl = ($decoded_scan['ssl'] == 1) ? 'True' : 'False';
     $sslstatus = ($decoded_scan['ssl'] == 1) ? 'OK' : 'Attention';
@@ -181,4 +192,46 @@ function opal_statusbar($status='test'){
   die();
 }
 add_action( 'wp_ajax_opal_statusbar', 'opalstatus' );
+}
+
+function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
+  // labels with labels.
+  # the current is Installed
+  #thing to check is  $match
+  #acceptable values are $bp1 and $bp2
+  $status = 'OK';
+ if ($match>$bp1){
+    $status = 'Attention';
+  }
+  if ($match>$bp2){
+    $status = 'Urgent';
+  }
+
+    $out=("<tr><td>$label</td><td>$installed</td><td>$status</td></tr>");
+    return $out;
+}
+
+function opalscan_render_summarytable($decoded_scan){
+    $out=('<table class="opalscan_results_table">');
+    //$out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
+    //$out .= $decoded_scan['plugin_outdated'];
+    if ($decoded_scan['scores']['wp']>2){
+      $out.='<tr><td class="inform wpcore">Your Wordpress core is out of date</td><td></td></tr>';
+    }
+    if (strlen($decoded_scan['wp_plugin_security'])<2){
+      $out.='<tr><td class="inform wpcore">Your Wordpress does not seem to ahve a security plugin</td><td></td></tr>';
+    }
+    $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_outdated'].' outdated plugins</td><td>DANGER</td></tr>';
+    $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td><td>DANGER</td></tr>';
+    if($decoded_scan['ssl']>0){
+      $out.='<tr><td class="inform server">Your server does not have a security certificate</td><td>DANGER</td></tr>';
+    }
+    if($decoded_scan['scores']['server']>1){
+      $out.='<tr><td class="inform server">Your server core components are outdated</td><td></td></tr>';
+    }
+
+    $out.=('</table>');
+    $out.=('<p><a>View the full detailed Report</a></p>');
+    $out.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
+    return $out;
 }

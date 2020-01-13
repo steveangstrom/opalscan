@@ -89,5 +89,6 @@ if ($score <70){
   $advice .= '</p></div>';
 
   $advice .= '<div><h2>Summary Report</h2><p>table here of actionable items</p></div>';
+  $advice .= opalscan_render_summarytable($decoded_scan);
  return $advice ;
 }

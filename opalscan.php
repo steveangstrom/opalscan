@@ -45,12 +45,10 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 		function phua_admin_page_output(){
 			echo '<div class="wrap opalsitescannerpage"><h1>Opal Site Scanner</h1>';
 			?>
-<p>Site Scanner will check the status of your site, plugins, and platform to produce a report which you can analyse to help you keep your site safe, speedy and secure. Our customers use this plugin to send reports so that we can advise and repair problems.
-</p>
+<p>This Site Scanner creates a quick analysis of the health status of your site but is not a comprehensive security scan. It is a tool helping our Opal Support Customers report issues with their sites.</p>
 			<?php
 
 			$logfile=plugin_dir_path( __FILE__ ) . 'reports/opalscan.log';
-			echo $logfile;
 			$sendvisibility = '';
 			if (file_exists($logfile)) {$sendvisibility = 'logpresent';}
 			echo('<hr>');	echo '<div id="scanbarcontrols"><a class="button bigbutton opalscannow">Scan your site</a><a class="button bigbutton opalsend '.$sendvisibility.'">Send Report</a><div class="opalspinnerlocation"></div></div><hr>';

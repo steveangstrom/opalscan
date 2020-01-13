@@ -11,14 +11,12 @@
   transition: all 0.3s;
   text-transform: uppercase;
 }
-.wp-core-ui .button.bigbutton.opalscannow{background:#0071a1;color:#fcfdf9;}
+.wp-core-ui .button.bigbutton.opalscannow{background:#0071a1;color:#fcfdf9; margin-right:20px;}
 .wp-core-ui .button.bigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
-
-
 
 .wp-core-ui .button.bigbutton.opalsend{display:none;}
 
-.wp-core-ui .button.bigbutton.opalsend.logpresent{margin-left:20px;background: #74d583;border-color:#74d583; color:#173e25;display: inline-block;}
+.wp-core-ui .button.bigbutton.opalsend.logpresent{background: #74d583;border-color:#74d583; color:#173e25;display: inline-block;}
 .wp-core-ui .button.bigbutton.opalsend.logpresent:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 /** button icons **/
 .wp-core-ui .button.bigbutton:after{
@@ -195,17 +193,20 @@ left:0;
 
 /*****  TABLE STYLES *****/
 .opalscan_results_table{
-  width:100%; margin-top: 20px;
+  width:100%; margin: 20px 0 30px 0;
 }
 .opalscan_results_table td, .opalscan_results_table th{text-align:left; padding: 8px 15px;}
 .opalscan_results_table th{background: #dadada;}
 
 .opalscan_results_table tr:nth-child(odd) {
   background-color: #f9f9f9;
-}/*
-.opalscan_results_table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}*/
+}
+
+.opalscan_results_table tr td.wpcore:before {content: "\f324";  font-family: dashicons; padding-right:20px}
+.opalscan_results_table tr td.plugin:before {content: "\f106";  font-family: dashicons; padding-right:20px}
+.opalscan_results_table tr td.server:before {content: "\f332"; font-family: dashicons; padding-right:20px}
+.opalscan_results_table tr td.warn {border-left: solid 4px red;}
+.opalscan_results_table tr td.inform {border-left: solid 4px orange;}
 /*****  SPINNY LOADER *****/
 
   .lds-hourglass {
