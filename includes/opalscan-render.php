@@ -136,7 +136,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
       # if this is a display of an old log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
         $out.=('<pre>');
-      //  $out.=( print_r($decoded_scan, true));
+       $out.=( print_r($decoded_scan, true));
         $out.=('</pre>');
         echo $out;
       }else{
@@ -217,22 +217,41 @@ function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
 function opalscan_render_summarytable($decoded_scan){
     $out=('<table class="opalscan_results_table opalbigtable">');
 
-    if ($decoded_scan['scores']['wp']>2){
+    $targ = $decoded_scan['scores']['wp'];
+    if ($targ >2){
       $out.='<tr><td class="inform wpcore">Your Wordpress core is out of date</td></tr>';
-    }
-    if (strlen($decoded_scan['wp_plugin_security'])<2){
-      $out.='<tr><td class="inform wpcore">Your Wordpress does not seem to ahve a security plugin</td></tr>';
-    }
-    $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_outdated'].' outdated plugins</td></tr>';
-    $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td></tr>';
-    if($decoded_scan['ssl']>0){
-      $out.='<tr><td class="inform server">Your server does not have a security certificate</td></tr>';
-    }
-    if($decoded_scan['scores']['server']>1){
-      $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
+    }elseif($targ >5){
+      $out.='<tr><td class="warn wpcore">Your Wordpress core is out of date</td></tr>';
     }
 
+    if (strlen($decoded_scan['wp_plugin_security'])<2){
+      $out.='<tr><td class="inform wpcore">Your Wordpress does not seem to have a security plugin</td></tr>';
+    }
+    if($decoded_scan['plugin_outdated']>1){
+    $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_outdated'].' outdated plugins</td></tr>';
+    }
+    if($decoded_scan['plugin_noupdates']>1){
+    $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td></tr>';
+    }
+    if($decoded_scan['plugin_amount'] >15){
+    $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_amount'].'  plugins active</td></tr>';
+    }
+    if($decoded_scan['ssl']<1){
+      $out.='<tr><td class="inform server">Your server does not have a security certificate</td></tr>';
+    }
+    if($decoded_scan['scores']['server']>10){
+      $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
+    }
     $out.=('</table>');
 
     return $out;
+}
+
+#not yet used ... label issue not solved.
+function summaryrank($targ,$b1,$b2){
+  if ($targ >$b1){
+    $out='<tr><td class="inform wpcore">Your Wordpress core is out of date</td></tr>';
+  }elseif($targ >$b2){
+    $out.='<tr><td class="warn wpcore">Your Wordpress core is out of date</td></tr>';
+  }
 }

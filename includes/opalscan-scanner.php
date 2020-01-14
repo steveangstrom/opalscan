@@ -20,6 +20,7 @@ if(is_admin()) {
 			'php_version' =>0,
 			'sql_version' =>0,
       'sql_size'=>0,
+      'wp_URL' =>0,
 			'wp_version' =>0,
       'wp_version_available' =>0,
 			'ssl' =>0,
@@ -28,7 +29,7 @@ if(is_admin()) {
       'scores'=>array('total'=>0,'wp'=>0,'plugins'=>0,'server'=>0),
 		);
 
-
+    $scan_results["wp_URL"] = get_site_url();
 		/** ----------------- Get some information about the site --------------------------**/
   $scan_results["opalscanner_version"] = '0.1';
 
@@ -113,10 +114,7 @@ if(is_admin()) {
       }
 
       // is this a security plugin?
-      if ($slug == 'wordfence'){
-      //  $scan_results['wp_plugin_security'] = true;
-        $scan_results['wp_plugin_security'] =  detect_plugin_security($slug);
-      }
+        $scan_results['wp_plugin_security'] =  detect_plugin_security($slug, $scan_results['wp_plugin_security'] ); // check, if already populated keep it. 
 
       //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
     }// end foreach
@@ -160,114 +158,7 @@ if(is_admin()) {
     fclose($scanlog);
   }
 
-/* ----- currently unused  ----- */
-  function detect_plugin_security($slug){
-    $haystack = array(
-      'astra',
-      'all-in-one-wp-security-and-firewall',
-      'better-wp-security',
-      'defender-security',
-      'ninjafirewall',
-      'secupress',
-      'security-ninja',
-      'sucuri-scanner',
-      'wp-cerber',
-      'wp-simple-firewall',
-      'wordfence'
-    );
-
-    if (in_array($slug, $haystack)) {
-        return $slug;
-    }
-    return false;
-  }
-
-/* ----- Calculate Scores  ----- */
-
-  function calculate_wp_score($scan_results){
-    $score = 0;
-    $wp_version = $scan_results['wp_version'];
-    $wp_version_available = $scan_results['wp_version_available'];
-  //  $score = $wp_version_available - $wp_version * 10;
-
-    $score = version_compare($wp_version_available, $wp_version);
-    $score *=3;
-    return $score;
-  }
-
-
-  function calculate_plugin_score($scan_results){
-    //$score = $scan_results['plugin_amount'];
-    $score = 0;
-
-    $p_amount = $scan_results['plugin_amount'];
-    $p_outdated = $scan_results['plugin_outdated'];
-    $p_noupdate = $scan_results['plugin_noupdates'];
-    $p_active = $scan_results['plugin_active_amount'];
-
-    if ($p_amount >10){
-      $score += $p_amount -10;
-    }
-
-    if ($p_outdated >0){
-      $score += $p_outdated * 2;
-    }
-
-    if ($p_noupdate >0){
-     $score += $p_noupdate * 2;
-    }
-
-    if ($p_amount > $p_active){
-      $score += $p_amount - $p_active; // inactive plugins
-    }
-    return $score;
-  }
 
 
 
-  function calculate_server_score($scan_results){
-
-  /*  $score = 0;
-    $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
-
-    $ssl = $scan_results['ssl'];
-    if ($ssl <1){ $score = 10;}*/
-
-    if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-      return 50;
-    }
-    if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-      return 30;
-    }
-    if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-      return 20;
-    }
-    if (version_compare(PHP_VERSION, '7.3.0', '<')) {
-      return  10;
-    }
-    return 0;
-  }
-
-}
-
-function fileSizeInfo($filesize) {
-    $bytes = array('KB', 'KB', 'MB', 'GB', 'TB');
-    if ($filesize < 1024)
-        $filesize = 1;
-    for ($i = 0; $filesize > 1024; $i++)
-        $filesize /= 1024;
-
-    $dbSizeInfo['size'] = round($filesize, 3);
-    $dbSizeInfo['type'] = $bytes[$i];
-
-    return $dbSizeInfo;
-}
-
-function calculate_database_size() {
-    global $wpdb;
-    $dbsize = 0;
-    $rows = $wpdb->get_results("SHOW table STATUS");
-    foreach($rows as $row)
-        $dbsize += $row->Data_length + $row->Index_length;
-    return fileSizeInfo($dbsize);
 }
