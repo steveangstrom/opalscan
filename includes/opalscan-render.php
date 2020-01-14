@@ -230,7 +230,6 @@ function opalscan_render_summarytable($decoded_scan){
     }
 
     $out.=('</table>');
-    $out.=('<p><a data-tab="opalreport" class="opal_tabber_link">View the full detailed Report</a></p>');
-    $out.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
+
     return $out;
 }

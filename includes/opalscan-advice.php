@@ -90,5 +90,7 @@ if ($score <70){
 
   $advice .= '<div class="opaladvice_wrap"><h2>Summary Report</h2><p>Here is a brief summary of the key issues we found</p></div>';
   $advice .= opalscan_render_summarytable($decoded_scan);
+  $advice.=('<p><a data-tab="opalreport" class="opal_tabber_link">View the full detailed Report</a></p>');
+  $advice.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
  return $advice ;
 }
