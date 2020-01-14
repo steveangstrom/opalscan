@@ -114,13 +114,11 @@ if(is_admin()) {
       }
 
       // is this a security plugin?
-        $scan_results['wp_plugin_security'] =  detect_plugin_security($slug, $scan_results['wp_plugin_security'] ); // check, if already populated keep it. 
+        $scan_results['wp_plugin_security'] =  detect_plugin_security($slug, $scan_results['wp_plugin_security'] ); // check, if already populated keep it.
 
       //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
     }// end foreach
 
-
-    //$scan_results['wp_plugin_security'] = detect_plugin_security($allPlugins);    //$plugin_security - not working yet.
 
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
     $scan_results["scanDate"] =  $today;
