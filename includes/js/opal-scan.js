@@ -16,8 +16,8 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
 $(document).on('click','.opalsend', function(e) {
   console.log ('send');
   doReportMail();
-  //$('#opalscanbarholder').addClass("lds-hourglass");
-
+    $('.opalspinnerlocation').addClass("lds-hourglass");
+    $('.bigbutton.opalsend').addClass("sendingmail");
 })
 
 function doReportMail(){
@@ -30,6 +30,8 @@ function doReportMail(){
       },
       success:function(data) {
           console.log(data);
+        $('.opalspinnerlocation').removeClass("lds-hourglass");
+        $('.bigbutton.opalsend').removeClass("sendingmail");
       },
       error: function(errorThrown){
           console.log(errorThrown);
@@ -70,7 +72,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg">
         success:function(data) {
         clearTimeout(statustimer); // stop looking for status.
         $('.opalsend').removeClass('opalhide');
-        $('.opalsend').addClass('logpresent');// there should be a log available to send if success. 
+        $('.opalsend').addClass('logpresent');// there should be a log available to send if success.
         $('#opalalertaudio')[0].play();
         //  console.log(data);
         $('.opal_status ').remove();

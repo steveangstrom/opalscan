@@ -46,6 +46,14 @@
   content: "\f465";
 }
 
+.wp-core-ui .button.bigbutton.opalsend.logpresent.sendingmail,
+.wp-core-ui .button.bigbutton.opalsend.logpresent.sendingmail:hover{
+  background: #a2c8a8!important;
+  border-color: #a2c8a8;
+  color:#4dA254;
+  cursor: wait;
+}
+
 
 /******************************/
 
