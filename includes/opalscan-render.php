@@ -126,8 +126,11 @@ if(is_admin()) { // make sure, the following code runs only in the back end
         $out.= '<td>'.$updstatus.'</td></tr>';
     }
       $out.=('</table>');
-      $out.='</div>'; //  END OF report pane
+      $out.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
+      $out.=('<p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to '.get_option('admin_email').'</p>');
+      $out.=('<p><a data-tab="opalreport" class="opal_tabber_link">View the full detailed Report</a></p>');
 
+      $out.='</div>'; //  END OF report pane
 
 
       # if this is a display of an old log then print it, otherwise we are in an AJAX situation, so return it.
