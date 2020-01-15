@@ -38,8 +38,8 @@ function calculate_wp_score($scan_results){
     $score = 0;
     $wp_version = $scan_results['wp_version'];
     $wp_version_available = $scan_results['wp_version_available'];
-    //$score = op_version_difference($wp_version_available,$wp_version);
-    $score = op_version_difference('7.0.1','5.2');
+    $score = op_version_difference($wp_version_available,$wp_version);
+    //$score = op_version_difference('7.0.1','5.2');
     $score *= 100;
     $score = $score>100 ? 100 : $score;
   //  $score = version_compare($wp_version_available, $wp_version);
