@@ -33,7 +33,23 @@ function opal_do_score($decoded_scan){
     return $score;
   }
 
-function calculate_server_score($scan_results){
+
+function calculate_wp_score($scan_results){
+    $score = 0;
+    $wp_version = $scan_results['wp_version'];
+    $wp_version_available = $scan_results['wp_version_available'];
+    //$score = op_version_difference($wp_version_available,$wp_version);
+    $score = op_version_difference('7.0.1','5.2');
+    $score *= 100;
+    $score = $score>100 ? 100 : $score;
+  //  $score = version_compare($wp_version_available, $wp_version);
+    //$score *=3;
+    return $score;
+}
+
+
+
+function calculate_serverPHP_score($scan_results){
 
 /*  $score = 0;
   $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
@@ -56,17 +72,6 @@ function calculate_server_score($scan_results){
   return 0;
 }
 
-
-function calculate_wp_score($scan_results){
-  $score = 0;
-  $wp_version = $scan_results['wp_version'];
-  $wp_version_available = $scan_results['wp_version_available'];
-//  $score = $wp_version_available - $wp_version * 10;
-
-  $score = version_compare($wp_version_available, $wp_version);
-  $score *=3;
-  return $score;
-}
 
 
   function calculate_plugin_score($scan_results){
@@ -139,4 +144,18 @@ function detect_plugin_security($slug, $current=''){
       return $slug;
   }
 
+}
+
+function op_version_difference($available, $current){
+  // a cheap version compare. uses string subtraction for first two numbers. array only if revision exists.
+  $availableA = explode(".",$available);
+  $currentA = explode(".",$current);
+
+  $diff=$available-$current;
+  if (array_key_exists('2',$availableA) && $diff ==0){
+    # if theres a Revision then calculate it.
+
+    return ($availableA[2] - $currentA[2])*0.01;
+  }
+  return   $diff;
 }

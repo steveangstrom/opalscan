@@ -52,11 +52,11 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
 
    /*$wpstatus = 'OK';
-    if ($decoded_scan['scores']['wp']>0){$wpstatus = 'Attention';}
-    if ($decoded_scan['scores']['wp']>10){$wpstatus = 'Urgent';}
+    if ($decoded_scan['scores']['wpcore']>0){$wpstatus = 'Attention';}
+    if ($decoded_scan['scores']['wpcore']>10){$wpstatus = 'Urgent';}
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td>'.$wpstatus.'</td></tr>');
 */
-    $out.=opal_rendertablerow('Wordpress Core Version',$decoded_scan['wp_version'],$decoded_scan['scores']['wp'], 0, 10 );
+    $out.=opal_rendertablerow('Wordpress Core Version',$decoded_scan['wp_version'],$decoded_scan['scores']['wpcore'], 0, 10 );
 
     if (strlen($decoded_scan['wp_plugin_security'])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
     $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
@@ -84,8 +84,8 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.=('<tr><td>Plug-ins Abandoned</td><td>'.$decoded_scan['plugin_noupdates'].'</td><td>'.$pabinstatus.'</td></tr>');
 
     $phpstatus = 'OK';
-    if ($decoded_scan['scores']['server']>10){$phpstatus = 'Attention';}
-    if ($decoded_scan['scores']['server']>20){$phpstatus = 'Urgent';}
+    if ($decoded_scan['scores']['serverPHP']>10){$phpstatus = 'Attention';}
+    if ($decoded_scan['scores']['serverPHP']>20){$phpstatus = 'Urgent';}
     $out.=('<tr><td>Web Server PHP</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>'.$phpstatus.'</td></tr>');
 
     $sqlstatus = 'OK';
@@ -217,7 +217,7 @@ function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
 function opalscan_render_summarytable($decoded_scan){
     $out=('<table class="opalscan_results_table opalbigtable">');
 
-    $targ = $decoded_scan['scores']['wp'];
+    $targ = $decoded_scan['scores']['wpcore'];
     if ($targ >2){
       $out.='<tr><td class="inform wpcore">Your Wordpress core is out of date</td></tr>';
     }elseif($targ >5){
@@ -239,7 +239,7 @@ function opalscan_render_summarytable($decoded_scan){
     if($decoded_scan['ssl']<1){
       $out.='<tr><td class="inform server">Your server does not have a security certificate</td></tr>';
     }
-    if($decoded_scan['scores']['server']>10){
+    if($decoded_scan['scores']['serverPHP']>10){
       $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
     }
     $out.=('</table>');

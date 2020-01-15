@@ -26,12 +26,12 @@ if(is_admin()) {
 			'ssl' =>0,
       'allPlugins'=>'',
       'wp_plugin_security'=>'',
-      'scores'=>array('total'=>0,'wp'=>0,'plugins'=>0,'server'=>0),
+      'scores'=>array(),
 		);
 
     $scan_results["wp_URL"] = get_site_url();
 		/** ----------------- Get some information about the site --------------------------**/
-  $scan_results["opalscanner_version"] = '0.1';
+    $scan_results["opalscanner_version"] = '0.1';
 
     $allPlugins = get_plugins(); // associative array of all installed plugins
     $activePlugins = get_option('active_plugins'); // simple array of active plugins
@@ -124,9 +124,9 @@ if(is_admin()) {
     $scan_results["scanDate"] =  $today;
 
     /* ----- populate the log with the calculated and weighted scores as a cache ----- */
-    $scan_results['scores']['wp'] = calculate_wp_score($scan_results);
+    $scan_results['scores']['wpcore'] = calculate_wp_score($scan_results);
     $scan_results['scores']['plugins'] = calculate_plugin_score($scan_results);
-    $scan_results['scores']['server'] = calculate_server_score($scan_results);
+    $scan_results['scores']['serverPHP'] = calculate_serverPHP_score($scan_results);
 
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
     unlink(plugin_dir_path( __DIR__ ) . 'reports/scanstatus.txt'); // empty the scan status file.
