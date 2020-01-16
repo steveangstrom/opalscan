@@ -42,6 +42,7 @@ function calculate_wp_score($scan_results){
     //$score = op_version_difference('7.0.1','5.2');
     $score *= 100;
     $score = $score>100 ? 100 : $score;
+    $score = 100-$score;
   //  $score = version_compare($wp_version_available, $wp_version);
     //$score *=3;
     return $score;
@@ -86,6 +87,48 @@ function calculate_serverPHP_score($scan_results){
     $p_noupdate = $scan_results['plugin_noupdates'];
     $p_active = $scan_results['plugin_active_amount'];
 
+    switch(true){ // score the amount of plugins
+      case ($p_amount <15):
+        $pa_score=100;
+        break;
+      case ($p_amount <25):
+        $pa_score=90;
+        break;
+      case ($p_amount <30):
+        $pa_score=70;
+        break;
+      case ($p_amount <40):
+        $pa_score=35;
+        break;
+      case ($p_amount <50):
+        $pa_score=10;
+        break;
+      default:
+        $pa_score = 0;
+    }
+    $scan_results['scores']['plugins_active'] = $pa_score;
+
+    switch(true){ // score the outdated of plugins
+      case ($p_outdated <1):
+        $po_score=100;
+        break;
+      case ($p_outdated <3):
+        $po_score=90;
+        break;
+      case ($p_outdated <6):
+        $po_score=70;
+        break;
+      case ($p_outdated <9):
+        $po_score=35;
+        break;
+      case ($p_outdated <11):
+        $po_score=10;
+        break;
+      default:
+        $po_score = 0;
+    }
+      $scan_results['scores']['plugins_out'] = $pa_score;
+/*
     if ($p_amount >10){
       $score += $p_amount -10;
     }
@@ -99,9 +142,10 @@ function calculate_serverPHP_score($scan_results){
     }
 
     if ($p_amount > $p_active){
-      $score += $p_amount - $p_active; // inactive plugins
+      $score += $p_amount - $p_active;
     }
-    return $score;
+    */
+    return $scan_results;
   }
 
 

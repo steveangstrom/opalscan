@@ -125,7 +125,7 @@ if(is_admin()) {
 
     /* ----- populate the log with the calculated and weighted scores as a cache ----- */
     $scan_results['scores']['wpcore'] = calculate_wp_score($scan_results);
-    $scan_results['scores']['plugins'] = calculate_plugin_score($scan_results);
+    $scan_results = calculate_plugin_score($scan_results);
     $scan_results['scores']['serverPHP'] = calculate_serverPHP_score($scan_results);
 
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport

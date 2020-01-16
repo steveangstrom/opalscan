@@ -20,10 +20,10 @@ if(is_admin()) {
       $out .= '<p>Most recent scan results</p>';
       $out .=  opalscan_render_summarytable($decoded_scan);
     }else{
-      $url=admin_url('admin.php?page=opal-site-scan');
-      $out .= '<p><a href="'.$url.'" class="button">Perform a Scan</a></p>';
+        $out .= '<p>Your site needs to be scanned</p>';
     }
-
+    $url=admin_url('admin.php?page=opal-site-scan');
+    $out .= '<a href="'.$url.'" class="button">Perform a Scan</a>';
     echo $out;
   }
 }
