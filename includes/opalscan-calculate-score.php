@@ -5,14 +5,14 @@ calculate individual scores for :
 > wp Core version lagging too far behing latest.
 > wp security plugin detected
 
-> wp plugins total (too many?)
-> wp plugins inactive (too many?)
+> wp plugins total
+> wp plugins inactive
 > wp plugins not at the latest version
 > wp plugins abandoned by author
 > wp plugins not upto date
 
 > server PHP version
-> Server SQL version
+> Server SQL version - not used.
 > Server SSL cert.
 
 calculate total score, WP score, Plugins score, Server score.
@@ -143,7 +143,7 @@ function calculate_server_score($scan_results){
         $pa_score=90;
         break;
       case ($p_amount <30):
-        $pa_score=70;
+        $pa_score=50;
         break;
       case ($p_amount <40):
         $pa_score=35;
@@ -160,37 +160,37 @@ function calculate_server_score($scan_results){
       case ($p_outdated <1):
         $po_score=100;
         break;
-      case ($p_outdated <3):
+      case ($p_outdated <4):
         $po_score=90;
         break;
-      case ($p_outdated <6):
+      case ($p_outdated <7):
         $po_score=70;
         break;
-      case ($p_outdated <9):
-        $po_score=35;
+      case ($p_outdated <10):
+        $po_score=50;
         break;
-      case ($p_outdated <11):
+      case ($p_outdated <14):
         $po_score=10;
         break;
       default:
         $po_score = 0;
     }
-      $scan_results['scores']['plugins_outdated'] = $pa_score;
+      $scan_results['scores']['plugins_outdated'] = $po_score;
 
     switch(true){ // score the outdated of plugins
       case ($p_noupdate <1):
         $pn_score=100;
         break;
-      case ($p_noupdate <3):
+      case ($p_noupdate <4):
         $pn_score=90;
         break;
-      case ($p_noupdate <6):
+      case ($p_noupdate <8):
+        $pn_score=80;
+        break;
+      case ($p_noupdate <12):
         $pn_score=70;
         break;
-      case ($p_noupdate <9):
-        $pn_score=35;
-        break;
-      case ($p_noupdate <11):
+      case ($p_noupdate <15):
         $pn_score=10;
         break;
       default:

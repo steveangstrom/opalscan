@@ -218,40 +218,54 @@ function opalscan_render_summarytable($decoded_scan){
     $out=('<table class="opalscan_results_table opalbigtable">');
 
     $targ = $decoded_scan['scores']['wpcore'];
-    if ($targ >2){
+    if ($targ >80 && $targ <99){
       $out.='<tr><td class="inform wpcore">Your Wordpress core is out of date</td></tr>';
-    }elseif($targ >5){
-      $out.='<tr><td class="warn wpcore">Your Wordpress core is out of date</td></tr>';
+    }elseif($targ <79){
+      $out.='<tr><td class="warn wpcore">Your Wordpress core is very out of date</td></tr>';
     }
 
-    if (strlen($decoded_scan['wp_plugin_security'])<2){
+    if (strlen($decoded_scan['wp_plugin_security'])<99){
       $out.='<tr><td class="inform wpcore">Your Wordpress does not seem to have a security plugin</td></tr>';
     }
-    if($decoded_scan['plugin_outdated']>1){
-    $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_outdated'].' outdated plugins</td></tr>';
+    # SSL summary
+    $ssl = $decoded_scan['scores']['serverSSL'];
+    if($ssl>70 && $ssl<90){
+      $out.='<tr><td class="inform server">Your security certificate has problems</td></tr>';
+    }elseif($ssl<70){
+      $out.='<tr><td class="warn server">Your security certificate has major problems</td></tr>';
     }
-    if($decoded_scan['plugin_noupdates']>1){
+
+    $plugins_active = $decoded_scan['scores']['plugins_active'];
+      if($plugins_active>50 && $plugins_active<80){
+      $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_amount'].'  plugins active</td></tr>';
+    }elseif($plugins_active<50){
+      $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_amount'].'  plugins active, that is too many</td></tr>';
+    }
+
+    $plugins_outdated= $decoded_scan['scores']['plugins_outdated'];
+      if($plugins_outdated>50 && $plugins_outdated<80){
+      $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_outdated'].' plugins needing aaaa updates</td></tr>';
+    }elseif($plugins_outdated<50){
+      $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_outdated'].' plugins needing updates, that is too many</td></tr>';
+    }
+
+    $plugins_abandoned= $decoded_scan['scores']['plugins_abandoned'];
+    if($plugins_abandoned>50 && $plugins_abandoned<90){
     $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td></tr>';
+    }elseif($plugins_abandoned<50){
+      $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td></tr>';
     }
-    if($decoded_scan['plugin_amount'] >15){
-    $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_amount'].'  plugins active</td></tr>';
-    }
-    if($decoded_scan['ssl']<1){
-      $out.='<tr><td class="inform server">Your server does not have a security certificate</td></tr>';
-    }
-    if($decoded_scan['scores']['serverPHP']>10){
+
+
+    $serverPHP= $decoded_scan['scores']['serverPHP'];
+    if($serverPHP>50 && $serverPHP<100){
       $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
+    }elseif($serverPHP<50){
+      $out.='<tr><td class="warn server">Your server core components are very outdated</td></tr>';
     }
+
+
     $out.=('</table>');
 
     return $out;
-}
-
-#not yet used ... label issue not solved.
-function summaryrank($targ,$b1,$b2){
-  if ($targ >$b1){
-    $out='<tr><td class="inform wpcore">Your Wordpress core is out of date</td></tr>';
-  }elseif($targ >$b2){
-    $out.='<tr><td class="warn wpcore">Your Wordpress core is out of date</td></tr>';
-  }
 }
