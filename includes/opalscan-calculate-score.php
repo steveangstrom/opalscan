@@ -53,8 +53,8 @@ function calculate_wpsecurity_score($ssl){
   return   $sslscore;
 }
 
-function calculate_serverPHP_score($scan_results){
-
+function calculate_server_score($scan_results){
+  $sql_version = $scan_results['sql_version'];
 /*  $score = 0;
   $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
 
@@ -73,8 +73,32 @@ function calculate_serverPHP_score($scan_results){
   if (version_compare(PHP_VERSION, '7.3.0', '<')) {
     $PHPscore =   90;
   }
-
   $scan_results['scores']['serverPHP'] = $PHPscore;
+
+  $sql_size = $scan_results['sql_size'];
+  switch(true){ // score the outdated of plugins
+    case ($sql_size <15):
+      $DBscore=100;
+      break;
+    case ($sql_size <30):
+      $DBscore=90;
+      break;
+    case ($sql_size <60):
+      $DBscore=60;
+      break;
+    case ($sql_size <90):
+      $DBscore=40;
+      break;
+    default:
+      $DBscore = 0;
+  }
+  $scan_results['scores']['serverDBsize'] = $DBscore;
+
+  $ssl = $scan_results['ssl'];
+  if ($ssl >=1){ $SSLscore = 100; }else { $SSLscore = 0;}
+
+  $scan_results['scores']['serverSSL'] = $SSLscore;
+
   return $scan_results;
 }
 
