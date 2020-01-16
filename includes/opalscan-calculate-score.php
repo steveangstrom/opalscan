@@ -107,11 +107,11 @@ function calculate_server_score($scan_results){
       case ($days_to_expiry <15):
         $SSL_score=30;
         break;
-      case ($days_to_expiry <30):
+      case ($days_to_expiry <20):
         $SSL_score=50;
         break;
-      case ($days_to_expiry <60):
-        $SSL_score=60;
+      case ($days_to_expiry <30):
+        $SSL_score=80;
         break;
       default:
         $SSL_score = 100;
