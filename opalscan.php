@@ -59,29 +59,8 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
 			echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.
 
-			SSLcheck();
 			 opalscan_show_scan(); // show the previous scan on load.
 			echo('<hr>');
 			echo('</div>');// close the main edit page pane
 		}
-}
-
-
-function SSLcheck(){
-	$https_url_with = site_url( null, 'https' );
-	$https_url_without = explode("://",$https_url_with);
-	$https_url_without = $https_url_without[1];
-	$orignal_parse = parse_url($https_url_with, PHP_URL_HOST);
-
-	$get = stream_context_create(array("ssl" => array("capture_peer_cert" => TRUE)));
-  $read = stream_socket_client("ssl://".$orignal_parse.":443", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $get);
-	if(!$read){
-    $alerts[] = "ERROR: Unable to check SSL certificate validity.";
-  }else {
-		$cert = stream_context_get_params($read);
-		$certinfo = openssl_x509_parse($cert['options']['ssl']['peer_certificate']);
-		print_r($certinfo);
-	}
-
-
 }

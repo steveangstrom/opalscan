@@ -94,10 +94,32 @@ function calculate_server_score($scan_results){
   }
   $scan_results['scores']['serverDBsize'] = $DBscore;
 
-  $ssl = $scan_results['ssl'];
-  if ($ssl >=1){ $SSLscore = 100; }else { $SSLscore = 0;}
 
-  $scan_results['scores']['serverSSL'] = $SSLscore;
+  $ssl = $scan_results['ssl'];
+  if ($ssl >=1){
+    $SSL_score = 100;
+    $days_to_expiry = SSLcheckdays(); // if we are on https then see if you can get the cert and expiry - note may fail locally
+
+    switch(true){ // score the outdated of plugins
+      case ($days_to_expiry <1):
+        $SSL_score=10;
+        break;
+      case ($days_to_expiry <15):
+        $SSL_score=30;
+        break;
+      case ($days_to_expiry <30):
+        $SSL_score=50;
+        break;
+      case ($days_to_expiry <60):
+        $SSL_score=60;
+        break;
+      default:
+        $SSL_score = 100;
+    }
+   }else {
+     $SSLscore = 0;
+   }
+  $scan_results['scores']['serverSSL'] = $SSL_score;
 
   return $scan_results;
 }
@@ -257,4 +279,30 @@ function op_version_difference($available, $current){
     return ($availableA[2] - $currentA[2])*0.01;
   }
   return   $diff;
+}
+
+function SSLcheckdays(){
+	$https_url_with = site_url( null, 'https' );
+	$https_url_without = explode("://",$https_url_with);
+	$https_url_without = $https_url_without[1];
+	$orignal_parse = parse_url($https_url_with, PHP_URL_HOST);
+//echo STREAM_CLIENT_CONNECT;
+	$get = stream_context_create(array("ssl" => array("capture_peer_cert" => TRUE)));
+
+  $read = stream_socket_client("ssl://".$orignal_parse.":443", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $get);
+	if(!$read){
+  //  echo 'ERROR: Unable to check SSL certificate validity.';
+  }else{
+		$cert = stream_context_get_params($read);
+		$certinfo = openssl_x509_parse($cert['options']['ssl']['peer_certificate']);
+    /*echo "<pre>";
+		print_r($certinfo);
+    echo "</pre>";*/
+    $localts = $certinfo['validTo_time_t'];
+   // echo 'valid until '.$localts;
+		$days_to_expiry = $localts - time();
+		$days_to_expiry = $days_to_expiry / 60 / 60 / 24;
+		// echo 'days to expiry  '.$days_to_expiry;
+		return $days_to_expiry;
+	}
 }
