@@ -41,8 +41,9 @@ function doReportMail(){
 } /* mail */
 
 /*****************/
+//$('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'scan-complete.mp3" type="audio/mpeg"><source src="'+path+'scan-complete.wav" type="audio/wav"></audio>').appendTo('body');
 
-$('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'scan-complete.mp3" type="audio/mpeg"><source src="'+path+'scan-complete.wav" type="audio/wav"></audio>').appendTo('body');
+$('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audio/mpeg"><source src="'+path+'scan-complete.wav" type="audio/wav"></audio>').appendTo('body');
 
 
   $(document).on('click','.opalscannow, .opaldoscan', function(e) {

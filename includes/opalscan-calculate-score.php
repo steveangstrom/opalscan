@@ -55,25 +55,19 @@ function calculate_wpsecurity_score($ssl){
 
 function calculate_serverPHP_score($scan_results){
 
-/*  $score = 0;
-  $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
-
-  $ssl = $scan_results['ssl'];
-  if ($ssl <1){ $score = 10;}*/
-
   if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-    return 50;
+    return 10;
   }
   if (version_compare(PHP_VERSION, '5.6.0', '<')) {
     return 30;
   }
   if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-    return 20;
+    return 80;
   }
   if (version_compare(PHP_VERSION, '7.3.0', '<')) {
-    return  10;
+    return  90;
   }
-  return 0;
+  return 100;
 }
 
 
@@ -127,24 +121,50 @@ function calculate_serverPHP_score($scan_results){
       default:
         $po_score = 0;
     }
-      $scan_results['scores']['plugins_out'] = $pa_score;
-/*
-    if ($p_amount >10){
-      $score += $p_amount -10;
-    }
+      $scan_results['scores']['plugins_outdated'] = $pa_score;
 
-    if ($p_outdated >0){
-      $score += $p_outdated * 2;
+    switch(true){ // score the outdated of plugins
+      case ($p_noupdate <1):
+        $pn_score=100;
+        break;
+      case ($p_noupdate <3):
+        $pn_score=90;
+        break;
+      case ($p_noupdate <6):
+        $pn_score=70;
+        break;
+      case ($p_noupdate <9):
+        $pn_score=35;
+        break;
+      case ($p_noupdate <11):
+        $pn_score=10;
+        break;
+      default:
+        $pn_score = 0;
     }
+      $scan_results['scores']['plugins_abandoned'] = $pn_score;
 
-    if ($p_noupdate >0){
-     $score += $p_noupdate * 2;
+$p_inactive = $p_amount - $p_active;
+    switch(true){ // score the outdated of plugins
+      case ($p_inactive <1):
+        $pi_score=100;
+        break;
+      case ($p_inactive <3):
+        $pi_score=85;
+        break;
+      case ($p_inactive <7):
+        $pi_score=70;
+        break;
+      case ($p_inactive <15):
+        $pi_score=60;
+        break;
+      case ($p_inactive <20):
+        $pi_score=30;
+        break;
+      default:
+        $pi_score = 0;
     }
-
-    if ($p_amount > $p_active){
-      $score += $p_amount - $p_active;
-    }
-    */
+      $scan_results['scores']['plugins_inactive'] = $pi_score;
     return $scan_results;
   }
 
