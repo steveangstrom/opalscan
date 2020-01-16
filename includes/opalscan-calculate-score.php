@@ -55,19 +55,27 @@ function calculate_wpsecurity_score($ssl){
 
 function calculate_serverPHP_score($scan_results){
 
+/*  $score = 0;
+  $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
+
+  $ssl = $scan_results['ssl'];
+  if ($ssl <1){ $score = 10;}*/
+  $PHPscore =  100;
   if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-    return 10;
+    $PHPscore = 10;
   }
   if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-    return 30;
+    $PHPscore =  30;
   }
   if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-    return 80;
+    $PHPscore =  80;
   }
   if (version_compare(PHP_VERSION, '7.3.0', '<')) {
-    return  90;
+    $PHPscore =   90;
   }
-  return 100;
+
+  $scan_results['scores']['serverPHP'] = $PHPscore;
+  return $scan_results;
 }
 
 
