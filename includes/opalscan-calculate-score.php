@@ -47,7 +47,10 @@ function calculate_wp_score($scan_results){
     return $score;
 }
 
-
+function calculate_wpsecurity_score($ssl){
+  $sslscore= $ssl*100;
+  return   $sslscore;
+}
 
 function calculate_serverPHP_score($scan_results){
 

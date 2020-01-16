@@ -49,8 +49,8 @@ if(is_admin()) {
     $scan_results["wp_version_available"] = $obj->offers[0]->version;
     /*-----------*/
 
-		$scan_results["ssl"] =   is_ssl();
-
+    $ssl = $scan_results["ssl"] = is_ssl();
+    $scan_results['scores']['wpsecurity'] = calculate_wpsecurity_score($ssl);
 		/* get SQL version */
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$SQLversion = mysqli_get_server_info($connection);
