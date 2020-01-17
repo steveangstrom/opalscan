@@ -26,7 +26,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     if($livescan===false){
         $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
     }
-    $out.='<canvas id ="opalreportgraph" data-score="'.$score_total.'" width="250px" height="250px"></canvas>';# the speedo display
+    $out.='<canvas id ="opalreportgraph" data-score="'.$score_total.'" width="250px" height="200px"></canvas>';# the speedo display
 $out .='<div id="op_bar_wrapper">';
     $out .='<div id="score-secure" class="scorebar" data-score="'.$scores['security'].'"><div class="opbar"></div></div>';
     $out .='<div id="score-maintain" class="scorebar" data-score="'.$scores['maintenance'].'"><div class="opbar"></div></div>';

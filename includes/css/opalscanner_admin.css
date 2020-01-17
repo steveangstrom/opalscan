@@ -181,9 +181,9 @@ left:0;
 }
 .opaladvice_wrap{
   clear:both;
-  padding-top:20px;
   margin: 20px 0 0 0 ;
   border-top:4px solid #f1f1f1;
+  padding:20px;
 }
 .opalscore_wrap .deco{
   width:10%;height:20px;
@@ -192,18 +192,15 @@ left:0;
   margin: 0;
 }
 
-.opalsitescannerpage .opalscore_wrap .s10{background: #ff021a;}
-.opalsitescannerpage .opalscore_wrap .s20{background: #ff3e06;}
-.opalsitescannerpage .opalscore_wrap .s30{background: #ff8103;}
-.opalsitescannerpage .opalscore_wrap .s40{background: #ffad02;}
-.opalsitescannerpage .opalscore_wrap .s50{background: #ffc702;}
-.opalsitescannerpage .opalscore_wrap .s60{background: #ffda00;}
-.opalsitescannerpage .opalscore_wrap .s70{background: #e8dd00;}
-.opalsitescannerpage .opalscore_wrap .s80{background: #d6e300;}
-.opalsitescannerpage .opalscore_wrap .s90{background: #98eb00;}
-.opalsitescannerpage .opalscore_wrap .s100{background: #50f800;}
-
-.opalsitescannerpage .scorebar{width:100%;max-width:300px;background:#dfdfdf;border-radius: 5px;height:30px;margin-bottom:5px;position: relative;}
+.opalsitescannerpage .scorebar{
+  width:100%;
+  max-width: 1000px;
+  background:#dfdfdf;
+  border-radius: 5px;
+  height:30px;
+  margin-bottom:5px;
+  position: relative;
+}
 .opalsitescannerpage .scorebar .opbar{
   display:block;
   position: absolute;box-sizing: border-box;
@@ -233,10 +230,11 @@ left:0;
   width: 30%;
   padding-right:10px;
   box-sizing: border-box;
+  min-width:300px;
  }
 #op_bar_wrapper{
-  padding: 75px 20px;
-  float: right;
+  padding: 50px 20px;
+  float: left;
   width: 68%;
   box-sizing: border-box;
 }
