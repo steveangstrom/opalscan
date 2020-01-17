@@ -228,11 +228,17 @@ left:0;
 .opalsitescannerpage #score-other .opbar:after{
     content:'STABILITY';
 }
-#opalreportgraph{float: left;min-width: 27%;padding-right:10px }
-#op_bar_wrapper{
-  padding:20px 0;
+#opalreportgraph{
   float: left;
-  min-width: 70%;
+  width: 30%;
+  padding-right:10px;
+  box-sizing: border-box;
+ }
+#op_bar_wrapper{
+  padding: 75px 20px;
+  float: right;
+  width: 68%;
+  box-sizing: border-box;
 }
 .opbar.bad{ background:#df3e3e!important;}
 .opbar.ok{ background:#dfcc25!important;}

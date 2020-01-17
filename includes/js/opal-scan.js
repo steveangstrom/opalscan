@@ -143,7 +143,7 @@ function watchstatus(){
   //  console.log(c);
     var ctx = c.getContext("2d");
     ctx.beginPath();
-    ctx.arc(75, 75, 50, 0, 2 * Math.PI);
+    ctx.arc(c.width/2, c.height/2, 75, 0, 2 * Math.PI);
     ctx.lineWidth = 15;
     ctx.strokeStyle = '#dfdfdf';// grey bg/
     ctx.stroke();
@@ -154,7 +154,7 @@ function watchstatus(){
     var start = 2;
     var rating = rating * 1.72;
     end= start + (rating * Math.PI);
-    ctx.arc(75, 75, 50, start, end);
+    ctx.arc(c.width/2, c.height/2, 75, start, end);
     ctx.stroke();
 
     /****/
