@@ -12,6 +12,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $decoded_scan = json_decode($JSON_scan,true);
     $log_date = strtotime($decoded_scan['scanDate']['date']);
     $scores = opal_do_score($decoded_scan);
+
     $score_total=$scores['total'];
     # Display results
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">

@@ -26,9 +26,27 @@ function opal_do_score($decoded_scan){
   }
   $totalscore= round($total/$i);
 
-  $security_score=90;
-  $maint_score=50;
-  $other_score=0;
+  $security_score = (
+    $decoded_scan['scores']['wpsecurity'] +
+    $decoded_scan['scores']['wpcore'] +
+    $decoded_scan['scores']['abandoned'] +
+    $decoded_scan['scores']['plugins_outdated']+
+    $decoded_scan['scores']['serverSSL']
+    )/5;
+
+
+  $maint_score= (
+      $decoded_scan['scores']['wpcore'] +
+      $decoded_scan['scores']['plugins_active'] +
+      $decoded_scan['scores']['abandoned'] +
+      $decoded_scan['scores']['outdated']
+    )/4;
+
+
+  $other_score= (
+      $decoded_scan['scores']['serverPHP'] +
+      $decoded_scan['scores']['serverDBsize']
+    )/2;
 
   $scores['total']=$totalscore;
   $scores['security']=$security_score;
@@ -165,16 +183,16 @@ function calculate_server_score($scan_results){
       case ($p_outdated <1):
         $po_score=100;
         break;
-      case ($p_outdated <4):
+      case ($p_outdated <5):
         $po_score=90;
         break;
-      case ($p_outdated <7):
+      case ($p_outdated <9):
         $po_score=70;
         break;
-      case ($p_outdated <10):
+      case ($p_outdated <12):
         $po_score=50;
         break;
-      case ($p_outdated <14):
+      case ($p_outdated <16):
         $po_score=10;
         break;
       default:
