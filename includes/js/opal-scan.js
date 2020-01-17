@@ -3,6 +3,7 @@ var path = thescanobj.pluginpath+'includes/media/';
 
 var score = $('#opalreportgraph').attr('data-score');
 drawscorearc(score);
+op_dobars();
 /****** TABS ************/
 $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
   var tab_id = $(this).attr('data-tab');
@@ -81,6 +82,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audi
           }
           score = $('#opalreportgraph').attr('data-score');
           drawscorearc(score); // draw the speedo graph
+          op_dobars();
         },
         error: function(errorThrown){
             console.log(errorThrown);
@@ -161,6 +163,25 @@ function watchstatus(){
     ctx.textAlign = 'center';
     ctx.fillText(score, c.width/2, (c.height/2)+15);
 
+  }
+  function op_dobars(){
+    var sec_score = $('#score-secure').attr('data-score');
+    $('#score-secure .opbar').css({"width": sec_score+'%'});
+    $('#score-secure .opbar').addClass(op_barcol(sec_score));
+
+    var maint_score = $('#score-maintain').attr('data-score');
+    $('#score-maintain .opbar').css({"width": maint_score+'%'});
+    $('#score-maintain .opbar').addClass(op_barcol(maint_score));
+
+    var other_score = $('#score-other').attr('data-score');
+    $('#score-other .opbar').css({"width": other_score+'%'});
+    $('#score-other .opbar').addClass(op_barcol(other_score));
+  }
+
+  function op_barcol($score){
+    if ($score <60){return 'bad' }
+    if ($score >=60 && $score<80){return 'ok' }
+    if ($score >=80){return 'good' }
   }
 
 });

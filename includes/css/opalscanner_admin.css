@@ -204,27 +204,35 @@ left:0;
 .opalsitescannerpage .opalscore_wrap .s100{background: #50f800;}
 
 .opalsitescannerpage .scorebar{width:100%;max-width:300px;background:#dfdfdf;border-radius: 5px;height:30px;margin-bottom:5px;position: relative;}
-.opalsitescannerpage .scorebar:after{
+.opalsitescannerpage .scorebar .opbar{
   display:block;
   position: absolute;box-sizing: border-box;
   content:'';
   color:#ffEDEF;
-  width:50%;height:100%;
-  background:#df3e3e;top:0;left: 0;
+  width:100%;
+  height:100%;
+  background:#dadada;
+  top:0;left: 0;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding:5px 5px 5px 15px;
   text-align: left;
+  transition:all 0.9s;
 }
-.opalsitescannerpage .scorebar.score-secure:after{
+.opalsitescannerpage #score-secure .opbar:after{
     content:'SECURITY';
 }
-.opalsitescannerpage .scorebar.score-maintain:after{
+.opalsitescannerpage #score-maintain .opbar:after{
     content:'MAINTENANCE';
 }
-.opalsitescannerpage .scorebar.score-other:after{
+.opalsitescannerpage #score-other .opbar:after{
     content:'STABILITY';
 }
+
+.opbar.bad{ background:#df3e3e!important;}
+.opbar.ok{ background:#dfcc25!important;}
+.opbar.good{ background-color:#49a41e!important;}
+
 /***** content styles *****/
 .opalscanner_results h2{font-size: 30px;font-weight: normal; line-height:normal; margin:20px 0 0.3em 0;}
 .opalscanner_results p{ line-height:normal; margin:0 0 0.7em 0;}

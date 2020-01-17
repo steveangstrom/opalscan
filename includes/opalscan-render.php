@@ -11,8 +11,8 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
     $decoded_scan = json_decode($JSON_scan,true);
     $log_date = strtotime($decoded_scan['scanDate']['date']);
-    $score = opal_do_score($decoded_scan);
-
+    $scores = opal_do_score($decoded_scan);
+    $score_total=$scores['total'];
     # Display results
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">
     <div class="opal_tab_bar noselect">
@@ -25,24 +25,24 @@ if(is_admin()) { // make sure, the following code runs only in the back end
         if($livescan===false){
             $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
         }
-    $out.='<canvas id ="opalreportgraph" data-score="'.$score.'" width="150px" height="150px"></canvas>';
-    $out .='<div class="scorebar score-secure"></div>';
-    $out .='<div class="scorebar score-maintain"></div>';
-    $out .='<div class="scorebar score-other"></div>';
+    $out.='<canvas id ="opalreportgraph" data-score="'.$score_total.'" width="150px" height="150px"></canvas>';
+    $out .='<div id="score-secure" class="scorebar" data-score="'.$scores['security'].'"><div class="opbar"></div></div>';
+    $out .='<div id="score-maintain" class="scorebar" data-score="'.$scores['maintenance'].'"><div class="opbar"></div></div>';
+    $out .='<div id="score-other" class="scorebar" data-score="'.$scores['other'].'"><div class="opbar"></div></div>';
 /****** top score and summary block *****/
     $out.='<div class="summary_wrap">';
 
       $out.='<div class="opalscore_wrap">
-        <div class = "opalscore score s'.round($score/10).'0"><span>SCORE '.$score.'%</span></div>
+        <div class = "opalscore score s'.round($score_total/10).'0"><span>SCORE '.$score_total.'%</span></div>
         <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50"></div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div></div>';
 
-    $out .= opal_summary($score);
+    $out .= opal_summary($score_total);
 
     $out.='</div>';#end summary wrapper
 
   /* --- describe plugin state verbally -----*/
   # this function is passed the entire decoded scan.
-    $out .= opal_advice($decoded_scan, $score);
+    $out .= opal_advice($decoded_scan, $score_total);
     $out.= '</div>';// end summary tab content
 
 

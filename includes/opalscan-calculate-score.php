@@ -19,26 +19,24 @@ calculate total score, WP score, Plugins score, Server score.
 */
 
 function opal_do_score($decoded_scan){
-  $i=0;
-  $total=0;
+  $i = $total=0;
   foreach ($decoded_scan['scores'] as $score){
     $total+=$score;
     $i++;
   }
-  $outscore = round($total/$i);
-    /*$score =100;
-    $wp_score = 0;
-    $server_score = 0;
+  $totalscore= round($total/$i);
 
-    # plugin score
-    $inactive_plugin_total = $decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount'];
-    $plugin_score = $decoded_scan['plugin_outdated'] + $decoded_scan['plugin_noupdates'] + ($decoded_scan['plugin_amount']/2) + ($inactive_plugin_total/2) ;
+  $security_score=90;
+  $maint_score=50;
+  $other_score=0;
 
-    # TOTAL UP THE SCORE AND DESCRIBE IT -----------------------
-    $score -= ($wp_score + $plugin_score +  $server_score);
-    $score = round($score);*/
-    return $outscore;
-  }
+  $scores['total']=$totalscore;
+  $scores['security']=$security_score;
+  $scores['maintenance']=$maint_score;
+  $scores['other']=$other_score;
+
+  return $scores;
+}
 
 
 function calculate_wp_score($scan_results){
