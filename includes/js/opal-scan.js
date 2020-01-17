@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
 var path = thescanobj.pluginpath+'includes/media/';
-
+drawscorearc(99);
 /****** TABS ************/
 $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
   var tab_id = $(this).attr('data-tab');
@@ -125,5 +125,50 @@ function watchstatus(){
   });
 } /* END DO status */
 
+
+  function drawscorearc(score){
+    var c = document.getElementById("opalreportgraph");
+    if (score===''){  return;}
+    var rating = score/100;
+    var ratingcolors=["rgb(223,62,62)","rgb(223,144,42)","rgb(73,164,44)" ];
+    switch(true){
+      case score <60:
+        var ratecol =0;
+        break;
+      case score <80:
+        var ratecol =1;
+        break;
+      case score <100:
+        var ratecol =2;
+        break;
+      default:
+        var ratecol =2;
+    }
+    var c = document.getElementById("opalreportgraph");
+    console.log(c);
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(75, 75, 50, 0, 2 * Math.PI);
+    ctx.lineWidth = 15;
+    ctx.strokeStyle = '#dfdfdf';// grey bg/
+    ctx.stroke();
+    /*****/
+    ctx.lineWidth = 6;
+    //ctx.strokeStyle = '#df3e3e';
+    ctx.strokeStyle = ratingcolors[ratecol];
+    ctx.beginPath();
+    var start = 2;
+    var rating = rating * 1.72;
+    end= start + (rating * Math.PI);
+    ctx.arc(75, 75, 50, start, end);
+    ctx.stroke();
+
+    /****/
+    ctx.font = '45px arial,helvetica';
+    ctx.fillStyle = ratingcolors[ratecol];
+    ctx.textAlign = 'center';
+    ctx.fillText(score, c.width/2, (c.height/2)+15);
+
+  }
 
 });
