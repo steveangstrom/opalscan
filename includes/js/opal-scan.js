@@ -127,7 +127,7 @@ function watchstatus(){
     var rating = score/100;
     var ratingcolors=["rgb(223,62,62)","rgb(223,144,42)","rgb(73,164,44)" ];
     switch(true){
-      case score <60:
+      case score <50:
         var ratecol =0;
         break;
       case score <80:
@@ -140,7 +140,7 @@ function watchstatus(){
         var ratecol =2;
     }
     var c = document.getElementById("opalreportgraph");
-    console.log(c);
+  //  console.log(c);
     var ctx = c.getContext("2d");
     ctx.beginPath();
     ctx.arc(75, 75, 50, 0, 2 * Math.PI);
@@ -179,8 +179,8 @@ function watchstatus(){
   }
 
   function op_barcol($score){
-    if ($score <60){return 'bad' }
-    if ($score >=60 && $score<80){return 'ok' }
+    if ($score <50){return 'bad' }
+    if ($score >=50 && $score<80){return 'ok' }
     if ($score >=80){return 'good' }
   }
 

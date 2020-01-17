@@ -22,16 +22,16 @@ if(is_admin()) { // make sure, the following code runs only in the back end
     $out.='<div id = "opalsummary" class= "opal_pane active">';
 
     $scandate = date('dS \o\f F Y g:i A', $log_date);
-        if($livescan===false){
-            $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
-        }
-    $out.='<canvas id ="opalreportgraph" data-score="'.$score_total.'" width="150px" height="150px"></canvas>';
+    if($livescan===false){
+        $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
+    }
+    $out.='<canvas id ="opalreportgraph" data-score="'.$score_total.'" width="150px" height="150px"></canvas>';# the speedo display
     $out .='<div id="score-secure" class="scorebar" data-score="'.$scores['security'].'"><div class="opbar"></div></div>';
     $out .='<div id="score-maintain" class="scorebar" data-score="'.$scores['maintenance'].'"><div class="opbar"></div></div>';
     $out .='<div id="score-other" class="scorebar" data-score="'.$scores['other'].'"><div class="opbar"></div></div>';
+
 /****** top score and summary block *****/
     $out.='<div class="summary_wrap">';
-
       $out.='<div class="opalscore_wrap">
         <div class = "opalscore score s'.round($score_total/10).'0"><span>SCORE '.$score_total.'%</span></div>
         <div class="deco s10"></div><div class="deco s20"></div><div class="deco s30"></div><div class="deco s40"></div><div class="deco s50"></div><div class="deco s60"></div><div class="deco s70"></div><div class="deco s80"></div><div class="deco s90"></div><div class="deco s100"></div></div>';
