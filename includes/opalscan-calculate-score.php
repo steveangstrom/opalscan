@@ -45,8 +45,9 @@ function opal_do_score($decoded_scan){
 
   $other_score= (
       $decoded_scan['scores']['serverPHP'] +
-      $decoded_scan['scores']['serverDBsize']
-    )/2;
+      $decoded_scan['scores']['serverDBsize'] +
+      $decoded_scan['scores']['serverSSL']
+    )/3;
 
   $scores['total']=$totalscore;
   $scores['security']=$security_score;
