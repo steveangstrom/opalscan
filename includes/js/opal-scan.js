@@ -43,11 +43,8 @@ function doReportMail(){
 } /* mail */
 
 /*****************/
-//$('<audio id="opalalertaudio"><source src="'+path+'notify.ogg" type="audio/ogg"><source src="'+path+'scan-complete.mp3" type="audio/mpeg"><source src="'+path+'scan-complete.wav" type="audio/wav"></audio>').appendTo('body');
 
 $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audio/mpeg"><source src="'+path+'scan-complete.wav" type="audio/wav"></audio>').appendTo('body');
-
-
   $(document).on('click','.opalscannow, .opaldoscan', function(e) {
     $('.opalspinnerlocation').addClass("lds-hourglass");
     $('.opalsend').addClass('opalhide'); // hide the send buttons while in action.
@@ -59,18 +56,15 @@ $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audi
     // We'll pass this variable to the PHP function
     var scan = 'startscan';
 
-/**************** AJAX FUNCTION ******************************************************************/
+/***** AJAX FUNCTION *******/
 
   function doScan(){
-    //  console.log('dis be path = '+thescanobj.pluginpath);
     var statustimer = window.setInterval(function(){  check_status();}, 250); // got check to see whats happening on the server.
-
       $.ajax({
         url: ajaxurl,
         data: {
             'action': 'opalscan_ajax_request',
             'scan' : scan,
-          //  'allPlugins' : allPlugins
         },
         success:function(data) {
         clearTimeout(statustimer); // stop looking for status.
@@ -81,15 +75,12 @@ $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audi
         $('.opal_status ').remove();
         $('.opalspinnerlocation').removeClass("lds-hourglass");
 
-      //  $( "#opalscan_displayarea" ).html(data); // this works with raw HTML data.
-
-          // removed for JSON reasons.
-          //console.log(data);
-
-            var structureddata = jQuery.parseJSON(data);
-            if (structureddata.scansuccess ==true){
-              $( "#opalscan_displayarea" ).html(structureddata.html);
-            }
+          var structureddata = jQuery.parseJSON(data);
+          if (structureddata.scansuccess ==true){
+            $( "#opalscan_displayarea" ).html(structureddata.html);
+          }
+          score = $('#opalreportgraph').attr('data-score');
+          drawscorearc(score); // draw the speedo graph
         },
         error: function(errorThrown){
             console.log(errorThrown);
