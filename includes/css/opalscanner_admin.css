@@ -203,6 +203,28 @@ left:0;
 .opalsitescannerpage .opalscore_wrap .s90{background: #98eb00;}
 .opalsitescannerpage .opalscore_wrap .s100{background: #50f800;}
 
+.opalsitescannerpage .scorebar{width:100%;max-width:300px;background:#dfdfdf;border-radius: 5px;height:30px;margin-bottom:5px;position: relative;}
+.opalsitescannerpage .scorebar:after{
+  display:block;
+  position: absolute;box-sizing: border-box;
+  content:'';
+  color:#ffEDEF;
+  width:50%;height:100%;
+  background:#df3e3e;top:0;left: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding:5px 5px 5px 15px;
+  text-align: left;
+}
+.opalsitescannerpage .scorebar.score-secure:after{
+    content:'SECURITY';
+}
+.opalsitescannerpage .scorebar.score-maintain:after{
+    content:'MAINTENANCE';
+}
+.opalsitescannerpage .scorebar.score-other:after{
+    content:'STABILITY';
+}
 /***** content styles *****/
 .opalscanner_results h2{font-size: 30px;font-weight: normal; line-height:normal; margin:20px 0 0.3em 0;}
 .opalscanner_results p{ line-height:normal; margin:0 0 0.7em 0;}

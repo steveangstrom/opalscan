@@ -26,7 +26,9 @@ if(is_admin()) { // make sure, the following code runs only in the back end
             $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
         }
     $out.='<canvas id ="opalreportgraph" data-score="'.$score.'" width="150px" height="150px"></canvas>';
-
+    $out .='<div class="scorebar score-secure"></div>';
+    $out .='<div class="scorebar score-maintain"></div>';
+    $out .='<div class="scorebar score-other"></div>';
 /****** top score and summary block *****/
     $out.='<div class="summary_wrap">';
 
