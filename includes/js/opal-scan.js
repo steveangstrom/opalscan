@@ -147,7 +147,6 @@ function watchstatus(){
     ctx.stroke();
     /*****/
     ctx.lineWidth = 6;
-    //ctx.strokeStyle = '#df3e3e';
     ctx.strokeStyle = ratingcolors[ratecol];
     ctx.beginPath();
     var start = 2;
@@ -157,7 +156,7 @@ function watchstatus(){
     ctx.stroke();
 
     /****/
-    ctx.font = '45px arial,helvetica';
+    ctx.font = '45px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif';
     ctx.fillStyle = ratingcolors[ratecol];
     ctx.textAlign = 'center';
     ctx.fillText(score, c.width/2, (c.height/2)+15);

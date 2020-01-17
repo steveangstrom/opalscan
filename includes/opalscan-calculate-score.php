@@ -19,7 +19,14 @@ calculate total score, WP score, Plugins score, Server score.
 */
 
 function opal_do_score($decoded_scan){
-    $score =100;
+  $i=0;
+  $total=0;
+  foreach ($decoded_scan['scores'] as $score){
+    $total+=$score;
+    $i++;
+  }
+  $outscore = round($total/$i);
+    /*$score =100;
     $wp_score = 0;
     $server_score = 0;
 
@@ -29,8 +36,8 @@ function opal_do_score($decoded_scan){
 
     # TOTAL UP THE SCORE AND DESCRIBE IT -----------------------
     $score -= ($wp_score + $plugin_score +  $server_score);
-    $score = round($score);
-    return $score;
+    $score = round($score);*/
+    return $outscore;
   }
 
 
