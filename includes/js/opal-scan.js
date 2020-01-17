@@ -1,6 +1,8 @@
 jQuery(document).ready(function($) {
 var path = thescanobj.pluginpath+'includes/media/';
-drawscorearc(99);
+
+var score = $('#opalreportgraph').attr('data-score');
+drawscorearc(score);
 /****** TABS ************/
 $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
   var tab_id = $(this).attr('data-tab');
