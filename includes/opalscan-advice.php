@@ -93,6 +93,6 @@ if ($score <70){
 
   $advice.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
   $advice.=('<p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to '.get_option('admin_email').'</p>');
-  $advice.=('<p><a data-tab="opalreport" class="opal_tabber_link">View the full detailed Report</a></p>');
+
  return $advice ;
 }

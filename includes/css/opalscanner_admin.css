@@ -162,7 +162,6 @@ left:0;
   width:100%;
   height:60px;
   background: #dadada;
-
 }
 .opalsitescannerpage .score span{
   position: absolute;
@@ -171,7 +170,6 @@ left:0;
   transform: translate(-50%, -50%);
   font-size: 24px;
 }
-
 .opalscore_wrap{
   position: relative;
   width:50%;
@@ -191,7 +189,6 @@ left:0;
   display: inline-block;
   margin: 0;
 }
-
 .opalsitescannerpage .scorebar{
   width:100%;
   max-width: 1000px;
@@ -248,7 +245,9 @@ left:0;
 .opalscanner_results p{ line-height:normal; margin:0 0 0.7em 0;}
 .opalscanner_results .opal_dimmed{ color:#7d8fa1;}
 
+
 /*****  TABLE STYLES *****/
+
 .opalscan_results_table{
   width:100%; margin: 20px 0 30px 0;
 }
@@ -272,7 +271,7 @@ float: left; line-height:initial;
 .opalscan_results_table tr td.warn {border-left: solid 4px red;}
 .opalscan_results_table tr td.inform {border-left: solid 4px orange;}
 
-
+.scoretotal td{background: #dadada;font-weight: bold;}
 .opalsitescannerpage  .opalbigtable td{
   font-size: 18px;
   padding: 15px 20px;

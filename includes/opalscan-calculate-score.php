@@ -19,17 +19,17 @@ calculate total score, WP score, Plugins score, Server score.
 */
 
 function opal_do_score($decoded_scan){
-  $i = $total=0;
+/*  $i = $total=0;
   foreach ($decoded_scan['scores'] as $score){
     $total+=$score;
     $i++;
   }
   $totalscore= round($total/$i);
-
+*/
   $security_score = (
     $decoded_scan['scores']['wpsecurity'] +
     $decoded_scan['scores']['wpcore'] +
-    $decoded_scan['scores']['abandoned'] +
+    $decoded_scan['scores']['plugins_abandoned'] +
     $decoded_scan['scores']['plugins_outdated']+
     $decoded_scan['scores']['serverSSL']
     )/5;
@@ -38,8 +38,8 @@ function opal_do_score($decoded_scan){
   $maint_score= (
       $decoded_scan['scores']['wpcore'] +
       $decoded_scan['scores']['plugins_active'] +
-      $decoded_scan['scores']['abandoned'] +
-      $decoded_scan['scores']['outdated']
+      $decoded_scan['scores']['plugins_abandoned'] +
+      $decoded_scan['scores']['plugins_outdated']
     )/4;
 
 
@@ -49,7 +49,7 @@ function opal_do_score($decoded_scan){
       $decoded_scan['scores']['serverSSL']
     )/3;
 
-  $scores['total']=$totalscore;
+  $scores['total']=round(($security_score+$maint_score+$other_score)/3);
   $scores['security']=$security_score;
   $scores['maintenance']=$maint_score;
   $scores['other']=$other_score;

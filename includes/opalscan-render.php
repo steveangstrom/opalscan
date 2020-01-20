@@ -36,20 +36,52 @@ $out .= opal_summary($score_total);
 $out .='</div>';
 /****** top score and summary block *****/
 
-    //$out.='<div class = "opalscore score s'.round($score_total/10).'0"><span>SCORE '.$score_total.'%</span></div>';
-
-
-
-
-
   /* --- describe plugin state verbally -----*/
   # this function is passed the entire decoded scan.
     $out .= opal_advice($decoded_scan, $score_total);
     $out.= '</div>';// end summary tab content
 
-
   /* -----RENDER THE SCORE RESULT TABLES ---*/
     $out.='<div id = "opalreport" class = "opal_pane">';
+
+    # explains the three human readable scores.
+    $out.=('<h2>Security, Maintenance and Stability</h2>');
+    $security_score = (
+      $decoded_scan['scores']['wpsecurity'] +
+      $decoded_scan['scores']['wpcore'] +
+      $decoded_scan['scores']['plugins_abandoned'] +
+      $decoded_scan['scores']['plugins_outdated']+
+      $decoded_scan['scores']['serverSSL']
+      )/5;
+    $out.='<h3>Security</h3>';
+    $out.=('<table class="opalscan_results_table">');
+    $out.=('<thead><tr><th>Scanned Item</th><th>Weighted Score (100 is best)</th></tr></thead>');
+    $out.='<tr><td>Wp Core updated and patched</td><td>'.$decoded_scan['scores']['wpcore'].'</td></tr>';
+    $out.='<tr><td>Server SSL</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
+    $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
+    $out.='<tr><td>Wp Security Plugin</td><td>'.$decoded_scan['scores']['wpsecurity'].'</td></tr>';
+    $out.='<tr><td>Outdated Plugins</td><td>'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
+    $out.='<tr class="scoretotal"><td>Security Score</td><td>'. $security_score .'</td></tr>';
+    $out.=('</table>');
+
+    $maint_score= (
+        $decoded_scan['scores']['wpcore'] +
+        $decoded_scan['scores']['plugins_active'] +
+        $decoded_scan['scores']['plugins_abandoned'] +
+        $decoded_scan['scores']['plugins_outdated']
+      )/4;
+    $out.='<h3>Maintenance</h3>';
+    $out.=('<table class="opalscan_results_table">');
+    $out.=('<thead><tr><th>Scanned Item</th><th>Weighted Score (100 is best)</th></tr></thead>');
+    $out.='<tr><td>Wp Core updated and patched</td><td>'.$decoded_scan['scores']['wpcore'].'</td></tr>';
+    $out.='<tr><td>Plugins active</td><td>'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
+    $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
+    $out.='<tr><td>Outdated Plugins</td><td>'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
+    $out.='<tr class="scoretotal"><td>Maintenance Score</td><td>'. $maint_score .'</td></tr>';
+    $out.=('</table>');
+
+
+
     $out.=('<h2>Wordpress and Server</h2>');
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
