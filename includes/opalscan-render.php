@@ -61,7 +61,7 @@ $out .='</div>';
     $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
     $out.='<tr><td>Wp Security Plugin</td><td>'.$decoded_scan['scores']['wpsecurity'].'</td></tr>';
     $out.='<tr><td>Outdated Plugins</td><td>'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
-    $out.='<tr class="scoretotal"><td>Security Score</td><td>'. $security_score .'</td></tr>';
+    $out.='<tr class="scoretotal"><td>Score</td><td>'. round($security_score) .'</td></tr>';
     $out.=('</table>');
 
     $maint_score= (
@@ -77,10 +77,23 @@ $out .='</div>';
     $out.='<tr><td>Plugins active</td><td>'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
     $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
     $out.='<tr><td>Outdated Plugins</td><td>'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
-    $out.='<tr class="scoretotal"><td>Maintenance Score</td><td>'. $maint_score .'</td></tr>';
+    $out.='<tr class="scoretotal"><td>Score</td><td>'. round($maint_score) .'</td></tr>';
     $out.=('</table>');
 
+    $other_score= (
+        $decoded_scan['scores']['serverPHP'] +
+        $decoded_scan['scores']['serverDBsize'] +
+        $decoded_scan['scores']['serverSSL']
+      )/3;
 
+      $out.='<h3>Server Stability</h3>';
+      $out.=('<table class="opalscan_results_table">');
+      $out.=('<thead><tr><th>Scanned Item</th><th>Weighted Score (100 is best)</th></tr></thead>');
+      $out.='<tr><td>server PHP up to date</td><td>'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
+      $out.='<tr><td>server Database size</td><td>'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
+      $out.='<tr><td>server SSL certificate checks</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
+      $out.='<tr class="scoretotal"><td>Score</td><td>'. round($other_score) .'</td></tr>';
+      $out.=('</table>');
 
     $out.=('<h2>Wordpress and Server</h2>');
     $out.=('<table class="opalscan_results_table">');

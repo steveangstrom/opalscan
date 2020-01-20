@@ -19,13 +19,7 @@ calculate total score, WP score, Plugins score, Server score.
 */
 
 function opal_do_score($decoded_scan){
-/*  $i = $total=0;
-  foreach ($decoded_scan['scores'] as $score){
-    $total+=$score;
-    $i++;
-  }
-  $totalscore= round($total/$i);
-*/
+
   $security_score = (
     $decoded_scan['scores']['wpsecurity'] +
     $decoded_scan['scores']['wpcore'] +
