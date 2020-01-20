@@ -215,6 +215,7 @@ left:0;
   padding:5px 5px 5px 15px;
   text-align: left;
   transition:all 0.9s;
+  font-size: larger;
 }
 .opalsitescannerpage #score-secure .opbar:after{
     content:'SECURITY';
@@ -239,7 +240,7 @@ left:0;
   box-sizing: border-box;
 }
 .opbar.bad{ background:#df3e3e!important;}
-.opbar.ok{ background:#dfcc25!important;}
+.opbar.ok{ background:#dfa825!important;}
 .opbar.good{ background-color:#49a41e!important;}
 
 /***** content styles *****/

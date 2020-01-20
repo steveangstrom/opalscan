@@ -130,6 +130,7 @@ if(is_admin()) {
   //  $scan_results['scores']['serverPHP'] = calculate_serverPHP_score($scan_results);
 
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
+
     unlink(plugin_dir_path( __DIR__ ) . 'reports/scanstatus.txt'); // empty the scan status file.
 		return $scan_results;
 	}  //  ----------end opalscan_get_scan() ---------------------
@@ -152,6 +153,7 @@ if(is_admin()) {
 
   function opal_save_to_log($scan_results){
     //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
+
     $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/opalscan.log", "w"); // store a raw copy.
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);

@@ -1,9 +1,14 @@
+
 jQuery(document).ready(function($) {
+
 var path = thescanobj.pluginpath+'includes/media/';
 
 var score = $('#opalreportgraph').attr('data-score');
-drawscorearc(score);
-op_dobars();
+if(typeof score !="undefined"){
+  drawscorearc(score);
+  op_dobars();
+}
+
 /****** TABS ************/
 $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
   var tab_id = $(this).attr('data-tab');
