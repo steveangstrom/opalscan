@@ -46,6 +46,7 @@ $out .='</div>';
 
     # explains the three human readable scores.
     $out.=('<h2>Security, Maintenance and Stability</h2>');
+   $out.=('<p>The first section shows how we determine the overal scores for the arbitrary categorisations Security, Maintenance and (Site) Stability. The scores are weighted. Each score itself is the product of a calculation and those figures are shown <a href="#scoring">below</a>. A good score is 100, a bad score is 0 </p>');
     $security_score = (
       $decoded_scan['scores']['wpsecurity'] +
       $decoded_scan['scores']['wpcore'] +
@@ -53,9 +54,9 @@ $out .='</div>';
       $decoded_scan['scores']['plugins_outdated']+
       $decoded_scan['scores']['serverSSL']
       )/5;
-    $out.='<h3>Security</h3>';
+
     $out.=('<table class="opalscan_results_table">');
-    $out.=('<thead><tr><th>Scanned Item</th><th>Weighted Score (100 is best)</th></tr></thead>');
+    $out.=('<thead><tr><th><h3>Security Scanned Item</h3></th><th>Score</th></tr></thead>');
     $out.='<tr><td>Wp Core updated and patched</td><td>'.$decoded_scan['scores']['wpcore'].'</td></tr>';
     $out.='<tr><td>Server SSL</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
     $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
@@ -70,9 +71,8 @@ $out .='</div>';
         $decoded_scan['scores']['plugins_abandoned'] +
         $decoded_scan['scores']['plugins_outdated']
       )/4;
-    $out.='<h3>Maintenance</h3>';
     $out.=('<table class="opalscan_results_table">');
-    $out.=('<thead><tr><th>Scanned Item</th><th>Weighted Score (100 is best)</th></tr></thead>');
+    $out.=('<thead><tr><th><h3>Maintenance Scanned Item</h3></th><th>Score</th></tr></thead>');
     $out.='<tr><td>Wp Core updated and patched</td><td>'.$decoded_scan['scores']['wpcore'].'</td></tr>';
     $out.='<tr><td>Plugins active</td><td>'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
     $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
@@ -88,14 +88,14 @@ $out .='</div>';
 
       $out.='<h3>Server Stability</h3>';
       $out.=('<table class="opalscan_results_table">');
-      $out.=('<thead><tr><th>Scanned Item</th><th>Weighted Score (100 is best)</th></tr></thead>');
+      $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
       $out.='<tr><td>server PHP up to date</td><td>'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
       $out.='<tr><td>server Database size</td><td>'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
       $out.='<tr><td>server SSL certificate checks</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
       $out.='<tr class="scoretotal"><td>Score</td><td>'. round($other_score) .'</td></tr>';
       $out.=('</table>');
 
-    $out.=('<h2>Wordpress and Server</h2>');
+    $out.=('<h2><a name="scoring">Wordpress and Server</a></h2>');
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
 
@@ -174,9 +174,9 @@ $out .='</div>';
         $out.= '<td>'.$updstatus.'</td></tr>';
     }
       $out.=('</table>');
-      $out.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
+
       $out.=('<p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to '.get_option('admin_email').'</p>');
-      $out.=('<p><a data-tab="opalreport" class="opal_tabber_link">View the full detailed Report</a></p>');
+        $out.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
 
       $out.='</div>'; //  END OF report pane
 

@@ -91,8 +91,7 @@ if ($score <70){
   $advice .= '<div class="opaladvice_wrap"><h2>Summary Report</h2><p>Here is a brief summary of the key issues we found</p></div>';
   $advice .= opalscan_render_summarytable($decoded_scan);
 
-  $advice.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
   $advice.=('<p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to '.get_option('admin_email').'</p>');
-
+  $advice.=('<a class="button bigbutton opalsend logpresent">Send Report</a>');
  return $advice ;
 }
