@@ -95,9 +95,9 @@ $out .='</div>';
     $out.='<h3>Server Stability</h3>';
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
-    $out.='<tr><td>server PHP up to date</td><td>'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
-    $out.='<tr><td>server Database size</td><td>'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
-    $out.='<tr><td>server SSL certificate checks</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
+    $out.='<tr><td>Server PHP up to date</td><td>'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
+    $out.='<tr><td>Server Database size</td><td>'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
+    $out.='<tr><td>Server SSL certificate checks</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($other_score) .'</td></tr>';
     $out.=('</table>');
 
@@ -121,11 +121,6 @@ $out .='</div>';
     if (strlen($decoded_scan['wp_plugin_security'])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
     $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
 
-    /*$pstatus = 'OK';
-    if ($decoded_scan['plugin_amount']>10){$pstatus = 'Attention';}
-    if ($decoded_scan['plugin_amount']>15){$pstatus = 'Urgent';}
-    $out.=('<tr><td>Plug-ins Installed</td><td>'.$decoded_scan['plugin_amount'].'</td><td>'.$pstatus.'</td></tr>');
-    */
     $out.=opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 );
 
     $pinstatus = 'OK';
@@ -154,8 +149,8 @@ $out .='</div>';
    $out.=('<tr><td>Themes Outdated</td><td>'.$decoded_scan['theme_outdated'].'</td><td>'.$thmout_status.'</td></tr>');
 /***************/
     $phpstatus = 'OK';
-    if ($decoded_scan['scores']['serverPHP']<90){$phpstatus = 'Attention';}
-    if ($decoded_scan['scores']['serverPHP']>60){$phpstatus = 'Urgent';}
+    if ($decoded_scan['scores']['serverPHP']<95){$phpstatus = 'Attention';}
+    if ($decoded_scan['scores']['serverPHP']<70){$phpstatus = 'Urgent';}
     $out.=('<tr><td>Web Server PHP</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>'.$phpstatus.'</td></tr>');
 
     $sqlstatus = 'OK';

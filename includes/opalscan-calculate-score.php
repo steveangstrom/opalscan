@@ -154,16 +154,16 @@ function calculate_server_score($scan_results){
       case ($t_amount <2):
         $ta_score=100;
         break;
-      case ($t_amount <4):
+      case ($t_amount <5):
         $ta_score=90;
         break;
-      case ($t_amount <6):
+      case ($t_amount <8):
         $ta_score=50;
         break;
-      case ($t_amount <9):
+      case ($t_amount <11):
         $ta_score=35;
         break;
-      case ($t_amount <15):
+      case ($t_amount <18):
         $ta_score=10;
         break;
       default:
