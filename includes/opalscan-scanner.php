@@ -17,6 +17,7 @@ if(is_admin()) {
 			'plugin_noupdates'=>0, // are there no recent updates?
 			'plugin_amount' =>0, // are there too many plugins?
       'plugin_active_amount' =>0, // are there too many plugins?
+      'theme_amount' =>0, // are there too many plugins?
 			'php_version' =>0,
 			'sql_version' =>0,
       'sql_size'=>0,
@@ -25,6 +26,7 @@ if(is_admin()) {
       'wp_version_available' =>0,
 			'ssl' =>0,
       'allPlugins'=>'',
+      'allThemes'=>'',
       'wp_plugin_security'=>'',
       'scores'=>array(),
 		);
@@ -33,7 +35,7 @@ if(is_admin()) {
 		/** ----------------- Get some information about the site --------------------------**/
     $scan_results["opalscanner_version"] = '0.1';
 
-    $allPlugins = get_plugins(); // associative array of all installed plugins
+    #$allPlugins = get_plugins(); // associative array of all installed plugins
     $activePlugins = get_option('active_plugins'); // simple array of active plugins
     $scan_results["plugin_active_amount"] = count($activePlugins);
 
@@ -61,7 +63,7 @@ if(is_admin()) {
     //$dbsizestring.=$dbSize['size'].$dbSize['type'];
     $scan_results["sql_size"] = $dbsizestring;
 
-    /*********/
+    /***** SCAN PLUGINS *****************************************************/
     $allPlugins =  get_plugins();// associative array of all installed plugins
     $how_many_plugins = count($allPlugins);
     $progress=1;
@@ -95,7 +97,6 @@ if(is_admin()) {
       $intervalstring= $interval->format('%R%a');
       $intervalINT=intval($intervalstring);
 
-
       if ($intervalINT <= -950){
         //also add a += to the overall score table perhaps.
         $allPlugins[$key]['plugin_noupdates']=36;
@@ -116,11 +117,44 @@ if(is_admin()) {
       // is this a security plugin?
         $scan_results['wp_plugin_security'] =  detect_plugin_security($slug, $scan_results['wp_plugin_security'] ); // check, if already populated keep it.
 
-      //  $allPlugins[$key]['plugin_outated']='status test for '.$slug;
     }// end foreach
 
 
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
+
+    /***** SCAN THEMES   *****************************************************/
+
+    $all_themes =  wp_get_themes();// associative array of all installed themes
+    $how_many_themes = count($all_themes);
+    $scan_results["theme_amount"] = $how_many_themes;
+
+    $theme_versions=array();
+
+    foreach($all_themes as $key => $value){
+      $slug = explode('/',$key)[0]; // get theme's slug
+      $call_api = getThemeVersionFromRepository($slug); // go check this particular theme.
+      // takes time, so comment out for debug.
+    /*  $repoversion = $call_api->version;
+      $theme_versions[$slug]=$repoversion;
+      $theme_versions[$slug]=$repoversion;*/
+
+      $theme_data = wp_get_theme($slug);
+      $theme_version = $theme_data->get( 'Version' );
+      $theme_versions[$slug]=$theme_version;
+    }
+    $scan_results["allThemes"] =  $theme_versions;
+      //$scan_results["allThemes"] =$all_themes;
+// do this loop as above for the plugins.
+//  print_r(wp_get_theme());
+/*
+https://developer.wordpress.org/reference/functions/wp_get_theme/
+
+#themes API
+https://developer.wordpress.org/reference/functions/themes_api/
+*/
+
+  /***** END THEMES   *****************************************************/
+
     $scan_results["scanDate"] =  $today;
 
     /* ----- populate the log with the calculated and weighted scores as a cache ----- */
@@ -136,11 +170,6 @@ if(is_admin()) {
 	}  //  ----------end opalscan_get_scan() ---------------------
 
 
-  // utility function which returns the available version of the plugin represented by $slug, from repository
-  function getPluginVersionFromRepo($slug) {
-    $call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'tested' => true,) );
-    return $call_api;
-  }
 
   function opal_update_status($slug,$progress, $total){ // writes the current scan status to a file.
   //  $status = $status .' '.$progress. ' of '.$total;
@@ -153,12 +182,10 @@ if(is_admin()) {
 
   function opal_save_to_log($scan_results){
     //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
-
     $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/opalscan.log", "w"); // store a raw copy.
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
   }
-
 
 
 

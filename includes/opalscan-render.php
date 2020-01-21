@@ -104,8 +104,14 @@ $out .='</div>';
     if ($decoded_scan['scores']['wpcore']>10){$wpstatus = 'Urgent';}
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td>'.$wpstatus.'</td></tr>');
 */
-    $out.=opal_rendertablerow('Wordpress Core Version',$decoded_scan['wp_version'],$decoded_scan['scores']['wpcore'], 0, 10 );
+  $wp_update_needed = "OK";
+  if ($decoded_scan['scores']['wpcore'] <75){
+    $wp_update_needed = "Attention";
+  }elseif($decoded_scan['scores']['wpcore'] >=75){
+    $wp_update_needed = "Urgent";
+  }
 
+    $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' Available ('.$decoded_scan['wp_version_available'].')</td><td>'.$wp_update_needed.'</td></tr>');
     if (strlen($decoded_scan['wp_plugin_security'])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
     $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
 
@@ -217,8 +223,6 @@ $out .='</div>';
 
   function opalscan_ajax_request() {
       // The $_REQUEST contains all the data sent via ajax
-
-
       if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
 

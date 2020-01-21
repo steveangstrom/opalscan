@@ -1,8 +1,8 @@
 <?php
 /*
   Plugin Name: Opal SiteScanner
-  Plugin URI: OpalSphere.com
-  Author: Opalsphere
+  Plugin URI: OpalSupport.com
+  Author: OpalSphere
   Version: 1
   Author URI:http://opalsupport.com
  */
@@ -14,6 +14,16 @@ include_once('includes/opalscan-calculate-score.php' );
 include_once('includes/opalscan-mailer.php' );
 include_once('includes/opalscan-dashboard-widget.php' );
 include_once('includes/opalscan-scanner.php' );
+
+function op_plugin_action_links( $links ) {
+
+	$links = array_merge( array(
+		'<a class="op_do_a_scanbut" href="' . esc_url( admin_url( '/admin.php?page=opal-site-scan' ) ) . '">' . __( 'Perform a Scan', 'textdomain' ) . '</a>'
+	), $links );
+	return $links;
+}
+add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'op_plugin_action_links' );
+
 
 /*************************************************/
 function opalscan_enqueue_scripts( ) {
@@ -40,6 +50,12 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 			  return $call_api;
     }
 
+    // returns version of the THEME represented by $slug, from repository
+    function getThemeVersionFromRepository($slug) {
+				$call_api = themes_api( 'theme_information', array( 'slug' => $slug , 'version' => true,) );
+			  return $call_api;
+    }
+    /*************/
 
 		add_action('admin_menu', 'register_opalscan_menu');
 		function register_opalscan_menu() {

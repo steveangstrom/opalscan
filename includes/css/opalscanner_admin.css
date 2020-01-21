@@ -1,4 +1,6 @@
 .opalhide{display:none!important;}
+.op_do_a_scanbut{display: inline-block;background: #007cba;padding:3px 10px;color:#fff; border-radius: 3px;}
+.op_do_a_scanbut:hover{background: #0071a1; color:#fff;}
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
