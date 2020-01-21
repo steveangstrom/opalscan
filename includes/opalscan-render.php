@@ -137,9 +137,19 @@ $out .='</div>';
     if ($decoded_scan['plugin_noupdates']>6){$pabinstatus = 'Urgent';}
     $out.=('<tr><td>Plug-ins Abandoned</td><td>'.$decoded_scan['plugin_noupdates'].'</td><td>'.$pabinstatus.'</td></tr>');
 
+/**********THEMES ************/
+   $themc_status =$thmout_status = 'OK';
+   if ($decoded_scan['theme_amount'] > 6){$themc_status = 'Attention';}
+   if($decoded_scan['theme_amount'] > 15){ $themc_status = 'Urgent'; }
+   $out.=('<tr><td>Themes Installed</td><td>'.$decoded_scan['theme_amount'].'</td><td>'.$themc_status.'</td></tr>');
+
+   if ($decoded_scan['theme_outdated'] > 2){$thmout_status = 'Attention';}
+   if($decoded_scan['theme_outdated'] > 4){ $thmout_status = 'Urgent'; }
+   $out.=('<tr><td>Themes Outdated</td><td>'.$decoded_scan['theme_outdated'].'</td><td>'.$thmout_status.'</td></tr>');
+/***************/
     $phpstatus = 'OK';
-    if ($decoded_scan['scores']['serverPHP']>10){$phpstatus = 'Attention';}
-    if ($decoded_scan['scores']['serverPHP']>20){$phpstatus = 'Urgent';}
+    if ($decoded_scan['scores']['serverPHP']<90){$phpstatus = 'Attention';}
+    if ($decoded_scan['scores']['serverPHP']>60){$phpstatus = 'Urgent';}
     $out.=('<tr><td>Web Server PHP</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>'.$phpstatus.'</td></tr>');
 
     $sqlstatus = 'OK';

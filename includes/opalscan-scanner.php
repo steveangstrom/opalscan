@@ -17,7 +17,8 @@ if(is_admin()) {
 			'plugin_noupdates'=>0, // are there no recent updates?
 			'plugin_amount' =>0, // are there too many plugins?
       'plugin_active_amount' =>0, // are there too many plugins?
-      'theme_amount' =>0, // are there too many plugins?
+      'theme_amount' =>0, // are there too many themes?
+      'theme_outdated'=>0, // how many outdated themes
 			'php_version' =>0,
 			'sql_version' =>0,
       'sql_size'=>0,
@@ -147,6 +148,7 @@ if(is_admin()) {
 
       if (isset($repoversion) && $repoversion>$theme_version){
         $theme_info[$slug]['theme_outdated']='1';
+        $scan_results['theme_outdated']+=1; // update the count of outdated themes 
       }// is the installed theme in need of updating from the repo.
 
       $theme_info[$slug]['theme_noupdates']='1'; // make use of the date elapsed since repo update code from plugin
