@@ -25,16 +25,19 @@ function opal_do_score($decoded_scan){
     $decoded_scan['scores']['wpcore'] +
     $decoded_scan['scores']['plugins_abandoned'] +
     $decoded_scan['scores']['plugins_outdated']+
+    $decoded_scan['scores']['themes_outdated']+
     $decoded_scan['scores']['serverSSL']
-    )/5;
+    )/6;
 
 
   $maint_score= (
       $decoded_scan['scores']['wpcore'] +
       $decoded_scan['scores']['plugins_active'] +
       $decoded_scan['scores']['plugins_abandoned'] +
-      $decoded_scan['scores']['plugins_outdated']
-    )/4;
+      $decoded_scan['scores']['plugins_outdated'] +
+      $decoded_scan['scores']['themes_outdated']+
+      $decoded_scan['scores']['themes_active']
+    )/6;
 
 
   $other_score= (
@@ -142,7 +145,53 @@ function calculate_server_score($scan_results){
   return $scan_results;
 }
 
+  function calculate_theme_score($scan_results){
+    $score = 0;
+    $t_amount = $scan_results['theme_amount'];
+    $t_outdated = $scan_results['theme_outdated'];
 
+    switch(true){ // score the amount of plugins
+      case ($t_amount <2):
+        $ta_score=100;
+        break;
+      case ($t_amount <4):
+        $ta_score=90;
+        break;
+      case ($t_amount <6):
+        $ta_score=50;
+        break;
+      case ($t_amount <9):
+        $ta_score=35;
+        break;
+      case ($t_amount <15):
+        $ta_score=10;
+        break;
+      default:
+        $ta_score = 0;
+    }
+
+    switch(true){ // score the amount of themes
+      case ($t_outdated <1):
+        $to_score=100;
+        break;
+      case ($t_outdated <5):
+        $to_score=90;
+        break;
+      case ($t_outdated <10):
+        $to_score=70;
+        break;
+      case ($t_outdated <15):
+        $to_score=50;
+        break;
+      default:
+        $to_score = 0;
+    }
+
+    $scan_results['scores']['themes_active'] = $ta_score;
+    $scan_results['scores']['themes_outdated'] = $to_score;
+    return $scan_results;
+
+  }
 
   function calculate_plugin_score($scan_results){
     //$score = $scan_results['plugin_amount'];

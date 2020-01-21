@@ -47,53 +47,59 @@ $out .='</div>';
     # explains the three human readable scores.
     $out.=('<h2>Security, Maintenance and Stability</h2>');
    $out.=('<p>The first section shows how we determine the overal scores for the arbitrary categorisations Security, Maintenance and (Site) Stability. The scores are weighted. Each score itself is the product of a calculation and those figures are shown <a href="#scoring">below</a>. A good score is 100, a bad score is 0 </p>');
-    $security_score = (
-      $decoded_scan['scores']['wpsecurity'] +
-      $decoded_scan['scores']['wpcore'] +
-      $decoded_scan['scores']['plugins_abandoned'] +
-      $decoded_scan['scores']['plugins_outdated']+
-      $decoded_scan['scores']['serverSSL']
-      )/5;
+   $security_score = (
+     $decoded_scan['scores']['wpsecurity'] +
+     $decoded_scan['scores']['wpcore'] +
+     $decoded_scan['scores']['plugins_abandoned'] +
+     $decoded_scan['scores']['plugins_outdated']+
+     $decoded_scan['scores']['themes_outdated']+
+     $decoded_scan['scores']['serverSSL']
+     )/6;
+
+   $maint_score= (
+       $decoded_scan['scores']['wpcore'] +
+       $decoded_scan['scores']['plugins_active'] +
+       $decoded_scan['scores']['plugins_abandoned'] +
+       $decoded_scan['scores']['plugins_outdated'] +
+       $decoded_scan['scores']['themes_outdated']+
+       $decoded_scan['scores']['themes_active']
+     )/6;
+
+   $other_score= (
+       $decoded_scan['scores']['serverPHP'] +
+       $decoded_scan['scores']['serverDBsize'] +
+       $decoded_scan['scores']['serverSSL']
+     )/3;
 
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Security Scanned Item</h3></th><th>Score</th></tr></thead>');
     $out.='<tr><td>Wp Core updated and patched</td><td>'.$decoded_scan['scores']['wpcore'].'</td></tr>';
     $out.='<tr><td>Server SSL</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
     $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
-    $out.='<tr><td>Wp Security Plugin</td><td>'.$decoded_scan['scores']['wpsecurity'].'</td></tr>';
     $out.='<tr><td>Outdated Plugins</td><td>'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
+    $out.='<tr><td>Outdated Themes</td><td>'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
+    $out.='<tr><td>Wp Security Plugin</td><td>'.$decoded_scan['scores']['wpsecurity'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($security_score) .'</td></tr>';
     $out.=('</table>');
 
-    $maint_score= (
-        $decoded_scan['scores']['wpcore'] +
-        $decoded_scan['scores']['plugins_active'] +
-        $decoded_scan['scores']['plugins_abandoned'] +
-        $decoded_scan['scores']['plugins_outdated']
-      )/4;
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Maintenance Scanned Item</h3></th><th>Score</th></tr></thead>');
     $out.='<tr><td>Wp Core updated and patched</td><td>'.$decoded_scan['scores']['wpcore'].'</td></tr>';
     $out.='<tr><td>Plugins active</td><td>'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
     $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
     $out.='<tr><td>Outdated Plugins</td><td>'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
+    $out.='<tr><td>Installed Themes</td><td>'.$decoded_scan['scores']['themes_active'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($maint_score) .'</td></tr>';
     $out.=('</table>');
 
-    $other_score= (
-        $decoded_scan['scores']['serverPHP'] +
-        $decoded_scan['scores']['serverDBsize'] +
-        $decoded_scan['scores']['serverSSL']
-      )/3;
-
-      $out.='<h3>Server Stability</h3>';
-      $out.=('<table class="opalscan_results_table">');
-      $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
-      $out.='<tr><td>server PHP up to date</td><td>'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
-      $out.='<tr><td>server Database size</td><td>'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
-      $out.='<tr><td>server SSL certificate checks</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
-      $out.='<tr class="scoretotal"><td>Score</td><td>'. round($other_score) .'</td></tr>';
-      $out.=('</table>');
+    $out.='<h3>Server Stability</h3>';
+    $out.=('<table class="opalscan_results_table">');
+    $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
+    $out.='<tr><td>server PHP up to date</td><td>'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
+    $out.='<tr><td>server Database size</td><td>'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
+    $out.='<tr><td>server SSL certificate checks</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
+    $out.='<tr class="scoretotal"><td>Score</td><td>'. round($other_score) .'</td></tr>';
+    $out.=('</table>');
 
     $out.=('<h2><a name="scoring">Wordpress and Server</a></h2>');
     $out.=('<table class="opalscan_results_table">');
@@ -306,7 +312,7 @@ function opalscan_render_summarytable($decoded_scan){
 
     $plugins_outdated= $decoded_scan['scores']['plugins_outdated'];
       if($plugins_outdated>50 && $plugins_outdated<80){
-      $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_outdated'].' plugins needing aaaa updates</td></tr>';
+      $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_outdated'].' plugins needing updates</td></tr>';
     }elseif($plugins_outdated<50){
       $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_outdated'].' plugins needing updates, that is too many</td></tr>';
     }

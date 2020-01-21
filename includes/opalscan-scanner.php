@@ -148,7 +148,7 @@ if(is_admin()) {
 
       if (isset($repoversion) && $repoversion>$theme_version){
         $theme_info[$slug]['theme_outdated']='1';
-        $scan_results['theme_outdated']+=1; // update the count of outdated themes 
+        $scan_results['theme_outdated']+=1; // update the count of outdated themes
       }// is the installed theme in need of updating from the repo.
 
       $theme_info[$slug]['theme_noupdates']='1'; // make use of the date elapsed since repo update code from plugin
@@ -167,6 +167,7 @@ if(is_admin()) {
     /* ----- populate the log with the calculated and weighted scores as a cache ----- */
     $scan_results['scores']['wpcore'] = calculate_wp_score($scan_results);
     $scan_results = calculate_plugin_score($scan_results);
+    $scan_results = calculate_theme_score($scan_results);
     $scan_results = calculate_server_score($scan_results);
   //  $scan_results['scores']['serverPHP'] = calculate_serverPHP_score($scan_results);
 
