@@ -128,30 +128,35 @@ if(is_admin()) {
     $how_many_themes = count($all_themes);
     $scan_results["theme_amount"] = $how_many_themes;
 
-    $theme_versions=array();
+    $theme_info=array();
 
     foreach($all_themes as $key => $value){
       $slug = explode('/',$key)[0]; // get theme's slug
       $call_api = getThemeVersionFromRepository($slug); // go check this particular theme.
       // takes time, so comment out for debug.
     /*  $repoversion = $call_api->version;
-      $theme_versions[$slug]=$repoversion;
-      $theme_versions[$slug]=$repoversion;*/
-
-      $theme_data = wp_get_theme($slug);
+      $theme_info[$slug]=$repoversion;
+      $theme_info[$slug]=$repoversion;*/
+      $repoversion = $call_api->version;
+      $theme_data = wp_get_theme($slug);// Iterate thru the themes
       $theme_version = $theme_data->get( 'Version' );
-      $theme_versions[$slug]=$theme_version;
+
+
+      $theme_info[$slug]['installed_version']=$theme_version;
+      $theme_info[$slug]['repo_version']=$repoversion;
+
+      if (isset($repoversion) && $repoversion>$theme_version){
+        $theme_info[$slug]['theme_outdated']='1';
+      }// is the installed theme in need of updating from the repo.
+
+      $theme_info[$slug]['theme_noupdates']='1'; // make use of the date elapsed since repo update code from plugin
+      # if plugin_outdated then push   plugin_outdated
     }
-    $scan_results["allThemes"] =  $theme_versions;
+    $scan_results["allThemes"] =  $theme_info;
       //$scan_results["allThemes"] =$all_themes;
 // do this loop as above for the plugins.
 //  print_r(wp_get_theme());
-/*
-https://developer.wordpress.org/reference/functions/wp_get_theme/
 
-#themes API
-https://developer.wordpress.org/reference/functions/themes_api/
-*/
 
   /***** END THEMES   *****************************************************/
 

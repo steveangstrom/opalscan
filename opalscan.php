@@ -49,10 +49,14 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 				$call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
 			  return $call_api;
     }
-
+    /*
+    https://developer.wordpress.org/reference/functions/wp_get_theme/
+    #themes API
+    https://developer.wordpress.org/reference/functions/themes_api/
+    */
     // returns version of the THEME represented by $slug, from repository
     function getThemeVersionFromRepository($slug) {
-				$call_api = themes_api( 'theme_information', array( 'slug' => $slug , 'version' => true,) );
+				$call_api = themes_api( 'theme_information', array( 'slug' => $slug , 'version' => true,'last_updated' => true) );
 			  return $call_api;
     }
     /*************/
