@@ -43,6 +43,7 @@ function doReportMail(){
           console.log(data);
         $('.opalspinnerlocation').removeClass("lds-hourglass");
         $('.bigbutton.opalsend').removeClass("sendingmail");
+        $('#opalmailsendaudio')[0].play();
       },
       error: function(errorThrown){
           console.log(errorThrown);
@@ -60,6 +61,7 @@ function doReportMail(){
 
 $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audio/mpeg"><source src="'+path+'scan-complete.wav" type="audio/wav"></audio>').appendTo('body');
 $('<audio id="opalerroraudio"><source src="'+path+'scan-error.mp3" type="audio/mpeg"></audio>').appendTo('body');
+$('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="audio/mpeg"></audio>').appendTo('body');
 
   $(document).on('click','.opalscannow, .opaldoscan', function(e) {
     $('.opalspinnerlocation').addClass("lds-hourglass");
