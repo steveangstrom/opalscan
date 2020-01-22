@@ -155,22 +155,19 @@ if(is_admin()) {
       # if plugin_outdated then push   plugin_outdated
     }
     $scan_results["allThemes"] =  $theme_info;
-      //$scan_results["allThemes"] =$all_themes;
-// do this loop as above for the plugins.
-//  print_r(wp_get_theme());
-
 
   /***** END THEMES   *****************************************************/
 
     $scan_results["scanDate"] =  $today;
 
     /* ----- populate the log with the calculated and weighted scores as a cache ----- */
+
     $scan_results['scores']['wpcore'] = calculate_wp_score($scan_results);
     $scan_results = calculate_plugin_score($scan_results);
     $scan_results = calculate_theme_score($scan_results);
     $scan_results = calculate_server_score($scan_results);
+    
   //  $scan_results['scores']['serverPHP'] = calculate_serverPHP_score($scan_results);
-
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
 
     unlink(plugin_dir_path( __DIR__ ) . 'reports/scanstatus.txt'); // empty the scan status file.

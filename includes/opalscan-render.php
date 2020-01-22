@@ -84,20 +84,20 @@ $out .='</div>';
 
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Maintenance Scanned Item</h3></th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Wp Core updated and patched</td><td>'.$decoded_scan['scores']['wpcore'].'</td></tr>';
-    $out.='<tr><td>Plugins active</td><td>'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
-    $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
-    $out.='<tr><td>Outdated Plugins</td><td>'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
-    $out.='<tr><td>Installed Themes</td><td>'.$decoded_scan['scores']['themes_active'].'</td></tr>';
+    $out.='<tr><td>Wp Core updated and patched</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
+    $out.='<tr><td>Plugins active</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
+    $out.='<tr><td>Abandoned Plugins</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
+    $out.='<tr><td>Outdated Plugins</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
+    $out.='<tr><td>Installed Themes</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_active'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($maint_score) .'</td></tr>';
     $out.=('</table>');
 
     $out.='<h3>Server Stability</h3>';
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Server PHP up to date</td><td>'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
-    $out.='<tr><td>Server Database size</td><td>'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
-    $out.='<tr><td>Server SSL certificate checks</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
+    $out.='<tr><td>Server PHP up to date</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
+    $out.='<tr><td>Server Database size</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
+    $out.='<tr><td>Server SSL certificate checks</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($other_score) .'</td></tr>';
     $out.=('</table>');
 
@@ -111,13 +111,14 @@ $out .='</div>';
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td>'.$wpstatus.'</td></tr>');
 */
   $wp_update_needed = "OK";
-  if ($decoded_scan['scores']['wpcore'] <75){
+  if ($decoded_scan['scores']['wpcore'] <90){
     $wp_update_needed = "Attention";
-  }elseif($decoded_scan['scores']['wpcore'] >=75){
+  }elseif($decoded_scan['scores']['wpcore'] <75){
     $wp_update_needed = "Urgent";
   }
 
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' Available ('.$decoded_scan['wp_version_available'].')</td><td>'.$wp_update_needed.'</td></tr>');
+
     if (strlen($decoded_scan['wp_plugin_security'])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
     $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
 
@@ -236,6 +237,12 @@ $out .='</div>';
       // The $_REQUEST contains all the data sent via ajax
       if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
+
+          if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
+            #opalscan-security-nonce
+             wp_send_json_error( 'Invalid security token sent.' );
+             wp_die();
+           }
 
           $JSON_results = opalscan_get_scan(); // go get the scan results for a basic check.
           $decoded_scan = json_encode($JSON_results);

@@ -73,6 +73,7 @@ $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audi
         data: {
             'action': 'opalscan_ajax_request',
             'scan' : scan,
+            'security': thescanobj.security,
         },
         success:function(data) {
         clearTimeout(statustimer); // stop looking for status.
@@ -190,16 +191,14 @@ function watchstatus(){
     if ($score >=50 && $score<80){return 'ok' }
     if ($score >=80){return 'good' }
   }
-  function drawfullreportbars(){
 
+  function drawfullreportbars(){
     $('.opfullscanbar').each(function( index ) {
       var newwidth = $( this ).text()
-      console.log( index + ": " + newwidth );
-
+      //console.log( index + ": " + newwidth );
       var bar = $( '<div class="scanbar"></div>' );
-      $( bar ).css( "background-color", "red" ).width(newwidth+'%');
+      $( bar ).css( "background-color", "hsl("+newwidth+",20%,87%)" ).width(newwidth+'%');
       $( this ).append( bar );
-      //$( this ).width(newwidth+'%');
     });
   }
 });

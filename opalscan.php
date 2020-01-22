@@ -29,7 +29,11 @@ add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'op_plugin_act
 function opalscan_enqueue_scripts( ) {
 
 	wp_enqueue_script( 'opalscan_ajax_display', plugin_dir_url( __FILE__ ) . 'includes/js/opal-scan.js', array( 'jquery' ),false,true );
-	wp_localize_script( 'opalscan_ajax_display', 'thescanobj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'pluginpath' => plugin_dir_url( __FILE__ ) ,'bar' => 'test' ));
+	wp_localize_script( 'opalscan_ajax_display', 'thescanobj', array(
+    'ajaxurl' => admin_url( 'admin-ajax.php' ),
+    'pluginpath' => plugin_dir_url( __FILE__ ) ,
+    'security'  => wp_create_nonce( 'opalscan-security-nonce' )
+  ));
 
 	wp_register_style( 'opalscan_admin_css', plugin_dir_url( __FILE__ ) . '/includes/css/opalscanner_admin.css', false, '1.0.0' );
 	wp_enqueue_style( 'opalscan_admin_css' );
