@@ -238,8 +238,8 @@ $out .='</div>';
       if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
 
+        #  if ( ! check_ajax_referer( 'testbreakit-security-nonce', 'security' ) ) {
           if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
-            #opalscan-security-nonce
              wp_send_json_error( 'Invalid security token sent.' );
              wp_die();
            }

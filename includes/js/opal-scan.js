@@ -36,7 +36,8 @@ function doReportMail(){
       url: ajaxurl,
       data: {
           'action': 'opalreportmail',
-          'mailaction' : mailaction
+          'mailaction' : mailaction,
+          'security': thescanobj.security,
       },
       success:function(data) {
           console.log(data);
@@ -45,6 +46,11 @@ function doReportMail(){
       },
       error: function(errorThrown){
           console.log(errorThrown);
+          $('.opal_status ').remove();
+          $('.bigbutton.opalsend').removeClass("sendingmail");
+          $('.opalspinnerlocation').removeClass("lds-hourglass");
+          $('#opalscan_displayarea').html('<div class="opbox"><h2>Sorry, there\'s something preventing the sending of the email</h2>The error we got was : '+ errorThrown.statusText + ' |  Status Code : ' +errorThrown.status+'<br>Contact us and we\'ll try to help out<div>');
+          $('#opalerroraudio')[0].play();
       }
   });
 
@@ -53,6 +59,8 @@ function doReportMail(){
 /*****************/
 
 $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audio/mpeg"><source src="'+path+'scan-complete.wav" type="audio/wav"></audio>').appendTo('body');
+$('<audio id="opalerroraudio"><source src="'+path+'scan-error.mp3" type="audio/mpeg"></audio>').appendTo('body');
+
   $(document).on('click','.opalscannow, .opaldoscan', function(e) {
     $('.opalspinnerlocation').addClass("lds-hourglass");
     $('.opalsend').addClass('opalhide'); // hide the send buttons while in action.
@@ -93,7 +101,12 @@ $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audi
           op_dobars();
         },
         error: function(errorThrown){
+            clearTimeout(statustimer); // stop looking for status.
             console.log(errorThrown);
+            $('.opal_status ').remove();
+            $('.opalspinnerlocation').removeClass("lds-hourglass");
+            $('#opalscan_displayarea').html('<div class="opbox"><h2>Sorry, there\'s something preventing the scanning of your site</h2>The error we got was : '+ errorThrown.statusText + ' |  Status Code : ' +errorThrown.status+'<br>Contact us and we\'ll try to help out<div>');
+            $('#opalerroraudio')[0].play();
         }
     });
   } /* END DO SCAN */

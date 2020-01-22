@@ -1,6 +1,12 @@
 <?php
 function opalreportmail() {
     if ( isset($_REQUEST) ) {
+
+      if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
+         wp_send_json_error( 'Invalid security token sent.' );
+         wp_die();
+       }
+
         $mailaction = $_REQUEST['mailaction'];
         if ( $mailaction == 'sendmail' ) {
           $attfile = plugin_dir_path( __DIR__  ) . 'reports/opalscan.log';
