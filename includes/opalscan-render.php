@@ -287,7 +287,7 @@ function opalscan_render_summarytable($decoded_scan){
       $out.='<tr><td class="warn wpcore">Your Wordpress core is very out of date</td></tr>';
     }
 
-    if (strlen($decoded_scan['wp_plugin_security'])<99){
+    if (strlen($decoded_scan['wp_plugin_security'])<2){
       $out.='<tr><td class="inform wpcore">Your Wordpress does not seem to have a security plugin</td></tr>';
     }
     # SSL summary
@@ -296,6 +296,12 @@ function opalscan_render_summarytable($decoded_scan){
       $out.='<tr><td class="inform server">Your security certificate has problems</td></tr>';
     }elseif($ssl<70){
       $out.='<tr><td class="warn server">Your security certificate has major problems</td></tr>';
+    }
+    $serverPHP= $decoded_scan['scores']['serverPHP'];
+    if($serverPHP>50 && $serverPHP<100){
+      $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
+    }elseif($serverPHP<50){
+      $out.='<tr><td class="warn server">Your server core components are very outdated</td></tr>';
     }
 
     $plugins_active = $decoded_scan['scores']['plugins_active'];
@@ -319,13 +325,20 @@ function opalscan_render_summarytable($decoded_scan){
       $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td></tr>';
     }
 
-
-    $serverPHP= $decoded_scan['scores']['serverPHP'];
-    if($serverPHP>50 && $serverPHP<100){
-      $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
-    }elseif($serverPHP<50){
-      $out.='<tr><td class="warn server">Your server core components are very outdated</td></tr>';
+    $themes_active= $decoded_scan['scores']['themes_active'];
+    if($themes_active>50 && $themes_active<90){
+    $out.='<tr><td class="inform theme">There are '.$decoded_scan['theme_amount'].' themes installed</td></tr>';
+    }elseif($themes_active<50){
+      $out.='<tr><td class="warn theme">There are '.$decoded_scan['theme_amount'].' themes installed</td></tr>';
     }
+
+    $themes_outdated= $decoded_scan['scores']['themes_outdated'];
+    if($themes_outdated>50 && $themes_outdated<90){
+    $out.='<tr><td class="inform theme">'.$decoded_scan['theme_outdated'].' themes are outdated</td></tr>';
+    }elseif($themes_outdated<50){
+      $out.='<tr><td class="warn theme">'.$decoded_scan['theme_outdated'].' themes are outdated</td></tr>';
+    }
+
 
 
     $out.=('</table>');

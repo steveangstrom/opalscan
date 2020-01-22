@@ -17,7 +17,10 @@ if(is_admin()) {
     if (file_exists($logfile)) {
       $JSON_scan = file_get_contents($logfile);
       $decoded_scan = json_decode($JSON_scan,true);
-      $out .= '<p>Most recent scan results</p>';
+      $log_date = strtotime($decoded_scan['scanDate']['date']);
+      $scandate = date('dS \o\f F Y g:i A', $log_date);
+
+      $out .= '<p>Most recent scan results ('.$scandate.')</p>';
       $out .=  opalscan_render_summarytable($decoded_scan);
     }else{
         $out .= '<p>Your site needs to be scanned</p>';

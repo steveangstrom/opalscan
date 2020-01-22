@@ -262,7 +262,8 @@ left:0;
 
 .opalscan_results_table tr td.wpcore:before,
 .opalscan_results_table tr td.plugin:before,
-.opalscan_results_table tr td.server:before{
+.opalscan_results_table tr td.server:before,
+.opalscan_results_table tr td.theme:before{
   font-family: dashicons; padding-right:20px;font-size: 22px;
 float: left; line-height:initial;
 }
@@ -270,6 +271,7 @@ float: left; line-height:initial;
 .opalscan_results_table tr td.wpcore:before {content: "\f324"; }
 .opalscan_results_table tr td.plugin:before {content: "\f106"; }
 .opalscan_results_table tr td.server:before {content: "\f332"; }
+.opalscan_results_table tr td.theme:before {content: "\f100"; }
 .opalscan_results_table tr td.warn {border-left: solid 4px red;}
 .opalscan_results_table tr td.inform {border-left: solid 4px orange;}
 
