@@ -242,6 +242,24 @@ left:0;
 .opbar.ok{ background:#dfa825!important;}
 .opbar.good{ background-color:#49a41e!important;}
 
+/******FULL REPORT BAR GRAPH*******/
+td.opfullscanbar{
+  position: relative;
+  display: block;
+  width: auto;
+}
+td.opfullscanbar .scanbar{
+  content: '';
+  background:  #daa;
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  mix-blend-mode: darken;
+}
+
 /***** content styles *****/
 .opalscanner_results h2{font-size: 30px;font-weight: normal; line-height:normal; margin:20px 0 0.3em 0;}
 .opalscanner_results p{ line-height:normal; margin:0 0 0.7em 0;}

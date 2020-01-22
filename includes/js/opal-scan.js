@@ -17,6 +17,8 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
 
   $(this).addClass('active');
   $("#"+tab_id).addClass('active');
+
+  drawfullreportbars();
 })
 
 
@@ -188,5 +190,16 @@ function watchstatus(){
     if ($score >=50 && $score<80){return 'ok' }
     if ($score >=80){return 'good' }
   }
+  function drawfullreportbars(){
 
+    $('.opfullscanbar').each(function( index ) {
+      var newwidth = $( this ).text()
+      console.log( index + ": " + newwidth );
+
+      var bar = $( '<div class="scanbar"></div>' );
+      $( bar ).css( "background-color", "red" ).width(newwidth+'%');
+      $( this ).append( bar );
+      //$( this ).width(newwidth+'%');
+    });
+  }
 });

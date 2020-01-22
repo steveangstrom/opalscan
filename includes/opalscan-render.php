@@ -73,13 +73,13 @@ $out .='</div>';
 
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Security Scanned Item</h3></th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Wp Core updated and patched</td><td>'.$decoded_scan['scores']['wpcore'].'</td></tr>';
-    $out.='<tr><td>Server SSL</td><td>'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
-    $out.='<tr><td>Abandoned Plugins</td><td>'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
-    $out.='<tr><td>Outdated Plugins</td><td>'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
-    $out.='<tr><td>Outdated Themes</td><td>'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
-    $out.='<tr><td>Wp Security Plugin</td><td>'.$decoded_scan['scores']['wpsecurity'].'</td></tr>';
-    $out.='<tr class="scoretotal"><td>Score</td><td>'. round($security_score) .'</td></tr>';
+    $out.='<tr><td>Wp Core updated and patched</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
+    $out.='<tr><td>Server SSL</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
+    $out.='<tr><td>Abandoned Plugins</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
+    $out.='<tr><td>Outdated Plugins</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
+    $out.='<tr><td>Outdated Themes</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
+    $out.='<tr><td>Wp Security Plugin</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpsecurity'].'</td></tr>';
+    $out.='<tr class="scoretotal"><td>Score</td><td >'. round($security_score) .'</td></tr>';
     $out.=('</table>');
 
     $out.=('<table class="opalscan_results_table">');
