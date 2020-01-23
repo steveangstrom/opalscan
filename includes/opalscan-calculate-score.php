@@ -143,7 +143,6 @@ function calculate_server_score($scan_results){
     }
       $scan_results['scores']['serverSSL'] = $SSL_score;
   }
-  //$scan_results['scores']['serverSSL'] = $SSL_score;
 
   return $scan_results;
 }
