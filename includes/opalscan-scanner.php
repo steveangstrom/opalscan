@@ -82,6 +82,9 @@ if(is_admin()) {
 
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
       $repoversion = $call_api->version;
+      
+      $allPlugins[$key]['plugin_repo_version']= $repoversion;
+      $allPlugins[$key]['plugin_installed_version']= $value['Version'];
 
       if($repoversion>$value['Version']){ // newer repo version available
         $allPlugins[$key]['plugin_outdated']= true;
