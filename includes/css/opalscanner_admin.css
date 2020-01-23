@@ -14,23 +14,33 @@
 .opalsitescannerpage p{font-size: 16px;}
 .opalsitescannerpage .opaldoscan{cursor: pointer;}
 /*   BUTTONS */
-.wp-core-ui .button.bigbutton{
+
+.opalbigbutton{
   font-size: 18px;
   padding: 5px 30px;
-  border-width: 2px;
+  border: 2px solid #0071a1;
   border-radius: 5px;
+  border-style: solid;
   transition: all 0.3s;
   text-transform: uppercase;
+  box-sizing: border-box;
+  min-height: 28px;
+  margin: 0;
+  line-height: 2;
+  display: inline-block;
+  cursor:pointer;
 }
-.wp-core-ui .button.bigbutton.opalscannow{background:#0071a1;color:#fcfdf9; margin-right:20px;}
-.wp-core-ui .button.bigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
-.wp-core-ui .button.bigbutton.opalsend{display:none;}
+.opalbigbutton.opalscannow{background:#0071a1;color:#fcfdf9; margin-right:20px;}
+.opalbigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 
-.wp-core-ui .button.bigbutton.opalsend.logpresent{background: #74d583;border-color:#74d583; color:#173e25;display: inline-block;}
-.wp-core-ui .button.bigbutton.opalsend.logpresent:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
+.opalbigbutton.opalsend{display:none;}
+
+.opalbigbutton.opalsend.logpresent{background: #74d583;border-color:#74d583; color:#173e25;display: inline-block;}
+.opalbigbutton.opalsend.logpresent:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
 /** button icons **/
-.wp-core-ui .button.bigbutton:after{
+
+.opalbigbutton:after{
       font-family: dashicons;
       display: inline-block;
       line-height: 30px;
@@ -41,15 +51,16 @@
       float: right;
       font-size: 30px;
   }
-.wp-core-ui .button.bigbutton.opalscannow:after{
+
+.opalbigbutton.opalscannow:after{
   content: "\f311";
 }
-.wp-core-ui .button.bigbutton.opalsend:after{
+.opalbigbutton.opalsend:after{
   content: "\f465";
 }
 
-.wp-core-ui .button.bigbutton.opalsend.logpresent.sendingmail,
-.wp-core-ui .button.bigbutton.opalsend.logpresent.sendingmail:hover{
+.opalbigbutton.opalsend.logpresent.sendingmail,
+.opalbigbutton.opalsend.logpresent.sendingmail:hover{
   background: #a2c8a8!important;
   border-color: #a2c8a8;
   color:#4dA254;

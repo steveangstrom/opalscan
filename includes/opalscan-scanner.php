@@ -167,7 +167,7 @@ if(is_admin()) {
     $scan_results = calculate_plugin_score($scan_results);
     $scan_results = calculate_theme_score($scan_results);
     $scan_results = calculate_server_score($scan_results);
-    
+
   //  $scan_results['scores']['serverPHP'] = calculate_serverPHP_score($scan_results);
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
 
@@ -192,7 +192,4 @@ if(is_admin()) {
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
   }
-
-
-
 }
