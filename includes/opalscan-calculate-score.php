@@ -115,12 +115,16 @@ function calculate_server_score($scan_results){
   }
   $scan_results['scores']['serverDBsize'] = $DBscore;
 
-
+/****** SSL check *****/
   $ssl = $scan_results['ssl'];
-  if ($ssl >=1){
-    $SSL_score = 100;
-    $days_to_expiry = SSLcheckdays(); // if we are on https then see if you can get the cert and expiry - note may fail locally
 
+  if(!isset($ssl) || $ssl ==0){
+    $scan_results['scores']['serverSSL'] = 0; # old SSL catchall.
+  }
+
+  if ($ssl >=1){
+    $SSL_score = 0;
+    $days_to_expiry = SSLcheckdays(); // if we are on https then see if you can get the cert and expiry - note may fail locally
     switch(true){ // score the outdated of plugins
       case ($days_to_expiry <1):
         $SSL_score=10;
@@ -137,10 +141,9 @@ function calculate_server_score($scan_results){
       default:
         $SSL_score = 100;
     }
-   }else {
-     $SSLscore = 0;
-   }
-  $scan_results['scores']['serverSSL'] = $SSL_score;
+      $scan_results['scores']['serverSSL'] = $SSL_score;
+  }
+  //$scan_results['scores']['serverSSL'] = $SSL_score;
 
   return $scan_results;
 }
