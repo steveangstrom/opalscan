@@ -73,8 +73,8 @@ if(is_admin()) {
     foreach($allPlugins as $key => $value) {
       $scan_results['plugin_amount']+=1;
       // scan each plugin for status.
-      $slug = explode('/',$key)[0]; // get active plugin's slug
-
+      $sluga = explode('/',$key); // get active plugin's slug
+		$slug = $sluga[0]; // get active plugin's slug
       // write the status to a file.
     //  $scan_percent= ' | Completed '.$p.' of '.$how_many_plugins;
       opal_update_status($slug, $progress, $how_many_plugins);
@@ -132,7 +132,8 @@ if(is_admin()) {
     $theme_info=array();
 
     foreach($all_themes as $key => $value){
-      $slug = explode('/',$key)[0]; // get theme's slug
+      $sluga = explode('/',$key);
+		$slug = $sluga[0]; // get theme's slug this compat for old php version
       $call_api = getThemeVersionFromRepository($slug); // go check this particular theme.
       // takes time, so comment out for debug.
     /*  $repoversion = $call_api->version;
@@ -166,7 +167,7 @@ if(is_admin()) {
     $scan_results = calculate_plugin_score($scan_results);
     $scan_results = calculate_theme_score($scan_results);
     $scan_results = calculate_server_score($scan_results);
-    
+
   //  $scan_results['scores']['serverPHP'] = calculate_serverPHP_score($scan_results);
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
 
@@ -191,7 +192,4 @@ if(is_admin()) {
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
   }
-
-
-
 }

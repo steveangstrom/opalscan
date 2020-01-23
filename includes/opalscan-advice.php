@@ -21,8 +21,8 @@ If plugins on the repo have not been updated in >2 years then strongly Advise
 */
 # just a basic assessment of the overal score. the score total is worked out in the function opal_do_score() \includes\opalscan-calculate-score.php
 function opal_summary($score){
-  $score_words=['Extremely bad','Extremely bad', 'Very bad','Bad','Insecure','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
-  $attentionphrases=[
+  $score_words= Array('Extremely bad','Extremely bad', 'Very bad','Bad','Insecure','Needs Attention','Needs Attention','Good','Very Good','Excellent');
+  $attentionphrases=Array(
   'is extremely vulnerable to attack and data loss and needs urgent attention in all areas.',
   'is very vulnerable to attack and data loss  and needs attention in many areas urgently',
   'is very vulnerable to attack and data loss and needs attention in several areas',
@@ -33,7 +33,7 @@ function opal_summary($score){
   'needs attention to prevent issues',
   'is OK but some areas need attention',
   'is doing great, well done!',
-  ];
+  );
 
   $out='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.$score_words[round($score/10)-1].'</h2>';
   $out.='<p>Your site scored '.$score.' out of a possible 100. This means your site '.$attentionphrases[round($score/10)-1].'</p>';
@@ -44,8 +44,8 @@ function opal_summary($score){
 }
 
 function opal_advice($decoded_scan, $score){
-  $severity_words=['very extreme','extreme', 'very bad','very many','quite a lot of ','quite a few','several','some','a few','no'];
-  $issues_words=[
+  $severity_words=Array('very extreme','extreme', 'very bad','very many','quite a lot of ','quite a few','several','some','a few','no');
+  $issues_words=Array(
 'you have many very serious issues and are extremely vulnerable to all common hack attacks, additionally due to the many problems your website is likely to fail imminently. We ugently advise you to ask a web specialist secure and repair your site.',
 'you have very serious issues and are extremely vulnerable to common hack attacks, additionally due to the many problems your website may fail soon. We ugently advise you to ask a web specialist to look at securing and reapairing your site.',
 'you have many very serious issues and are extremely vulnerable to common hack attacks, additionally due to the many problems your website may fail unexpectedly. We strongly advise you to ask a web specialist or competent IT team member to look at securing and maintaining your site.',
@@ -55,8 +55,8 @@ function opal_advice($decoded_scan, $score){
 'you have a few issues and might be vulnerable to common hack attacks, you can ask a specialist to look at how you can update, optimise and repair the issues. ',
 'you have one or two issues and should address them',
 'you have no issues and everything looks good',
-];
-$what_to_do_words =[
+);
+$what_to_do_words =Array(
 'which must be repaired very urgently, your site is in grave peril and we stronly advise you contact a competent web technician to recover it and a plan is put in place to secure your site in future',
 'which must be analysed and repaired by a competent web technician very urgently, with a plan put in place to secure your site in future',
 'which must be analysed and repaired by a competent web technician very urgently, with a plan put in place to secure your site in future',
@@ -66,7 +66,7 @@ $what_to_do_words =[
 'you need to address the issues in the report to keep your site speedy and secure',
 'that means you are on top of most issues right now',
 'a safe a secure web site with no detected issues. Well done. Please make sure you back up regularly and run your virus software.'
-];
+);
 
   $advice = '<div class="opaladvice_wrap">';
   $advice .= '<h2>Security Advice</h2>';
