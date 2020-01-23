@@ -1,1 +1,0 @@
-{"slug":"wordpress-seo","progress":42,"total":42}

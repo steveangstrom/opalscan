@@ -73,8 +73,8 @@ if(is_admin()) {
     foreach($allPlugins as $key => $value) {
       $scan_results['plugin_amount']+=1;
       // scan each plugin for status.
-      $slug = explode('/',$key)[0]; // get active plugin's slug
-
+      $sluga = explode('/',$key); // get active plugin's slug
+		$slug = $sluga[0]; // get active plugin's slug
       // write the status to a file.
     //  $scan_percent= ' | Completed '.$p.' of '.$how_many_plugins;
       opal_update_status($slug, $progress, $how_many_plugins);
@@ -132,7 +132,8 @@ if(is_admin()) {
     $theme_info=array();
 
     foreach($all_themes as $key => $value){
-      $slug = explode('/',$key)[0]; // get theme's slug
+      $sluga = explode('/',$key);
+		$slug = $sluga[0]; // get theme's slug this compat for old php version
       $call_api = getThemeVersionFromRepository($slug); // go check this particular theme.
       // takes time, so comment out for debug.
     /*  $repoversion = $call_api->version;

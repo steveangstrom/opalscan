@@ -354,8 +354,11 @@ float: left; line-height:initial;
     .opal_tab_bar {height:auto; padding:20px 0 0 0; margin: 0px 0 -2px 0;clear:both;
       min-width: 330px;
     }
-    .opalscore_wrap {
+    .opalscore_wrap, #op_bar_wrapper {
         width: 100%;
       }
-
+    .opalscan_results_table th:nth-of-type(2),
+    .opalscan_results_table td:nth-of-type(2){
+      display: none;
+    }
   }
