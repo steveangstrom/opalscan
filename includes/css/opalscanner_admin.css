@@ -93,7 +93,18 @@
 .opalsitescannerpage .opal_infobox p{
   margin:0 0 0 0;
 }
-
+.opalsitescannerpage .op_alertbox {
+  margin:0;
+  padding:40px;
+  font-size: 18px;
+}
+.opalsitescannerpage .op_alertbox h2{margin: 0;padding:0 0 10px 0;line-height: normal;}
+.opalsitescannerpage .op_alertbox.success{
+  background:#74d583;
+}
+.opalsitescannerpage .op_alertbox.fail{
+  background:#df3e3e;
+}
 .opalsitescannerpage .opal_status .statusbar{
   position:absolute;
   width:1%;

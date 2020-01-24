@@ -44,13 +44,14 @@ function doReportMail(){
         $('.opalspinnerlocation').removeClass("lds-hourglass");
         $('.bigbutton.opalsend').removeClass("sendingmail");
         $('#opalmailsendaudio')[0].play();
+        $('#opalscan_displayarea').prepend('<div class="op_alertbox success"><h2>Mail Sent</h2>The mail containing your scan results has been sent to our team and we\'ll get in touch with you to try to help out.<div>');
       },
       error: function(errorThrown){
           console.log(errorThrown);
           $('.opal_status ').remove();
           $('.bigbutton.opalsend').removeClass("sendingmail");
           $('.opalspinnerlocation').removeClass("lds-hourglass");
-          $('#opalscan_displayarea').html('<div class="opbox"><h2>Sorry, there\'s something preventing the sending of the email</h2>The error we got was : '+ errorThrown.statusText + ' |  Status Code : ' +errorThrown.status+'<br>Contact us and we\'ll try to help out<div>');
+          $('#opalscan_displayarea').html('<div class="op_alertbox fail"><h2>Sorry, there\'s something preventing the sending of the email</h2>The error we got was : '+ errorThrown.statusText + ' |  Status Code : ' +errorThrown.status+'<br>Contact us and we\'ll try to help out<div>');
           $('#opalerroraudio')[0].play();
       }
   });
