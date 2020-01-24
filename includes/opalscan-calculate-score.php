@@ -44,7 +44,11 @@ function opal_do_score($decoded_scan){
 
   if( $decoded_scan['scores']['wpcore'] < 50){
     $maint_score = $decoded_scan['scores']['wpcore'];
+  }elseif($decoded_scan['scores']['plugins_outdated'] < 50){
+    $maint_score = $decoded_scan['scores']['plugins_outdated'];
   }
+
+
 
   $other_score= (
     $decoded_scan['scores']['serverPHP'] +
@@ -231,17 +235,17 @@ function calculate_server_score($scan_results){
     }
     $scan_results['scores']['plugins_active'] = $pa_score;
 
-    switch(true){ // score the outdated of plugins
+    switch(true){ // score the outdated plugins
       case ($p_outdated <1):
         $po_score=100;
         break;
-      case ($p_outdated <2):
+      case ($p_outdated <5):
         $po_score=90;
         break;
-      case ($p_outdated <4):
+      case ($p_outdated <9):
         $po_score=70;
         break;
-      case ($p_outdated <8):
+      case ($p_outdated <12):
         $po_score=50;
         break;
       case ($p_outdated <16):
@@ -252,7 +256,7 @@ function calculate_server_score($scan_results){
     }
       $scan_results['scores']['plugins_outdated'] = $po_score;
 
-    switch(true){ // score the outdated of plugins
+    switch(true){ // score the abandoned plugins
       case ($p_noupdate <1):
         $pn_score=100;
         break;
