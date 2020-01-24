@@ -1,4 +1,5 @@
 <?php
+namespace opalscan;
 //emits textual advice and analysis of the scores for the layperson.
 
 /*

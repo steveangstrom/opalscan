@@ -1,4 +1,5 @@
 <?php
+namespace opalscan;
 if(is_admin()) { // make sure, the following code runs only in the back end
 
   /****** RENDER THE DATA AS HTML ********/
@@ -240,13 +241,13 @@ $out .='</div>';
       }
      die();
   }
-  add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
+  add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan\opalscan_ajax_request' );
 
-function opal_statusbar($status='test'){
-  echo $status;
-  die();
-}
-add_action( 'wp_ajax_opal_statusbar', 'opalstatus' );
+  function opal_statusbar($status='test'){
+    echo $status;
+    die();
+  }
+  add_action( 'wp_ajax_opal_statusbar', 'opalscan\opalstatus' );
 }
 
 function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
@@ -328,9 +329,6 @@ function opalscan_render_summarytable($decoded_scan){
       $out.='<tr><td class="warn theme">'.$decoded_scan['theme_outdated'].' themes are outdated</td></tr>';
     }
 
-
-
     $out.=('</table>');
-
     return $out;
 }

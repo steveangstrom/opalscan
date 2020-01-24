@@ -1,11 +1,12 @@
 <?php
+namespace opalscan;
+use \DateTime;
 if(is_admin()) {
   include_once('opalscan-render.php' ); # get the admin display methods
   include_once('opalscan-advice.php' ); # textualised advice in human form
 
   function opalscan_get_scan(){ // the main scan and data populating function
   //  global $allPlugins;
-
 
 		if (!function_exists('plugins_api')) {
 			require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
@@ -125,7 +126,6 @@ if(is_admin()) {
 
     }// end foreach
 
-
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
 
     /***** SCAN THEMES   *****************************************************/
@@ -138,7 +138,7 @@ if(is_admin()) {
 
     foreach($all_themes as $key => $value){
       $sluga = explode('/',$key);
-		$slug = $sluga[0]; // get theme's slug this compat for old php version
+      $slug = $sluga[0]; // get theme's slug this compat for old php version
       $call_api = getThemeVersionFromRepository($slug); // go check this particular theme.
       // takes time, so comment out for debug.
     /*  $repoversion = $call_api->version;
@@ -147,7 +147,6 @@ if(is_admin()) {
       $repoversion = $call_api->version;
       $theme_data = wp_get_theme($slug);// Iterate thru the themes
       $theme_version = $theme_data->get( 'Version' );
-
 
       $theme_info[$slug]['installed_version']=$theme_version;
       $theme_info[$slug]['repo_version']=$repoversion;
@@ -163,9 +162,7 @@ if(is_admin()) {
     $scan_results["allThemes"] =  $theme_info;
 
   /***** END THEMES   *****************************************************/
-
     $scan_results["scanDate"] =  $today;
-
     /* ----- populate the log with the calculated and weighted scores as a cache ----- */
 
     $scan_results['scores']['wpcore'] = calculate_wp_score($scan_results);
@@ -184,9 +181,9 @@ if(is_admin()) {
 
   function opal_update_status($slug,$progress, $total){ // writes the current scan status to a file.
   //  $status = $status .' '.$progress. ' of '.$total;
-  $status_array['slug']= $slug;
-  $status_array['progress']= $progress;
-  $status_array['total']= $total;
+    $status_array['slug']= $slug;
+    $status_array['progress']= $progress;
+    $status_array['total']= $total;
     $JSON_status = json_encode($status_array);
     file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $JSON_status);
   }

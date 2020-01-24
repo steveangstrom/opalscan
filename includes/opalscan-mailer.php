@@ -1,4 +1,5 @@
 <?php
+namespace opalscan;
 function opalreportmail() {
     if ( isset($_REQUEST) ) {
 
@@ -22,4 +23,4 @@ function opalreportmail() {
     }
    die();
 }
-add_action( 'wp_ajax_opalreportmail', 'opalreportmail' );
+add_action( 'wp_ajax_opalreportmail', 'opalscan\opalreportmail' );
