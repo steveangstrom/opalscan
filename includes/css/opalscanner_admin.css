@@ -315,6 +315,8 @@ float: left; line-height:initial;
   font-size: 18px;
   padding: 15px 20px;
 }
+.op_badbar{border:1px solid red;}
+
 /*****  SPINNY LOADER *****/
 
   .lds-hourglass {

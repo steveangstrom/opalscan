@@ -29,6 +29,10 @@ function opal_do_score($decoded_scan){
     $decoded_scan['scores']['serverSSL']
     )/6;
 
+    if(  $decoded_scan['scores']['wpcore'] < 50){
+      $security_score = $decoded_scan['scores']['wpcore'];
+    }
+
 
   $maint_score= (
       $decoded_scan['scores']['wpcore'] +
@@ -39,6 +43,10 @@ function opal_do_score($decoded_scan){
       $decoded_scan['scores']['themes_active']
     )/6;
 
+    if( $decoded_scan['scores']['wpcore'] < 50){
+      $maint_score = $decoded_scan['scores']['wpcore'];
+    }
+
 
   $other_score= (
       $decoded_scan['scores']['serverPHP'] +
@@ -46,12 +54,18 @@ function opal_do_score($decoded_scan){
       $decoded_scan['scores']['serverSSL']
     )/3;
 
+    if( $decoded_scan['scores']['serverPHP'] < 30){
+      $other_score = $decoded_scan['scores']['serverPHP'];
+    }
+
+
   $scores['total']=round(($security_score+$maint_score+$other_score)/3);
   $scores['security']=$security_score;
   $scores['maintenance']=$maint_score;
   $scores['other']=$other_score;
-
-  return $scores;
+$decoded_scan['scores']['analysis'] = $scores;
+##  return $scores;
+return $decoded_scan;
 }
 
 
@@ -60,12 +74,10 @@ function calculate_wp_score($scan_results){
     $wp_version = $scan_results['wp_version'];
     $wp_version_available = $scan_results['wp_version_available'];
     $score = op_version_difference($wp_version_available,$wp_version);
-    //$score = op_version_difference('7.0.1','5.2');
     $score *= 100;
     $score = $score>100 ? 100 : $score;
     $score = 100-$score;
-  //  $score = version_compare($wp_version_available, $wp_version);
-    //$score *=3;
+    $score = $score< 0 ? 0 : $score;
     return $score;
 }
 
@@ -82,18 +94,19 @@ function calculate_server_score($scan_results){
   $ssl = $scan_results['ssl'];
   if ($ssl <1){ $score = 10;}*/
   $PHPscore =  100;
-  if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-    $PHPscore = 10;
+  if (version_compare(PHP_VERSION, '7.3.0', '<')) {
+    $PHPscore =   90;
+  }
+  if (version_compare(PHP_VERSION, '7.2.0', '<')) {
+      $PHPscore =  80;
   }
   if (version_compare(PHP_VERSION, '5.6.0', '<')) {
     $PHPscore =  30;
   }
-  if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-    $PHPscore =  80;
+  if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+    $PHPscore = 10;
   }
-  if (version_compare(PHP_VERSION, '7.3.0', '<')) {
-    $PHPscore =   90;
-  }
+
   $scan_results['scores']['serverPHP'] = $PHPscore;
 
   $sql_size = $scan_results['sql_size'];
@@ -229,13 +242,13 @@ function calculate_server_score($scan_results){
       case ($p_outdated <1):
         $po_score=100;
         break;
-      case ($p_outdated <5):
+      case ($p_outdated <2):
         $po_score=90;
         break;
-      case ($p_outdated <9):
+      case ($p_outdated <4):
         $po_score=70;
         break;
-      case ($p_outdated <12):
+      case ($p_outdated <8):
         $po_score=50;
         break;
       case ($p_outdated <16):

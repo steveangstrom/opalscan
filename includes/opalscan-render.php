@@ -11,8 +11,9 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 
     $decoded_scan = json_decode($JSON_scan,true);
     $log_date = strtotime($decoded_scan['scanDate']['date']);
-    $scores = opal_do_score($decoded_scan);
-
+  #  $scores = opal_do_score($decoded_scan);
+    $decoded_scan = opal_do_score($decoded_scan);
+    $scores = $decoded_scan['scores']['analysis'];
     $score_total=$scores['total'];
     # Display results
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">
@@ -46,30 +47,11 @@ $out .='</div>';
 
     # explains the three human readable scores.
     $out.=('<h2>Security, Maintenance and Stability</h2>');
-   $out.=('<p>The first section shows how we determine the overal scores for the arbitrary categorisations Security, Maintenance and (Site) Stability. The scores are weighted. Each score itself is the product of a calculation and those figures are shown <a href="#scoring">below</a>. A good score is 100, a bad score is 0 </p>');
-   $security_score = (
-     $decoded_scan['scores']['wpsecurity'] +
-     $decoded_scan['scores']['wpcore'] +
-     $decoded_scan['scores']['plugins_abandoned'] +
-     $decoded_scan['scores']['plugins_outdated']+
-     $decoded_scan['scores']['themes_outdated']+
-     $decoded_scan['scores']['serverSSL']
-     )/6;
+    $out.=('<p>The first section shows how we determine the overal scores for the arbitrary categorisations Security, Maintenance and (Site) Stability. The scores are weighted. Each score itself is the product of a calculation and those figures are shown <a href="#scoring">below</a>. A good score is 100, a bad score is 0 </p>');
 
-   $maint_score= (
-       $decoded_scan['scores']['wpcore'] +
-       $decoded_scan['scores']['plugins_active'] +
-       $decoded_scan['scores']['plugins_abandoned'] +
-       $decoded_scan['scores']['plugins_outdated'] +
-       $decoded_scan['scores']['themes_outdated']+
-       $decoded_scan['scores']['themes_active']
-     )/6;
-
-   $other_score= (
-       $decoded_scan['scores']['serverPHP'] +
-       $decoded_scan['scores']['serverDBsize'] +
-       $decoded_scan['scores']['serverSSL']
-     )/3;
+    $security_score = $decoded_scan['scores']['analysis']['security'];
+    $maint_score= $decoded_scan['scores']['analysis']['maintenance'];
+    $other_score= $decoded_scan['scores']['analysis']['other'];
 
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Security Scanned Item</h3></th><th>Score</th></tr></thead>');
@@ -84,11 +66,11 @@ $out .='</div>';
 
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Maintenance Scanned Item</h3></th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Wp Core updated and patched</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
-    $out.='<tr><td>Plugins active</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
-    $out.='<tr><td>Abandoned Plugins</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
-    $out.='<tr><td>Outdated Plugins</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
-    $out.='<tr><td>Installed Themes</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_active'].'</td></tr>';
+    $out.='<tr><td>Wp Core '.$decoded_scan['wp_version'].' (Available '.$decoded_scan['wp_version_available'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
+    $out.='<tr><td>Plugins active ('.$decoded_scan['plugin_amount'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
+    $out.='<tr><td>Abandoned Plugins ('.$decoded_scan['plugin_noupdates'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
+    $out.='<tr><td>Outdated Plugins ('.$decoded_scan['plugin_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
+    $out.='<tr><td>Installed Themes ('.$decoded_scan['theme_amount'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_active'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($maint_score) .'</td></tr>';
     $out.=('</table>');
 
