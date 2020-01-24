@@ -1,4 +1,5 @@
 <?php
+namespace opalscan;
 if(is_admin()) { // make sure, the following code runs only in the back end
 
   /****** RENDER THE DATA AS HTML ********/
@@ -55,12 +56,12 @@ $out .='</div>';
 
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Security Scanned Item</h3></th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Wp Core updated and patched</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
+    $out.='<tr><td>Wp Core '.$decoded_scan['wp_version'].' (Available '.$decoded_scan['wp_version_available'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
     $out.='<tr><td>Server SSL</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
-    $out.='<tr><td>Abandoned Plugins</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
-    $out.='<tr><td>Outdated Plugins</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
-    $out.='<tr><td>Outdated Themes</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
-    $out.='<tr><td>Wp Security Plugin</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpsecurity'].'</td></tr>';
+    $out.='<tr><td>Abandoned Plugins ('.$decoded_scan['plugin_noupdates'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
+    $out.='<tr><td>Outdated Plugins ('.$decoded_scan['plugin_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
+    $out.='<tr><td>Outdated Themes ('.$decoded_scan['theme_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
+    $out.='<tr><td>Wp Security Plugin ('.$decoded_scan['wp_plugin_security'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpsecurity'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td >'. round($security_score) .'</td></tr>';
     $out.=('</table>');
 
@@ -77,8 +78,8 @@ $out .='</div>';
     $out.='<h3>Server Stability</h3>';
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Server PHP up to date</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
-    $out.='<tr><td>Server Database size</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
+    $out.='<tr><td>Server PHP ('.$decoded_scan['php_version'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
+    $out.='<tr><td>Server Database size ('.$decoded_scan['sql_size'].' Mb)</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
     $out.='<tr><td>Server SSL certificate checks</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($other_score) .'</td></tr>';
     $out.=('</table>');
@@ -240,13 +241,13 @@ $out .='</div>';
       }
      die();
   }
-  add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan_ajax_request' );
+  add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan\opalscan_ajax_request' );
 
-function opal_statusbar($status='test'){
-  echo $status;
-  die();
-}
-add_action( 'wp_ajax_opal_statusbar', 'opalstatus' );
+  function opal_statusbar($status='test'){
+    echo $status;
+    die();
+  }
+  add_action( 'wp_ajax_opal_statusbar', 'opalscan\opalstatus' );
 }
 
 function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
@@ -328,9 +329,6 @@ function opalscan_render_summarytable($decoded_scan){
       $out.='<tr><td class="warn theme">'.$decoded_scan['theme_outdated'].' themes are outdated</td></tr>';
     }
 
-
-
     $out.=('</table>');
-
     return $out;
 }

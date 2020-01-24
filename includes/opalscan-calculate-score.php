@@ -1,5 +1,5 @@
 <?php
-
+namespace opalscan;
 /*
 calculate individual scores for :
 > wp Core version lagging too far behing latest.

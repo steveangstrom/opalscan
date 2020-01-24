@@ -1,14 +1,15 @@
 <?php
 // widget's registration
+namespace opalscan;
 if(is_admin()) {
   function opalAddDashboardWidget() {
       wp_add_dashboard_widget(
           'active_plugins_versions', // widget's ID
           'OpalSupport Site Scan', // widget's title
-          'opalscanDashDisplay'    // widget's callback (content)
+          'opalscan\opalscanDashDisplay'    // widget's callback (content)
       );
   }
-  add_action('wp_dashboard_setup', 'opalAddDashboardWidget');
+  add_action('wp_dashboard_setup', 'opalscan\opalAddDashboardWidget');
 
   function opalscanDashDisplay(){
     $out = '';

@@ -1,4 +1,5 @@
 <?php
+namespace opalscan;
 //emits textual advice and analysis of the scores for the layperson.
 
 /*
@@ -75,17 +76,9 @@ $what_to_do_words =Array(
   $advice .=  $issues_words[round($score/10)-1];
 
 if ($score <70){
-  $advice .='</p><p>If you feel confident you may update all components detailed in the <a class="opal_tabber_link" data-tab="opalreport">Full Report</a> yourself but we caution that updating multiple components synchronously without testing often reveals code incompatibilities which may render your site inoperable. If you decide to proceed yourself please back up your site and data before proceeding.
-  If you would like additional help, or advice, you may wish to <a>send the report to us for analysis</a>.';
+  $advice .='</p><h3>Self-Repair</h3><p>If you feel confident you may update all components detailed in the <a class="opal_tabber_link" data-tab="opalreport">Full Report</a> yourself but we caution that updating multiple components synchronously without testing often reveals code incompatibilities which may render your site inoperable.<br> If you decide to proceed yourself please back up your site and data before proceeding.
+  </p><p>If you would like advice or assistance restoring your site speed and security you may <a>send the report to us for analysis</a>.';
 }
-  #  <p>Your site has security and maintenance problems which must be addressed. Your scan score is rated as $score_rating and this means you are vulnerable to attacks, or your website may fail.</p> ";
-
-/*
-
-  $advice .= "<h2>Wordpress</h2><p>your website may fail.</p> ";
-  $advice .= "<h2>Plugins</h2><p>your website may fail.</p> ";
-  $advice .= "<h2>Web Server</h2><p>your website may fail.</p> ";*/
-  //<a class="button bigbutton opalsend">Send Report</a>
   $advice .= '</p></div>';
 
   $advice .= '<div class="opaladvice_wrap"><h2>Summary Report</h2><p>Here is a brief summary of the key issues we found</p></div>';
