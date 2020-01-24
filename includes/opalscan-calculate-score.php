@@ -27,45 +27,42 @@ function opal_do_score($decoded_scan){
     $decoded_scan['scores']['plugins_outdated']+
     $decoded_scan['scores']['themes_outdated']+
     $decoded_scan['scores']['serverSSL']
-    )/6;
+  )/6;
 
-    if(  $decoded_scan['scores']['wpcore'] < 50){
-      $security_score = $decoded_scan['scores']['wpcore'];
-    }
-
+  if(  $decoded_scan['scores']['wpcore'] < 50){
+    $security_score = $decoded_scan['scores']['wpcore'];
+  }
 
   $maint_score= (
-      $decoded_scan['scores']['wpcore'] +
-      $decoded_scan['scores']['plugins_active'] +
-      $decoded_scan['scores']['plugins_abandoned'] +
-      $decoded_scan['scores']['plugins_outdated'] +
-      $decoded_scan['scores']['themes_outdated']+
-      $decoded_scan['scores']['themes_active']
-    )/6;
+    $decoded_scan['scores']['wpcore'] +
+    $decoded_scan['scores']['plugins_active'] +
+    $decoded_scan['scores']['plugins_abandoned'] +
+    $decoded_scan['scores']['plugins_outdated'] +
+    $decoded_scan['scores']['themes_outdated']+
+    $decoded_scan['scores']['themes_active']
+  )/6;
 
-    if( $decoded_scan['scores']['wpcore'] < 50){
-      $maint_score = $decoded_scan['scores']['wpcore'];
-    }
-
+  if( $decoded_scan['scores']['wpcore'] < 50){
+    $maint_score = $decoded_scan['scores']['wpcore'];
+  }
 
   $other_score= (
-      $decoded_scan['scores']['serverPHP'] +
-      $decoded_scan['scores']['serverDBsize'] +
-      $decoded_scan['scores']['serverSSL']
-    )/3;
+    $decoded_scan['scores']['serverPHP'] +
+    $decoded_scan['scores']['serverDBsize'] +
+    $decoded_scan['scores']['serverSSL']
+  )/3;
 
-    if( $decoded_scan['scores']['serverPHP'] < 30){
-      $other_score = $decoded_scan['scores']['serverPHP'];
-    }
-
+  if( $decoded_scan['scores']['serverPHP'] < 30){
+    $other_score = $decoded_scan['scores']['serverPHP'];
+  }
 
   $scores['total']=round(($security_score+$maint_score+$other_score)/3);
   $scores['security']=$security_score;
   $scores['maintenance']=$maint_score;
   $scores['other']=$other_score;
-$decoded_scan['scores']['analysis'] = $scores;
+  $decoded_scan['scores']['analysis'] = $scores;
 ##  return $scores;
-return $decoded_scan;
+  return $decoded_scan;
 }
 
 
@@ -88,11 +85,7 @@ function calculate_wpsecurity_score($ssl){
 
 function calculate_server_score($scan_results){
   $sql_version = $scan_results['sql_version'];
-/*  $score = 0;
-  $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
 
-  $ssl = $scan_results['ssl'];
-  if ($ssl <1){ $score = 10;}*/
   $PHPscore =  100;
   if (version_compare(PHP_VERSION, '7.3.0', '<')) {
     $PHPscore =   90;
