@@ -27,31 +27,42 @@ function opal_do_score($decoded_scan){
     $decoded_scan['scores']['plugins_outdated']+
     $decoded_scan['scores']['themes_outdated']+
     $decoded_scan['scores']['serverSSL']
-    )/6;
+  )/6;
 
+  if(  $decoded_scan['scores']['wpcore'] < 50){
+    $security_score = $decoded_scan['scores']['wpcore'];
+  }
 
   $maint_score= (
-      $decoded_scan['scores']['wpcore'] +
-      $decoded_scan['scores']['plugins_active'] +
-      $decoded_scan['scores']['plugins_abandoned'] +
-      $decoded_scan['scores']['plugins_outdated'] +
-      $decoded_scan['scores']['themes_outdated']+
-      $decoded_scan['scores']['themes_active']
-    )/6;
+    $decoded_scan['scores']['wpcore'] +
+    $decoded_scan['scores']['plugins_active'] +
+    $decoded_scan['scores']['plugins_abandoned'] +
+    $decoded_scan['scores']['plugins_outdated'] +
+    $decoded_scan['scores']['themes_outdated']+
+    $decoded_scan['scores']['themes_active']
+  )/6;
 
+  if( $decoded_scan['scores']['wpcore'] < 50){
+    $maint_score = $decoded_scan['scores']['wpcore'];
+  }
 
   $other_score= (
-      $decoded_scan['scores']['serverPHP'] +
-      $decoded_scan['scores']['serverDBsize'] +
-      $decoded_scan['scores']['serverSSL']
-    )/3;
+    $decoded_scan['scores']['serverPHP'] +
+    $decoded_scan['scores']['serverDBsize'] +
+    $decoded_scan['scores']['serverSSL']
+  )/3;
+
+  if( $decoded_scan['scores']['serverPHP'] < 30){
+    $other_score = $decoded_scan['scores']['serverPHP'];
+  }
 
   $scores['total']=round(($security_score+$maint_score+$other_score)/3);
   $scores['security']=$security_score;
   $scores['maintenance']=$maint_score;
   $scores['other']=$other_score;
-
-  return $scores;
+  $decoded_scan['scores']['analysis'] = $scores;
+##  return $scores;
+  return $decoded_scan;
 }
 
 
@@ -60,12 +71,10 @@ function calculate_wp_score($scan_results){
     $wp_version = $scan_results['wp_version'];
     $wp_version_available = $scan_results['wp_version_available'];
     $score = op_version_difference($wp_version_available,$wp_version);
-    //$score = op_version_difference('7.0.1','5.2');
     $score *= 100;
     $score = $score>100 ? 100 : $score;
     $score = 100-$score;
-  //  $score = version_compare($wp_version_available, $wp_version);
-    //$score *=3;
+    $score = $score< 0 ? 0 : $score;
     return $score;
 }
 
@@ -76,24 +85,21 @@ function calculate_wpsecurity_score($ssl){
 
 function calculate_server_score($scan_results){
   $sql_version = $scan_results['sql_version'];
-/*  $score = 0;
-  $sql = $scan_results['sql_version']; ///////// DO SOMETHING WITH THIS
 
-  $ssl = $scan_results['ssl'];
-  if ($ssl <1){ $score = 10;}*/
   $PHPscore =  100;
-  if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-    $PHPscore = 10;
+  if (version_compare(PHP_VERSION, '7.3.0', '<')) {
+    $PHPscore =   90;
+  }
+  if (version_compare(PHP_VERSION, '7.2.0', '<')) {
+      $PHPscore =  80;
   }
   if (version_compare(PHP_VERSION, '5.6.0', '<')) {
     $PHPscore =  30;
   }
-  if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-    $PHPscore =  80;
+  if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+    $PHPscore = 10;
   }
-  if (version_compare(PHP_VERSION, '7.3.0', '<')) {
-    $PHPscore =   90;
-  }
+
   $scan_results['scores']['serverPHP'] = $PHPscore;
 
   $sql_size = $scan_results['sql_size'];
@@ -115,12 +121,16 @@ function calculate_server_score($scan_results){
   }
   $scan_results['scores']['serverDBsize'] = $DBscore;
 
-
+/****** SSL check *****/
   $ssl = $scan_results['ssl'];
-  if ($ssl >=1){
-    $SSL_score = 100;
-    $days_to_expiry = SSLcheckdays(); // if we are on https then see if you can get the cert and expiry - note may fail locally
 
+  if(!isset($ssl) || $ssl ==0){
+    $scan_results['scores']['serverSSL'] = 0; # old SSL catchall.
+  }
+
+  if ($ssl >=1){
+    $SSL_score = 0;
+    $days_to_expiry = SSLcheckdays(); // if we are on https then see if you can get the cert and expiry - note may fail locally
     switch(true){ // score the outdated of plugins
       case ($days_to_expiry <1):
         $SSL_score=10;
@@ -137,10 +147,8 @@ function calculate_server_score($scan_results){
       default:
         $SSL_score = 100;
     }
-   }else {
-     $SSLscore = 0;
-   }
-  $scan_results['scores']['serverSSL'] = $SSL_score;
+      $scan_results['scores']['serverSSL'] = $SSL_score;
+  }
 
   return $scan_results;
 }
@@ -227,13 +235,13 @@ function calculate_server_score($scan_results){
       case ($p_outdated <1):
         $po_score=100;
         break;
-      case ($p_outdated <5):
+      case ($p_outdated <2):
         $po_score=90;
         break;
-      case ($p_outdated <9):
+      case ($p_outdated <4):
         $po_score=70;
         break;
-      case ($p_outdated <12):
+      case ($p_outdated <8):
         $po_score=50;
         break;
       case ($p_outdated <16):

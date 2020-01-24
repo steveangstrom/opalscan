@@ -51,8 +51,8 @@ if(is_admin()) {
     $obj = json_decode($json);
     $scan_results["wp_version_available"] = $obj->offers[0]->version;
     /*-----------*/
-
-    $ssl = $scan_results["ssl"] = is_ssl();
+    if (is_ssl()){$ssl=1;}else{$ssl=0;}
+    $scan_results["ssl"] = $ssl;
     $scan_results['scores']['wpsecurity'] = calculate_wpsecurity_score($ssl);
 		/* get SQL version */
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -74,7 +74,7 @@ if(is_admin()) {
       $scan_results['plugin_amount']+=1;
       // scan each plugin for status.
       $sluga = explode('/',$key); // get active plugin's slug
-		$slug = $sluga[0]; // get active plugin's slug
+  		$slug = $sluga[0]; // get active plugin's slug
       // write the status to a file.
     //  $scan_percent= ' | Completed '.$p.' of '.$how_many_plugins;
       opal_update_status($slug, $progress, $how_many_plugins);
@@ -82,6 +82,9 @@ if(is_admin()) {
 
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
       $repoversion = $call_api->version;
+      $allPlugins[$key]['plugin_repo_version']= $repoversion;
+      $allPlugins[$key]['plugin_installed_version']= $value['Version'];
+
       $allPlugins[$key]['plugin_repo_version']= $repoversion;
       $allPlugins[$key]['plugin_installed_version']= $value['Version'];
 

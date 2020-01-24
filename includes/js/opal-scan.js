@@ -214,6 +214,9 @@ function watchstatus(){
       var bar = $( '<div class="scanbar"></div>' );
       $( bar ).css( "background-color", "hsl("+newwidth+",20%,87%)" ).width(newwidth+'%');
       $( this ).append( bar );
+      if(newwidth <30){
+        $( this ).addClass('op_badbar');
+      }
     });
   }
 });
