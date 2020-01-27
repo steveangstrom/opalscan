@@ -61,7 +61,7 @@ $out .='</div>';
     $out.='<tr><td>Abandoned Plugins ('.$decoded_scan['plugin_noupdates'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
     $out.='<tr><td>Outdated Plugins ('.$decoded_scan['plugin_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
     $out.='<tr><td>Outdated Themes ('.$decoded_scan['theme_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
-    $out.='<tr><td>Wp Security Plugin ('.$decoded_scan['wp_plugin_security'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wp_plugin_security'].'</td></tr>';
+    $out.='<tr><td>Wp Security Plugin ('.$decoded_scan['wp_plugin_security'][0].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wp_plugin_security'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td >'. round($security_score) .'</td></tr>';
     $out.=('</table>');
 
