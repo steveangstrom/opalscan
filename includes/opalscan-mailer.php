@@ -10,8 +10,11 @@ function opalreportmail() {
 
         $mailaction = $_REQUEST['mailaction'];
         if ( $mailaction == 'sendmail' ) {
+          $randomised_filename = get_option( 'opalsupport_log_location' );
           $attfile = plugin_dir_path( __DIR__  ) . 'reports/opalscan.log';
-          $attachments = array($attfile);
+          $html_log_file = plugin_dir_path( __DIR__  ) . "reports/opal-scanner-report-$randomised_filename.html";
+
+          $attachments = array($attfile, $html_log_file);
           $h_css= 'style="font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 24px;"';
           $p_css= 'style="font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 16px;"';
           $subject = 'You scanned your site '.get_bloginfo('name');
@@ -26,7 +29,7 @@ function opalreportmail() {
           $message .= "<p $p_css>The attached log is for your information only $attfile</p>";
           $message .= "<p $p_css>Best regards,<br> Steve and the Team at OpalSupport</p>";
 
-          $secret_log_location = get_option( 'opalsupport_log_location' );
+
           $message .= "<p $p_css> teh secret location is ...  $secret_log_location</p>";
 
           $mailout = wp_mail('steve@pheriche.com', $subject, $message, $headers, $attachments);
