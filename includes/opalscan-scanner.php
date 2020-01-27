@@ -191,4 +191,15 @@ if(is_admin()) {
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
   }
+
+  function getPluginVersionFromRepository($slug) {
+      $call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
+      return $call_api;
+  }
+
+  function getThemeVersionFromRepository($slug) {
+      $call_api = themes_api( 'theme_information', array( 'slug' => $slug , 'version' => true,'last_updated' => true) );
+      return $call_api;
+  }
+
 }

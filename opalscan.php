@@ -48,15 +48,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
   		require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
   	}
 */
-    function getPluginVersionFromRepository($slug) {
-				$call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
-			  return $call_api;
-    }
 
-    function getThemeVersionFromRepository($slug) {
-				$call_api = themes_api( 'theme_information', array( 'slug' => $slug , 'version' => true,'last_updated' => true) );
-			  return $call_api;
-    }
     /*************/
 
 		add_action('admin_menu', 'opalscan\register_opalscan_menu');
