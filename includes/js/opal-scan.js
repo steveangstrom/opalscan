@@ -45,6 +45,9 @@ function doReportMail(){
         $('.bigbutton.opalsend').removeClass("sendingmail");
         $('#opalmailsendaudio')[0].play();
         $('#opalscan_displayarea').prepend('<div class="op_alertbox success"><h2>Mail Sent</h2>The mail containing your scan results has been sent to our team and we\'ll get in touch with you to try to help out.<div>');
+        $( ".op_alertbox" ).delay(2000).fadeOut( 1000, function() {
+            $( ".op_alertbox" ).remove();
+          });
       },
       error: function(errorThrown){
           console.log(errorThrown);

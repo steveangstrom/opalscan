@@ -67,15 +67,12 @@
   cursor: wait;
 }
 
-
 /******************************/
-
 .opalscanner_results,
 #scanbarcontrols {
     max-width: 1300px;
     margin: 20px auto;
 }
-
 /********/
 
 .opalsitescannerpage .opal_status{
@@ -94,16 +91,25 @@
   margin:0 0 0 0;
 }
 .opalsitescannerpage .op_alertbox {
-  margin:0;
-  padding:40px;
+ z-index: 9000;
+  padding: 40px;
   font-size: 18px;
+  position: fixed;
+  top:50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .opalsitescannerpage .op_alertbox h2{margin: 0;padding:0 0 10px 0;line-height: normal;}
 .opalsitescannerpage .op_alertbox.success{
-  background:#74d583;
+  background:
+  #74d583;
+  border: 20px solid  #5cb76a;
 }
 .opalsitescannerpage .op_alertbox.fail{
-  background:#df3e3e;
+  background:
+  #df3e3e;
+  color:#ffdfdf;
+  border: 20px solid  #bf0f0f;
 }
 .opalsitescannerpage .opal_status .statusbar{
   position:absolute;
@@ -363,8 +369,8 @@ float: left; line-height:initial;
   }
 
 
-  @media screen and (max-width: 630px) {
-
+  @media screen and (max-width: 960px) {
+.opalsitescannerpage .op_alertbox {left:0;}
     .wp-core-ui .button.bigbutton.opalsend{float: none;margin: 0px;}
     .opal_tab_bar  .opal_tab,
     .opal_tab_bar .opal_tab.active, {
