@@ -199,7 +199,8 @@ $out .='</div>';
   }
 
   function opalscan_show_scan(){ // show previous scan, from the log  including summary
-    $logfile=plugin_dir_path( __DIR__ ) . 'reports/opalscan.log';
+    $randomised_filename = get_option( 'opalsupport_log_location' );
+    $logfile=plugin_dir_path( __DIR__ ) . "reports/opalscan-$randomised_filename.log";
     if (file_exists($logfile)) {
       $JSON_scan = file_get_contents($logfile);
       opalscan_render_html($JSON_scan);// render the array as HTML table.

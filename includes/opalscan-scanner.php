@@ -182,7 +182,6 @@ if(is_admin()) {
 
 
   function opal_update_status($slug,$progress, $total){ // writes the current scan status to a file.
-  //  $status = $status .' '.$progress. ' of '.$total;
     $status_array['slug']= $slug;
     $status_array['progress']= $progress;
     $status_array['total']= $total;
@@ -191,17 +190,16 @@ if(is_admin()) {
   }
 
   function opal_save_to_log($scan_results){
-
     $old_filename = get_option( 'opalsupport_log_location' );
     unlink(plugin_dir_path( __DIR__ ) . "reports/opal-scanner-report-$old_filename.html"); // delete the old HTML file
-
 
     //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED OR POSTED **/
     $randomised_filename = wp_generate_password( 8, false );
     update_option('opalsupport_log_location',$randomised_filename, false);
 
     $JSON_scan = json_encode($scan_results);
-    $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/opalscan.log", "w"); // store a raw copy.
+    //$scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/opalscan.log", "w"); // store a raw copy.
+    $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/opalscan-$randomised_filename.log", "w"); // store a raw copy.
     fwrite($scanlog, $JSON_scan);
     fclose($scanlog);
 

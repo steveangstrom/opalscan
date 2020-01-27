@@ -11,7 +11,7 @@ function opalreportmail() {
         $mailaction = $_REQUEST['mailaction'];
         if ( $mailaction == 'sendmail' ) {
           $randomised_filename = get_option( 'opalsupport_log_location' );
-          $attfile = plugin_dir_path( __DIR__  ) . 'reports/opalscan.log';
+          $attfile = plugin_dir_path( __DIR__  ) ."reports/opalscan-$randomised_filename.log";
           $html_log_file = plugin_dir_path( __DIR__  ) . "reports/opal-scanner-report-$randomised_filename.html";
 
           $attachments = array($attfile, $html_log_file);
@@ -29,8 +29,6 @@ function opalreportmail() {
           $message .= "<p $p_css>The attached log is for your information only $attfile</p>";
           $message .= "<p $p_css>Best regards,<br> Steve and the Team at OpalSupport</p>";
 
-
-          $message .= "<p $p_css> teh secret location is ...  $secret_log_location</p>";
 
           $mailout = wp_mail('steve@pheriche.com', $subject, $message, $headers, $attachments);
           echo 'we just tried to send a mail,'. $attfile.', if it failed there should be an error ' .$mailout;

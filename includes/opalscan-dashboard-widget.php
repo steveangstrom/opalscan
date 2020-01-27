@@ -12,8 +12,9 @@ if(is_admin()) {
   add_action('wp_dashboard_setup', 'opalscan\opalAddDashboardWidget');
 
   function opalscanDashDisplay(){
+    $randomised_filename = get_option( 'opalsupport_log_location' );
     $out = '';
-    $logfile=plugin_dir_path( __DIR__ ) . 'reports/opalscan.log';
+    $logfile=plugin_dir_path( __DIR__ ) . "reports/opalscan-$randomised_filename.log";
 
     if (file_exists($logfile)) {
       $JSON_scan = file_get_contents($logfile);

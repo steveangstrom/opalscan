@@ -56,8 +56,8 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 			?>
 <p>This Site Scanner creates a quick analysis of the health status of your site but is not a comprehensive security scan. It is a tool helping our Opal Support Customers report issues with their sites.</p>
 			<?php
-
-			$logfile=plugin_dir_path( __FILE__ ) . 'reports/opalscan.log';
+      $randomised_filename = get_option( 'opalsupport_log_location' );
+			$logfile=plugin_dir_path( __FILE__ ) . "reports/opalscan-$randomised_filename.log";
 			$sendvisibility = '';
 			if (file_exists($logfile)) {$sendvisibility = 'logpresent';}
 			echo('<hr>');	echo '<div id="scanbarcontrols" class="noselect"><a class="opalbigbutton opalscannow">Scan your site</a><a class="opalbigbutton opalsend '.$sendvisibility.'">Send Report</a><div class="opalspinnerlocation"></div></div><hr>';
