@@ -21,7 +21,7 @@ calculate total score, WP score, Plugins score, Server score.
 function opal_do_score($decoded_scan){
 
   $security_score = (
-    $decoded_scan['scores']['wpsecurity'] +
+    $decoded_scan['scores']['wp_plugin_security'] +
     $decoded_scan['scores']['wpcore'] +
     $decoded_scan['scores']['plugins_abandoned'] +
     $decoded_scan['scores']['plugins_outdated']+
@@ -29,7 +29,7 @@ function opal_do_score($decoded_scan){
     $decoded_scan['scores']['serverSSL']
   )/6;
 
-  if(  $decoded_scan['scores']['wpcore'] < 50){
+  if( $decoded_scan['scores']['wpcore'] < 50){
     $security_score = $decoded_scan['scores']['wpcore'];
   }
 
@@ -65,21 +65,21 @@ function opal_do_score($decoded_scan){
   $scores['maintenance']=$maint_score;
   $scores['other']=$other_score;
   $decoded_scan['scores']['analysis'] = $scores;
-##  return $scores;
+  ##  return $scores;
   return $decoded_scan;
 }
 
 
 function calculate_wp_score($scan_results){
-    $score = 0;
-    $wp_version = $scan_results['wp_version'];
-    $wp_version_available = $scan_results['wp_version_available'];
-    $score = op_version_difference($wp_version_available,$wp_version);
-    $score *= 100;
-    $score = $score>100 ? 100 : $score;
-    $score = 100-$score;
-    $score = $score< 0 ? 0 : $score;
-    return $score;
+  $score = 0;
+  $wp_version = $scan_results['wp_version'];
+  $wp_version_available = $scan_results['wp_version_available'];
+  $score = op_version_difference($wp_version_available,$wp_version);
+  $score *= 100;
+  $score = $score>100 ? 100 : $score;
+  $score = 100-$score;
+  $score = $score< 0 ? 0 : $score;
+  return $score;
 }
 
 function calculate_wpsecurity_score($ssl){
@@ -103,7 +103,6 @@ function calculate_server_score($scan_results){
   if (version_compare(PHP_VERSION, '5.4.0', '<')) {
     $PHPscore = 10;
   }
-
   $scan_results['scores']['serverPHP'] = $PHPscore;
 
   $sql_size = $scan_results['sql_size'];
@@ -126,7 +125,7 @@ function calculate_server_score($scan_results){
   $scan_results['scores']['serverDBsize'] = $DBscore;
 
 /****** SSL check *****/
-  $ssl = $scan_results['ssl'];
+  //$ssl = $scan_results['ssl'];
 
   if(!isset($ssl) || $ssl ==0){
     $scan_results['scores']['serverSSL'] = 0; # old SSL catchall.
@@ -153,6 +152,7 @@ function calculate_server_score($scan_results){
     }
       $scan_results['scores']['serverSSL'] = $SSL_score;
   }
+
 
   return $scan_results;
 }
@@ -260,14 +260,14 @@ function calculate_server_score($scan_results){
       case ($p_noupdate <1):
         $pn_score=100;
         break;
-      case ($p_noupdate <4):
+      case ($p_noupdate <3):
         $pn_score=90;
         break;
-      case ($p_noupdate <8):
-        $pn_score=80;
+      case ($p_noupdate <5):
+        $pn_score=60;
         break;
-      case ($p_noupdate <12):
-        $pn_score=70;
+      case ($p_noupdate <8):
+        $pn_score=30;
         break;
       case ($p_noupdate <15):
         $pn_score=10;
@@ -298,6 +298,13 @@ $p_inactive = $p_amount - $p_active;
         $pi_score = 0;
     }
       $scan_results['scores']['plugins_inactive'] = $pi_score;
+
+    $wp_sec=0;
+    if ($scan_results['wp_plugin_security']!=''){
+      $wp_sec=100;
+    }
+    $scan_results['scores']['wp_plugin_security']=$wp_sec;
+
     return $scan_results;
   }
 
@@ -365,18 +372,14 @@ function SSLcheckdays(){
 	$https_url_without = explode("://",$https_url_with);
 	$https_url_without = $https_url_without[1];
 	$orignal_parse = parse_url($https_url_with, PHP_URL_HOST);
-//echo STREAM_CLIENT_CONNECT;
-	$get = stream_context_create(array("ssl" => array("capture_peer_cert" => TRUE)));
 
+	$get = stream_context_create(array("ssl" => array("capture_peer_cert" => TRUE)));
   $read = stream_socket_client("ssl://".$orignal_parse.":443", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $get);
 	if(!$read){
   //  echo 'ERROR: Unable to check SSL certificate validity.';
   }else{
 		$cert = stream_context_get_params($read);
 		$certinfo = openssl_x509_parse($cert['options']['ssl']['peer_certificate']);
-    /*echo "<pre>";
-		print_r($certinfo);
-    echo "</pre>";*/
     $localts = $certinfo['validTo_time_t'];
    // echo 'valid until '.$localts;
 		$days_to_expiry = $localts - time();

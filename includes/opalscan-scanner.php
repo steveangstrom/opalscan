@@ -54,7 +54,8 @@ if(is_admin()) {
     /*-----------*/
     if (is_ssl()){$ssl=1;}else{$ssl=0;}
     $scan_results["ssl"] = $ssl;
-    $scan_results['scores']['wpsecurity'] = calculate_wpsecurity_score($ssl);
+    //$scan_results['scores']['wpsecurity'] = calculate_wpsecurity_score($ssl);
+
 		/* get SQL version */
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$SQLversion = mysqli_get_server_info($connection);
@@ -129,21 +130,15 @@ if(is_admin()) {
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
 
     /***** SCAN THEMES   *****************************************************/
-
     $all_themes =  wp_get_themes();// associative array of all installed themes
     $how_many_themes = count($all_themes);
     $scan_results["theme_amount"] = $how_many_themes;
 
     $theme_info=array();
-
     foreach($all_themes as $key => $value){
       $sluga = explode('/',$key);
       $slug = $sluga[0]; // get theme's slug this compat for old php version
       $call_api = getThemeVersionFromRepository($slug); // go check this particular theme.
-      // takes time, so comment out for debug.
-    /*  $repoversion = $call_api->version;
-      $theme_info[$slug]=$repoversion;
-      $theme_info[$slug]=$repoversion;*/
       $repoversion = $call_api->version;
       $theme_data = wp_get_theme($slug);// Iterate thru the themes
       $theme_version = $theme_data->get( 'Version' );
@@ -162,9 +157,11 @@ if(is_admin()) {
     $scan_results["allThemes"] =  $theme_info;
 
   /***** END THEMES   *****************************************************/
-    $scan_results["scanDate"] =  $today;
-    /* ----- populate the log with the calculated and weighted scores as a cache ----- */
 
+    $scan_results["scanDate"] =  $today;
+
+
+  /******  SCORING populate the log with the calculated and weighted scores as a cache ----- */
     $scan_results['scores']['wpcore'] = calculate_wp_score($scan_results);
     $scan_results = calculate_plugin_score($scan_results);
     $scan_results = calculate_theme_score($scan_results);

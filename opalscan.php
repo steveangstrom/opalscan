@@ -43,12 +43,11 @@ add_action('admin_enqueue_scripts', 'opalscan\opalscan_enqueue_scripts');
 
 
 if(is_admin()) { // make sure, the following code runs only in the back end
-
+/*
   	if (!function_exists('plugins_api')) {
   		require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
   	}
-
-    // returns version of the plugin represented by $slug, from repository
+*/
     function getPluginVersionFromRepository($slug) {
 				$call_api = plugins_api( 'plugin_information', array( 'slug' => $slug , 'version' => true,) );
 			  return $call_api;
