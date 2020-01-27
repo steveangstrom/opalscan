@@ -178,22 +178,21 @@ $out .='</div>';
       $out.=('</table>');
 
       $out.=('<p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to '.get_option('admin_email').'</p>');
-        $out.=('<a class="opalbigbutton opalsend logpresent">Send Report</a>');
+      $out.=('<a class="opalbigbutton opalsend logpresent">Send Report</a>');
 
       $out.='</div>'; //  END OF report pane
-
 
       # if this is a display of an old log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
         $out.=('<pre>');
-       $out.=( print_r($decoded_scan, true));
+        $out.=( print_r($decoded_scan, true));
         $out.=('</pre>');
         echo $out;
       }else{
         return $out;
       }
-
   }
+
   function opalscan_noprevious_html(){
     $out = 'test';
     return $out;

@@ -128,12 +128,7 @@ if(is_admin()) {
       // is this a security plugin? If so is it actually active?
         $scan_results['wp_plugin_security'] =  detect_plugin_security($slug, $scan_results['wp_plugin_security'],$key ); // check, if already populated keep it.
 
-        #  the error here is that its checking every loop and the condition stays true for every loop after wordfence is detected
-      /*  if (strlen ($scan_results['wp_plugin_security']) > 2 ){
-          if(in_array($key,$activePlugins)){$scan_results['wp_plugin_security_active']=$key;}
-        }*/
     }// end foreach
-
 
 
     $scan_results["activePlugins"] =  $activePlugins;
@@ -197,6 +192,9 @@ if(is_admin()) {
 
   function opal_save_to_log($scan_results){
     //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED  OR POSTED **/
+    $randomised_filename = wp_generate_password( 8, false ).'-log.txt';
+    update_option('opalsupport_log_location',$randomised_filename, false);
+
     $scanlog = fopen(plugin_dir_path( __DIR__ ) . "reports/opalscan.log", "w"); // store a raw copy.
     fwrite($scanlog, json_encode($scan_results));
     fclose($scanlog);
