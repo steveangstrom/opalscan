@@ -102,7 +102,7 @@ $out .='</div>';
 
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' Available ('.$decoded_scan['wp_version_available'].')</td><td>'.$wp_update_needed.'</td></tr>');
 
-    if (strlen($decoded_scan['wp_plugin_security'])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
+    if (strlen($decoded_scan['wp_plugin_security'][0])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
     $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
 
     $out.=opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 );
@@ -277,7 +277,7 @@ function opalscan_render_summarytable($decoded_scan){
       $out.='<tr><td class="warn wpcore">Your Wordpress core is very out of date</td></tr>';
     }
 
-    if (strlen($decoded_scan['wp_plugin_security'])<2){
+    if (strlen($decoded_scan['wp_plugin_security'][0])<2){
       $out.='<tr><td class="inform wpcore">Your Wordpress does not seem to have a security plugin</td></tr>';
     }
     # SSL summary

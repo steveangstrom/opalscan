@@ -43,13 +43,7 @@ add_action('admin_enqueue_scripts', 'opalscan\opalscan_enqueue_scripts');
 
 
 if(is_admin()) { // make sure, the following code runs only in the back end
-/*
-  	if (!function_exists('plugins_api')) {
-  		require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
-  	}
-*/
 
-    /*************/
 
 		add_action('admin_menu', 'opalscan\register_opalscan_menu');
 		function register_opalscan_menu() {

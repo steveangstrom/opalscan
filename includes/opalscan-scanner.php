@@ -39,6 +39,7 @@ if(is_admin()) {
 
     #$allPlugins = get_plugins(); // associative array of all installed plugins
     $activePlugins = get_option('active_plugins'); // simple array of active plugins
+    //$scan_results['jarg'] = $activePlugins;
     $scan_results["plugin_active_amount"] = count($activePlugins);
 
 		$scan_results["php_version"] =  phpversion();
@@ -122,11 +123,18 @@ if(is_admin()) {
         $scan_results['plugin_noupdates']+=1; // update the main tally  of no updates.
       }
 
-      // is this a security plugin?
-        $scan_results['wp_plugin_security'] =  detect_plugin_security($slug, $scan_results['wp_plugin_security'] ); // check, if already populated keep it.
+      // is this a security plugin? If so is it actually active?
+        $scan_results['wp_plugin_security'] =  detect_plugin_security($slug, $scan_results['wp_plugin_security'],$key ); // check, if already populated keep it.
 
+        #  the error here is that its checking every loop and the condition stays true for every loop after wordfence is detected
+      /*  if (strlen ($scan_results['wp_plugin_security']) > 2 ){
+          if(in_array($key,$activePlugins)){$scan_results['wp_plugin_security_active']=$key;}
+        }*/
     }// end foreach
 
+
+
+    $scan_results["activePlugins"] =  $activePlugins;
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
 
     /***** SCAN THEMES   *****************************************************/

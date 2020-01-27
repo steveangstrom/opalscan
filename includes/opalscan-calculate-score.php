@@ -300,7 +300,7 @@ $p_inactive = $p_amount - $p_active;
       $scan_results['scores']['plugins_inactive'] = $pi_score;
 
     $wp_sec=0;
-    if ($scan_results['wp_plugin_security']!=''){
+    if ($scan_results['wp_plugin_security'][1]>0){
       $wp_sec=100;
     }
     $scan_results['scores']['wp_plugin_security']=$wp_sec;
@@ -331,7 +331,7 @@ function calculate_database_size() {
     return fileSizeInfo($dbsize);
 }
 
-function detect_plugin_security($slug, $current=''){
+function detect_plugin_security($slug, $current='',$key){
   if ($current !=''){return $current ;}
   $haystack = array(
     'astra',
@@ -348,7 +348,18 @@ function detect_plugin_security($slug, $current=''){
   );
 
   if (in_array($slug, $haystack)) {
-      return $slug;
+
+    # note : get active plugins, needs base url
+    $activePlugins = get_option('active_plugins');
+    $active = 0;
+
+   if(in_array($key,$activePlugins)){
+      $active = 1;
+    }
+
+    $out = [$slug,$active];
+      return $out;
+    //  return $slug;
   }
 
 }
