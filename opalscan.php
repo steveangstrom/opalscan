@@ -11,6 +11,7 @@ namespace opalscan;
 	header( 'HTTP/1.0 403 Forbidden' );
   exit;
 }
+
 include_once('includes/opalscan-calculate-score.php' );
 include_once('includes/opalscan-mailer.php' );
 include_once('includes/opalscan-dashboard-widget.php' );

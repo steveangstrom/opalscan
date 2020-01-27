@@ -33,11 +33,13 @@ if(is_admin()) {
       'scores'=>array(),
 		);
 
-    $scan_results["wp_URL"] = get_site_url();
-		/** ----------------- Get some information about the site --------------------------**/
-    $scan_results["opalscanner_version"] = '0.1';
 
-    #$allPlugins = get_plugins(); // associative array of all installed plugins
+    $plugin_data = get_plugin_data( dirname(__DIR__).'/opalscan.php' );
+    $scan_results['opalscanner_version']=$plugin_data['Version'];
+
+
+		/** ----------------- Get some information about the site --------------------------**/
+    $scan_results["wp_URL"] = get_site_url();
     $activePlugins = get_option('active_plugins'); // simple array of active plugins
     //$scan_results['jarg'] = $activePlugins;
     $scan_results["plugin_active_amount"] = count($activePlugins);

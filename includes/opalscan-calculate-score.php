@@ -21,12 +21,12 @@ calculate total score, WP score, Plugins score, Server score.
 function opal_do_score($decoded_scan){
 
   $security_score = (
-    $decoded_scan['scores']['wp_plugin_security'] +
-    $decoded_scan['scores']['wpcore'] +
-    $decoded_scan['scores']['plugins_abandoned'] +
-    $decoded_scan['scores']['plugins_outdated']+
-    $decoded_scan['scores']['themes_outdated']+
-    $decoded_scan['scores']['serverSSL']
+    $decoded_scan['scores']['wpcore']*0.7 +
+    $decoded_scan['scores']['plugins_abandoned']*0.7 +
+    $decoded_scan['scores']['plugins_outdated']*0.9 +
+    $decoded_scan['scores']['themes_outdated']*0.9 +
+    $decoded_scan['scores']['serverSSL']*1 +
+    $decoded_scan['scores']['wp_plugin_security']*0.7
   )/6;
 
   if( $decoded_scan['scores']['wpcore'] < 50){
@@ -34,12 +34,12 @@ function opal_do_score($decoded_scan){
   }
 
   $maint_score= (
-    $decoded_scan['scores']['wpcore'] +
-    $decoded_scan['scores']['plugins_active'] +
-    $decoded_scan['scores']['plugins_abandoned'] +
-    $decoded_scan['scores']['plugins_outdated'] +
-    $decoded_scan['scores']['themes_outdated']+
-    $decoded_scan['scores']['themes_active']
+    $decoded_scan['scores']['wpcore']*0.7 +
+    $decoded_scan['scores']['plugins_active']*1 +
+    $decoded_scan['scores']['plugins_abandoned']*0.8 +
+    $decoded_scan['scores']['plugins_outdated']*0.8 +
+    $decoded_scan['scores']['themes_outdated']*0.8+
+    $decoded_scan['scores']['themes_active']*1
   )/6;
 
   if( $decoded_scan['scores']['wpcore'] < 50){
@@ -51,8 +51,8 @@ function opal_do_score($decoded_scan){
 
 
   $other_score= (
-    $decoded_scan['scores']['serverPHP'] +
-    $decoded_scan['scores']['serverDBsize'] +
+    $decoded_scan['scores']['serverPHP']*0.8 +
+    $decoded_scan['scores']['serverDBsize']*0.8 +
     $decoded_scan['scores']['serverSSL']
   )/3;
 

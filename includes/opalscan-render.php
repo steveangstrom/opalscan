@@ -7,6 +7,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
   	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
 
     $out='';
+    //$out.=dirname(__DIR__).'/opalscan.php';
     $score =100;
     //$scorewords=['Extremely bad','Extremely bad', 'Very bad','Bad','Adequate','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
 
