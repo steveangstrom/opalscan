@@ -61,7 +61,7 @@ if(is_admin()) { // make sure, the following code runs only in the back end
 			$logfile=plugin_dir_path( __FILE__ ) . "reports/opalscan-$randomised_filename.log";
 			$sendvisibility = '';
 			if (file_exists($logfile)) {$sendvisibility = 'logpresent';}
-			echo('<hr>');	echo '<div id="scanbarcontrols" class="noselect"><a class="opalbigbutton opalscannow">Scan your site</a><a class="opalbigbutton opalsend '.$sendvisibility.'">Send Report</a><div class="opalspinnerlocation"></div></div><hr>';
+			echo('<hr>');	echo '<div id="scanbarcontrols" class="noselect"><a class="opalbigbutton opalscannow">Scan your site</a><a class="opalbigbutton opalsend opalsendGDPR '.$sendvisibility.'">Send Report</a><div class="opalspinnerlocation"></div></div><hr>';
 			echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.
 			opalscan_show_scan(); // show the previous scan on load.
 			echo('<hr>');

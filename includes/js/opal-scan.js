@@ -49,18 +49,25 @@ $(document).on('click','.op_alertbox_close', function(e) {
   $( ".op_alertbox" ).fadeOut( 500, function() {
     $( ".op_alertbox" ).remove();
   });
-    $( "#op_dim_everything" ).fadeOut( 500, function() {
-      $( "#op_dim_everything" ).remove();
-    });
+  $( "#op_dim_everything" ).fadeOut( 500, function() {
+    $( "#op_dim_everything" ).remove();
+  });
 })
 
 
 
-$(document).on('click','.opalsend', function(e) {
-  console.log ('send');
+$(document).on('click','.op_alertbox .opalsend', function(e) {
+  console.log ('sending a report');
+  $( ".op_alertbox" ).fadeOut( 100, function() {
+    $( ".op_alertbox" ).remove();
+  });
+  $( "#op_dim_everything" ).fadeOut( 100, function() {
+    $( "#op_dim_everything" ).remove();
+  });
   doReportMail();
     $('.opalspinnerlocation').addClass("lds-hourglass");
     $('.bigbutton.opalsend').addClass("sendingmail");
+
 })
 
 function doReportMail(){
