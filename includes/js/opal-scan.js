@@ -23,6 +23,20 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
 
 
 /*-----------------Send mail---------------------------------*/
+$(document).on('click','.opalsendGDPR', function(e) {
+  console.log ('send open GDPR');
+  $('#wpwrap').prepend('<div id="op_dim_everything"></div>');
+  out='<div class="op_alertbox info"><h2>Send a Report to us</h2>';
+  out+='<p>The report will be sent to us at scanrequests@opalsupport.com<p>We delete all reports and emails after 7 days, and we don\'t retain your details, nor offer them to anyone for any purpose.<div>';
+  out+='<p>If you agree to send us the report and wish us to respond with solutions to <span class="op_youremail">yourmail@yourmail.com</span> then please check Agree<p><div>';
+  out+='<hr><input type="checkbox" name="agree" value="agree">Agree &nbsp;';
+  out+='<a class="opalbigbutton opalsend logpresent">Send Report</a>';
+  out+='<div>';
+  $('#opalscan_displayarea').prepend(out);
+})
+
+
+
 $(document).on('click','.opalsend', function(e) {
   console.log ('send');
   doReportMail();
