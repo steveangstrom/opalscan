@@ -31,7 +31,7 @@ $(document).on('click','.opalsendGDPR', function(e) {
   out+='<p>The report will be sent to us at scanrequests@opalsupport.com and you at <span class="op_youremail">yourmail@yourmail.com</span> <p>We delete all reports and emails after 7 days and we don\'t retain your details, nor offer them to anyone for any purpose.<div>';
   out+='<p>If you agree to send us the report and wish us to reply with solutions then please check Agree<p><div>';
   out+='<hr><input type="checkbox" name="agree" id="agreetosend" value="agree"><label for="agreetosend"  class="noselect">Agree</label> &nbsp;';
-  out+='<a class="opalbigbutton opalsend logpresent notagreed">Send Report</a>';
+  out+='<a class="opalbigbutton opalsend logpresent notagreed noselect">Send Report</a>';
   out+='<div>';
   $('#opalscan_displayarea').prepend(out);
 })
@@ -56,7 +56,7 @@ $(document).on('click','.op_alertbox_close', function(e) {
 
 
 
-$(document).on('click','.op_alertbox .opalsend', function(e) {
+$(document).on('click','.op_alertbox .opalsend.agreed', function(e) {
   console.log ('sending a report');
   $( ".op_alertbox" ).fadeOut( 100, function() {
     $( ".op_alertbox" ).remove();
