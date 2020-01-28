@@ -27,12 +27,31 @@ $(document).on('click','.opalsendGDPR', function(e) {
   console.log ('send open GDPR');
   $('#wpwrap').prepend('<div id="op_dim_everything"></div>');
   out='<div class="op_alertbox info"><h2>Send a Report to us</h2>';
-  out+='<p>The report will be sent to us at scanrequests@opalsupport.com<p>We delete all reports and emails after 7 days, and we don\'t retain your details, nor offer them to anyone for any purpose.<div>';
-  out+='<p>If you agree to send us the report and wish us to respond with solutions to <span class="op_youremail">yourmail@yourmail.com</span> then please check Agree<p><div>';
-  out+='<hr><input type="checkbox" name="agree" value="agree">Agree &nbsp;';
-  out+='<a class="opalbigbutton opalsend logpresent">Send Report</a>';
+  out+='<div class="op_alertbox_close">X</div>';
+  out+='<p>The report will be sent to us at scanrequests@opalsupport.com and you at <span class="op_youremail">yourmail@yourmail.com</span> <p>We delete all reports and emails after 7 days and we don\'t retain your details, nor offer them to anyone for any purpose.<div>';
+  out+='<p>If you agree to send us the report and wish us to reply with solutions then please check Agree<p><div>';
+  out+='<hr><input type="checkbox" name="agree" id="agreetosend" value="agree"><label for="agreetosend"  class="noselect">Agree</label> &nbsp;';
+  out+='<a class="opalbigbutton opalsend logpresent notagreed">Send Report</a>';
   out+='<div>';
   $('#opalscan_displayarea').prepend(out);
+})
+
+$(document).on('click','#agreetosend', function(e) {
+  if ($('#agreetosend').is(':checked')) {
+    $('.op_alertbox .opalsend').removeClass('notagreed');
+    $('.op_alertbox .opalsend').addClass('agreed');
+  }else{
+    $('.op_alertbox .opalsend').addClass('notagreed');
+    $('.op_alertbox .opalsend').removeClass('agreed');
+  }
+})
+$(document).on('click','.op_alertbox_close', function(e) {
+  $( ".op_alertbox" ).fadeOut( 500, function() {
+    $( ".op_alertbox" ).remove();
+  });
+    $( "#op_dim_everything" ).fadeOut( 500, function() {
+      $( "#op_dim_everything" ).remove();
+    });
 })
 
 
