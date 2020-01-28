@@ -184,9 +184,9 @@ $out .='</div>';
 
       # if this is a display of an old log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
-        $out.=('<pre>');
+      /*  $out.=('<pre>');
         $out.=( print_r($decoded_scan, true));
-        $out.=('</pre>');
+        $out.=('</pre>');*/
         echo $out;
       }else{
         return $out;

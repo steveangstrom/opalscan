@@ -28,7 +28,7 @@ if(is_admin()) {
         $out .= '<p>Your site needs to be scanned</p>';
     }
     $url=admin_url('admin.php?page=opal-site-scan');
-    $out .= '<a href="'.$url.'" class="button">Perform a Scan</a>';
+    $out .= '<a href="'.$url.'" class="button button-primary">Perform a Scan</a>';
     echo $out;
   }
 }
