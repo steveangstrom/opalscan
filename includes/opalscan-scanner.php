@@ -192,7 +192,8 @@ if(is_admin()) {
   function opal_save_to_log($scan_results){
     $old_filename = get_option( 'opalsupport_log_location' );
     unlink(plugin_dir_path( __DIR__ ) . "reports/opal-scanner-report-$old_filename.html"); // delete the old HTML file
-
+    unlink(plugin_dir_path( __DIR__ ) . "reports/opalscan-$old_filename.log"); // delete the old log file
+    
     //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED OR POSTED **/
     $randomised_filename = wp_generate_password( 8, false );
     update_option('opalsupport_log_location',$randomised_filename, false);
