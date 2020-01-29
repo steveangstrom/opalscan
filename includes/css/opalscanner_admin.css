@@ -99,24 +99,28 @@
 }
 
 #op_dim_everything{
-  width:100vw;
+  width:100%;
   height:100%;
   background: rgba(0,0,0,0.7);
   position: absolute;
   top:0;left:0;
   z-index: 1;
 }
+
 .opalsitescannerpage .op_alertbox {
- z-index: 9000;
-  padding: 40px;
-  font-size: 18px;
-  position: fixed;
-  top:50%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-  background:#fafafa;
-  border: 20px solid  #dadada;
+	z-index: 9000;
+	padding: 40px;
+	font-size: 18px;
+	position: fixed;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	background: #fafafa;
+	border: 20px solid #dadada;
+	right: 8vw;
+	left: 19vw;
 }
+
 .opalsitescannerpage .op_alertbox_close {
 	position: absolute;
 	top: 20px;
@@ -404,7 +408,10 @@ float: left; line-height:initial;
 
 
   @media screen and (max-width: 960px) {
-    .opalsitescannerpage .op_alertbox {left:0;}
+    .opalsitescannerpage .op_alertbox {
+      right: 4vw;
+      left: 5vw;
+    }
     .opalbigbutton {
       margin-top: 10px;
     }
