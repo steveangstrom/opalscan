@@ -3,7 +3,11 @@ namespace opalscan;
 if(is_admin()) {
   /****** RENDER THE DATA AS HTML ********/
   function opalscan_render_html($JSON_scan, $livescan=false){
-  	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
+  	# This function renders the html from the scan.
+    # it takes the JSON passed to it and accepts a flag to switch between a HTML echo, or a return
+    # it can be called from the AJAX from where it returns to be rendered to the page by JS
+    # it is also used to create a HTML file which is sent to the receipients as an attachment via mail.
+
     $out='';
     $score =100;
 
@@ -35,8 +39,7 @@ if(is_admin()) {
 
     /****** top score and summary block *****/
 
-    /* --- describe plugin state verbally -----*/
-    # this function is passed the entire decoded scan.
+    # opal_advice function is passed the entire decoded scan so it can render advice in natural language.
     $out .= opal_advice($decoded_scan, $score_total);
     $out.= '</div>';// end summary tab content
 
@@ -91,12 +94,10 @@ if(is_admin()) {
     }elseif($decoded_scan['scores']['wpcore'] <75){
       $wp_update_needed = "Urgent";
     }
-
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' Available ('.$decoded_scan['wp_version_available'].')</td><td>'.$wp_update_needed.'</td></tr>');
 
     if (strlen($decoded_scan['wp_plugin_security'][0])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
     $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
-
     $out.=opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 );
 
     $pinstatus = 'OK';
@@ -114,7 +115,7 @@ if(is_admin()) {
     if ($decoded_scan['plugin_noupdates']>6){$pabinstatus = 'Urgent';}
     $out.=('<tr><td>Plug-ins Abandoned</td><td>'.$decoded_scan['plugin_noupdates'].'</td><td>'.$pabinstatus.'</td></tr>');
 
-/**********THEMES ************/
+    /********** DISPLAY THEMES INFO ************/
    $themc_status =$thmout_status = 'OK';
    if ($decoded_scan['theme_amount'] > 6){$themc_status = 'Attention';}
    if($decoded_scan['theme_amount'] > 15){ $themc_status = 'Urgent'; }
@@ -123,7 +124,7 @@ if(is_admin()) {
    if ($decoded_scan['theme_outdated'] > 2){$thmout_status = 'Attention';}
    if($decoded_scan['theme_outdated'] > 4){ $thmout_status = 'Urgent'; }
    $out.=('<tr><td>Themes Outdated</td><td>'.$decoded_scan['theme_outdated'].'</td><td>'.$thmout_status.'</td></tr>');
-/***************/
+
     $phpstatus = 'OK';
     if ($decoded_scan['scores']['serverPHP']<95){$phpstatus = 'Attention';}
     if ($decoded_scan['scores']['serverPHP']<70){$phpstatus = 'Urgent';}
@@ -169,8 +170,9 @@ if(is_admin()) {
 
       $out.='</div>'; //  END OF report pane
 
-      # if this is a display of an old log then print it, otherwise we are in an AJAX situation, so return it.
+      # if this is a display of an archived  log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
+        # handy debug function left here because we all like to debug
       /* $out.=('<pre>');
         $out.=( print_r($decoded_scan, true));
         $out.=('</pre>');*/
@@ -180,12 +182,10 @@ if(is_admin()) {
       }
   }
 
-  function opalscan_noprevious_html(){
-    $out = 'test';
-    return $out;
-  }
-
-  function opalscan_show_scan(){ // show previous scan, from the log  including summary
+  function opalscan_show_scan(){
+    # Go and get a previous scan from the log  including summary
+    # the reason we do this is to cache a scan, and prevent site slowdown.
+    # I could cron-job the scans but I want users to feel in control of this
     $randomised_filename = get_option( 'opalsupport_log_location' );
     $logfile=plugin_dir_path( __DIR__ ) . "reports/opalscan-$randomised_filename.log";
     if (file_exists($logfile)) {
@@ -202,7 +202,7 @@ if(is_admin()) {
       if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
 
-          #Security: check for a nonce, and also for capabilities.
+          #Security: check for a nonce, and also for user capabilities.
           if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) && !current_user_can( 'edit_posts' )) {
              wp_send_json_error( 'Invalid security token sent.' );
              wp_die();
@@ -224,7 +224,9 @@ if(is_admin()) {
   }
   add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan\opalscan_ajax_request' );
 
-  function opal_statusbar($status='test'){
+  function opal_statusbar($status=''){
+    # status bar updating function
+    # this is called on a timer from JS via AJAX when the scan starts,
     echo $status;
     die();
   }
@@ -232,6 +234,7 @@ if(is_admin()) {
 }
 
 function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
+  # renders an html table row, not used to its full extent.
   $status = 'OK';
  if ($match>$bp1){
     $status = 'Attention';
@@ -244,8 +247,8 @@ function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
 }
 
 function opalscan_render_summarytable($decoded_scan){
+    # renders an html table fora  summary in the dashboard and in the summary tab of the plugin. 
     $out=('<table class="opalscan_results_table opalbigtable">');
-
     $targ = $decoded_scan['scores']['wpcore'];
     if ($targ >80 && $targ <99){
       $out.='<tr><td class="inform wpcore">Your Wordpress core is out of date</td></tr>';
