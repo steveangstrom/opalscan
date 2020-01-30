@@ -1,12 +1,21 @@
 <?php
 namespace opalscan;
 function opalreportmail() {
+  # sends the mail containing the site report to the user and the opalsupport team.
+  # activated via AJAX
+  # secured with a nonce and a user capabilities check
+
     if ( isset($_REQUEST) ) {
 
-      if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
+      if ( !check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
          wp_send_json_error( 'Invalid security token sent.' );
          wp_die();
        }
+       if (!current_user_can( 'edit_posts' )) {
+          wp_send_json_error( 'Invalid user' );
+          wp_die();
+        }
+
 
         $mailaction = $_REQUEST['mailaction'];
         if ( $mailaction == 'sendmail' ) {
