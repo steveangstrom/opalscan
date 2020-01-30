@@ -174,9 +174,9 @@ if(is_admin()) {
       # if this is a display of an archived  log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
         # handy debug function left here because we all like to debug
-      /* $out.=('<pre>');
+        $out.=('<pre>');
         $out.=( print_r($decoded_scan, true));
-        $out.=('</pre>');*/
+        $out.=('</pre>');
         echo $out;
       }else{
         return $out;

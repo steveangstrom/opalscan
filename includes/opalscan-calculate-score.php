@@ -128,30 +128,30 @@ function calculate_server_score($scan_results){
   $scan_results['scores']['serverDBsize'] = $DBscore;
 
 /****** SSL check *****/
+  $ssl_expiry = $scan_results['ssl']['days'];
 
-  if(!isset($ssl) || $ssl ==0){
+  if(!isset($ssl_expiry) || $ssl_expiry == 0){
     $scan_results['scores']['serverSSL'] = 0; # old SSL catchall.
   }
 
-  if ($ssl >=1){
-    $SSL_score = 0;
-    $days_to_expiry = SSLcheckdays(); // if we are on https then see if you can get the cert and expiry - note may fail locally
-    switch(true){ // score the outdated of plugins
-      case ($days_to_expiry <1):
+  if ($ssl_expiry >=1){
+    switch(true){ // score the SSL expiry. TODO - add issuer deduction for self-signed. 
+      case ($ssl_expiry <1):
         $SSL_score=10;
         break;
-      case ($days_to_expiry <15):
+      case ($ssl_expiry <15):
         $SSL_score=30;
         break;
-      case ($days_to_expiry <20):
+      case ($ssl_expiry <20):
         $SSL_score=50;
         break;
-      case ($days_to_expiry <30):
+      case ($ssl_expiry <30):
         $SSL_score=80;
         break;
       default:
         $SSL_score = 100;
     }
+
       $scan_results['scores']['serverSSL'] = $SSL_score;
   }
   return $scan_results;
@@ -372,17 +372,23 @@ function op_version_difference($available, $current){
   return   $diff;
 }
 
-function SSLcheckdays(){
+function SSLcheck(){
   # checking the status of the SSL cert and epxpiry  if it exists.
 	$https_url_with = site_url( null, 'https' );
 	$https_url_without = explode("://",$https_url_with);
 	$https_url_without = $https_url_without[1];
 	$orignal_parse = parse_url($https_url_with, PHP_URL_HOST);
 
-	$get = stream_context_create(array("ssl" => array("capture_peer_cert" => TRUE)));
+	$get = stream_context_create(array("ssl" => array(
+      "capture_peer_cert" => TRUE,
+      'verify_peer' => false,
+      'verify_peer_name' => false,
+      'allow_self_signed' => true)
+      ));
   $read = stream_socket_client("ssl://".$orignal_parse.":443", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $get);
 	if(!$read){
   //  echo 'ERROR: Unable to check SSL certificate validity.';
+    return;
   }else{
 		$cert = stream_context_get_params($read);
 		$certinfo = openssl_x509_parse($cert['options']['ssl']['peer_certificate']);
@@ -390,7 +396,9 @@ function SSLcheckdays(){
    // echo 'valid until '.$localts;
 		$days_to_expiry = $localts - time();
 		$days_to_expiry = $days_to_expiry / 60 / 60 / 24;
-		// echo 'days to expiry  '.$days_to_expiry;
-		return $days_to_expiry;
+    $out=Array('days'=>$days_to_expiry, 'issuer'=>$certinfo['issuer']);
+		//return $days_to_expiry;
+    //$out = $certinfo;
+    return $out;
 	}
 }

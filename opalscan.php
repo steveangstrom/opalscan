@@ -53,6 +53,7 @@ if(is_admin()) {
   function opalscan_admin_page_output(){
     # Renders the basic HTML for the admin page for this plugin,
   	echo '<div class="wrap opalsitescannerpage"><h1>Opal Site Scanner</h1><p>This Site Scanner creates a quick analysis of the health status of your site but is not a comprehensive security scan, it is a tool helping our Opal Support Customers report issues with their sites.</p>';
+
     $randomised_filename = get_option( 'opalsupport_log_location' );
   	$logfile=plugin_dir_path( __FILE__ ) . "reports/opalscan-$randomised_filename.log";
   	$sendvisibility = '';

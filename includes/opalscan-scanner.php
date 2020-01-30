@@ -55,8 +55,9 @@ if(is_admin()) {
     $obj = json_decode($json);
     $scan_results["wp_version_available"] = $obj->offers[0]->version;
     /*-----------*/
-    if (is_ssl()){$ssl=1;}else{$ssl=0;}
-    $scan_results["ssl"] = $ssl;
+    //if (is_ssl()){$ssl=1;}else{$ssl=0;}
+  //  $scan_results["ssl"] = $ssl;
+    $scan_results["ssl"] = SSLcheck();
 
 		/* get SQL version */
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
