@@ -13,10 +13,11 @@ if(is_admin()) {
 
     $decoded_scan = json_decode($JSON_scan,true);
     $log_date = strtotime($decoded_scan['scanDate']['date']);
-  #  $scores = opal_do_score($decoded_scan);
+
     $decoded_scan = opal_do_score($decoded_scan);
     $scores = $decoded_scan['scores']['analysis'];
     $score_total=$scores['total'];
+
     # Display results
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">
     <div class="opal_tab_bar noselect">
@@ -247,7 +248,7 @@ function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
 }
 
 function opalscan_render_summarytable($decoded_scan){
-    # renders an html table fora  summary in the dashboard and in the summary tab of the plugin. 
+    # renders an html table fora  summary in the dashboard and in the summary tab of the plugin.
     $out=('<table class="opalscan_results_table opalbigtable">');
     $targ = $decoded_scan['scores']['wpcore'];
     if ($targ >80 && $targ <99){

@@ -53,8 +53,6 @@ function opalreportmail() {
           /* return a console.log message to the front end */
           echo 'we just tried to send a mail,'. $attfile.', if it failed there should be an error ' .$c_mailout;
         }
-      #
-    //  echo 'we just tried to send a mail, this is step one , the url = '.plugin_dir_url( __DIR__  ) . 'reports/opalscan.log';
     }
    die();
 }

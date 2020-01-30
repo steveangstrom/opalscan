@@ -19,7 +19,10 @@ calculate total score, WP score, Plugins score, Server score.
 */
 
 function opal_do_score($decoded_scan){
-
+# takes the scores for key components such as "WPcore (version outddated)" - which are scored in severity from 0-100
+# and uses those combined with others to give an overall score to a section such as "security"
+# so if WPcore and many plugins are out of date, and some plugins are abandoned we can say there's a security risk.
+# the scoring is weighted depending on how vital each element is to the section
   $security_score = (
     $decoded_scan['scores']['wpcore']*0.7 +
     $decoded_scan['scores']['plugins_abandoned']*0.7 +
@@ -125,7 +128,6 @@ function calculate_server_score($scan_results){
   $scan_results['scores']['serverDBsize'] = $DBscore;
 
 /****** SSL check *****/
-  //$ssl = $scan_results['ssl'];
 
   if(!isset($ssl) || $ssl ==0){
     $scan_results['scores']['serverSSL'] = 0; # old SSL catchall.
@@ -152,8 +154,6 @@ function calculate_server_score($scan_results){
     }
       $scan_results['scores']['serverSSL'] = $SSL_score;
   }
-
-
   return $scan_results;
 }
 
@@ -206,9 +206,7 @@ function calculate_server_score($scan_results){
   }
 
   function calculate_plugin_score($scan_results){
-    //$score = $scan_results['plugin_amount'];
     $score = 0;
-
     $p_amount = $scan_results['plugin_amount'];
     $p_outdated = $scan_results['plugin_outdated'];
     $p_noupdate = $scan_results['plugin_noupdates'];
@@ -348,8 +346,6 @@ function detect_plugin_security($slug, $current='',$key){
   );
 
   if (in_array($slug, $haystack)) {
-
-    # note : get active plugins, needs base url
     $activePlugins = get_option('active_plugins');
     $active = 0;
 
@@ -359,7 +355,6 @@ function detect_plugin_security($slug, $current='',$key){
 
     $out = [$slug,$active];
       return $out;
-    //  return $slug;
   }
 
 }
@@ -372,13 +367,13 @@ function op_version_difference($available, $current){
   $diff=$available-$current;
   if (array_key_exists('2',$availableA) && $diff ==0){
     # if theres a Revision then calculate it.
-
     return ($availableA[2] - $currentA[2])*0.01;
   }
   return   $diff;
 }
 
 function SSLcheckdays(){
+  # checking the status of the SSL cert and epxpiry  if it exists.
 	$https_url_with = site_url( null, 'https' );
 	$https_url_without = explode("://",$https_url_with);
 	$https_url_without = $https_url_without[1];
