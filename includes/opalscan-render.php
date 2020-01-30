@@ -141,9 +141,9 @@ if(is_admin()) {
     if ($dbSize > 80){$status = 'Urgent';}
     $out.=('<tr><td>SQL Database Size</td><td> '.$dbSize.' MB</td><td> '.$status.' </td></tr>');
 
-    $ssl = ($decoded_scan['ssl'] == 1) ? 'True' : 'False';
-    $sslstatus = ($decoded_scan['ssl'] == 1) ? 'OK' : 'Attention';
-    $out.=('<tr><td>SSL Security</td><td>'.$ssl.'</td><td>'.$sslstatus.'</td></tr>');
+    $ssldays = round($decoded_scan['ssl']['days']);
+    $sslstatus = ($ssldays>30) ? 'OK' : 'Attention';
+    $out.=('<tr><td>SSL Security</td><td>'.$ssldays.' Days ('.$decoded_scan['ssl']['issuer']['OU'].')</td><td>'.$sslstatus.'</td></tr>');
     $out.=('</table>');
 
     $allPlugins = $decoded_scan['allPlugins'];
