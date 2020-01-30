@@ -1,15 +1,11 @@
 <?php
 namespace opalscan;
-if(is_admin()) { // make sure, the following code runs only in the back end
-
+if(is_admin()) {
   /****** RENDER THE DATA AS HTML ********/
   function opalscan_render_html($JSON_scan, $livescan=false){
   	// this can be called from the AJAX , or it can be used to create the HTML file which is sent to the receipients.
-
     $out='';
-    //$out.=dirname(__DIR__).'/opalscan.php';
     $score =100;
-    //$scorewords=['Extremely bad','Extremely bad', 'Very bad','Bad','Adequate','Needs Attention','Needs Attention','Good','Very Good','Excellent'];
 
     $decoded_scan = json_decode($JSON_scan,true);
     $log_date = strtotime($decoded_scan['scanDate']['date']);
@@ -30,21 +26,21 @@ if(is_admin()) { // make sure, the following code runs only in the back end
         $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
     }
     $out.='<canvas id ="opalreportgraph" data-score="'.$score_total.'" width="250px" height="200px"></canvas>';# the speedo display
-$out .='<div id="op_bar_wrapper">';
+    $out .='<div id="op_bar_wrapper">';
     $out .='<div id="score-secure" class="scorebar" data-score="'.$scores['security'].'"><div class="opbar"></div></div>';
     $out .='<div id="score-maintain" class="scorebar" data-score="'.$scores['maintenance'].'"><div class="opbar"></div></div>';
     $out .='<div id="score-other" class="scorebar" data-score="'.$scores['other'].'"><div class="opbar"></div></div>';
-$out .= opal_summary($score_total);
+    $out .= opal_summary($score_total);
+    $out .='</div>';
 
-$out .='</div>';
-/****** top score and summary block *****/
+    /****** top score and summary block *****/
 
-  /* --- describe plugin state verbally -----*/
-  # this function is passed the entire decoded scan.
+    /* --- describe plugin state verbally -----*/
+    # this function is passed the entire decoded scan.
     $out .= opal_advice($decoded_scan, $score_total);
     $out.= '</div>';// end summary tab content
 
-  /* -----RENDER THE SCORE RESULT TABLES ---*/
+    /* -----RENDER THE SCORE RESULT TABLES ---*/
     $out.='<div id = "opalreport" class = "opal_pane">';
 
     # explains the three human readable scores.
@@ -89,17 +85,12 @@ $out .='</div>';
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
 
-   /*$wpstatus = 'OK';
-    if ($decoded_scan['scores']['wpcore']>0){$wpstatus = 'Attention';}
-    if ($decoded_scan['scores']['wpcore']>10){$wpstatus = 'Urgent';}
-    $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' ( Avaliable '.$decoded_scan['wp_version_available'].' )</td><td>'.$wpstatus.'</td></tr>');
-*/
-  $wp_update_needed = "OK";
-  if ($decoded_scan['scores']['wpcore'] <90){
-    $wp_update_needed = "Attention";
-  }elseif($decoded_scan['scores']['wpcore'] <75){
-    $wp_update_needed = "Urgent";
-  }
+    $wp_update_needed = "OK";
+    if ($decoded_scan['scores']['wpcore'] <90){
+      $wp_update_needed = "Attention";
+    }elseif($decoded_scan['scores']['wpcore'] <75){
+      $wp_update_needed = "Urgent";
+    }
 
     $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' Available ('.$decoded_scan['wp_version_available'].')</td><td>'.$wp_update_needed.'</td></tr>');
 
@@ -139,7 +130,6 @@ $out .='</div>';
     $out.=('<tr><td>Web Server PHP</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>'.$phpstatus.'</td></tr>');
 
     $sqlstatus = 'OK';
-    //if ($decoded_scan['sql_version']==0){$sqlstatus = 'Attention';}
     $out.=('<tr><td>SQL Server</td><td>SQL Version '.$decoded_scan['sql_version'].'</td><td>'.$sqlstatus.'</td></tr>');
 
     $databasesize = 'OK';
@@ -152,9 +142,7 @@ $out .='</div>';
     $ssl = ($decoded_scan['ssl'] == 1) ? 'True' : 'False';
     $sslstatus = ($decoded_scan['ssl'] == 1) ? 'OK' : 'Attention';
     $out.=('<tr><td>SSL Security</td><td>'.$ssl.'</td><td>'.$sslstatus.'</td></tr>');
-
     $out.=('</table>');
-
 
     $allPlugins = $decoded_scan['allPlugins'];
     $out.=('<h2>Plug-in Details</h2>');
@@ -168,7 +156,6 @@ $out .='</div>';
         $outstatus = $value['plugin_outdated']? 'Needs Update' : 'Most Recent';
         $out.= '<td>'.$outstatus.'</td>';
 
-      //  $updstatus = $value['plugin_noupdates']? 'Abandoned' : 'Ok';
       $updstatus = 'OK';
       if ($value['plugin_noupdates'] >11){$updstatus = 'Outdated';}
       if ($value['plugin_noupdates'] >20){$updstatus = 'Abandoned!';}
@@ -184,7 +171,7 @@ $out .='</div>';
 
       # if this is a display of an old log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
-      /*  $out.=('<pre>');
+      /* $out.=('<pre>');
         $out.=( print_r($decoded_scan, true));
         $out.=('</pre>');*/
         echo $out;
@@ -205,25 +192,18 @@ $out .='</div>';
       $JSON_scan = file_get_contents($logfile);
       opalscan_render_html($JSON_scan);// render the array as HTML table.
     } else {
-      //  file_put_contents($filename, '');
+      # nothing yet
     }
   }
 
-
-/*
-  NOTE ;
-  to make the AJAX for the scan be more interactive, every loop of the ELSE scan of the repo, call this and
-  increment a status bar, possibly even pass something about what is being scanned..
-
-*/
 
   function opalscan_ajax_request() {
       // The $_REQUEST contains all the data sent via ajax
       if ( isset($_REQUEST['scan']) ) {
           $scan= $_REQUEST['scan'];
 
-        #  if ( ! check_ajax_referer( 'testbreakit-security-nonce', 'security' ) ) {
-          if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
+          #Security: check for a nonce, and also for capabilities.
+          if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) && !current_user_can( 'edit_posts' )) {
              wp_send_json_error( 'Invalid security token sent.' );
              wp_die();
            }
@@ -252,10 +232,6 @@ $out .='</div>';
 }
 
 function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
-  // labels with labels.
-  # the current is Installed
-  #thing to check is  $match
-  #acceptable values are $bp1 and $bp2
   $status = 'OK';
  if ($match>$bp1){
     $status = 'Attention';
@@ -263,9 +239,8 @@ function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
   if ($match>$bp2){
     $status = 'Urgent';
   }
-
-    $out=("<tr><td>$label</td><td>$installed</td><td>$status</td></tr>");
-    return $out;
+  $out=("<tr><td>$label</td><td>$installed</td><td>$status</td></tr>");
+  return $out;
 }
 
 function opalscan_render_summarytable($decoded_scan){

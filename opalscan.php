@@ -12,6 +12,7 @@ namespace opalscan;
   exit;
 }
 
+
 include_once('includes/opalscan-calculate-score.php' );
 include_once('includes/opalscan-mailer.php' );
 include_once('includes/opalscan-dashboard-widget.php' );
