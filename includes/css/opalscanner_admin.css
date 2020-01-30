@@ -1,6 +1,4 @@
 .opalhide{display:none!important;}
-.op_do_a_scanbut{display: inline-block;background: #007cba;padding:3px 10px;color:#fff; border-radius: 3px;}
-.op_do_a_scanbut:hover{background: #0071a1; color:#fff;}
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -13,8 +11,8 @@
 .opalsitescannerpage h1{font-size: 34px;}
 .opalsitescannerpage p{font-size: 16px;}
 .opalsitescannerpage .opaldoscan{cursor: pointer;}
-/*   BUTTONS */
 
+/*   BUTTONS */
 .opalbigbutton{
   font-size: 18px;
   padding: 5px 30px;
@@ -31,15 +29,46 @@
   cursor:pointer;
 }
 
-.opalbigbutton.opalscannow{background:#0071a1;color:#fcfdf9; margin-right:20px;}
-.opalbigbutton.opalscannow:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
+.opalbigbutton.opalscannow{
+  background:#0071a1;
+  color:#fcfdf9;
+  margin-right:20px;
+}
+.opalbigbutton.opalscannow:hover{
+  background: #caeed0 !important;
+  border-color: #01872f;
+  color: #01872f;
+}
 
-.opalbigbutton.opalsend{display:none;}
+.opalbigbutton.opalsend{
+  display:none;
+}
 
-.opalbigbutton.opalsend.logpresent{background: #74d583;border-color:#74d583; color:#173e25;display: inline-block;}
-.opalbigbutton.opalsend.logpresent:hover{background: #caeed0 !important;border-color: #01872f; color: #01872f;}
+.opalbigbutton.opalsend.logpresent{
+  background: #74d583;
+  border-color:#74d583;
+  color:#173e25;
+  display: inline-block;
+}
+.opalbigbutton.opalsend.logpresent:hover{
+  background: #caeed0 !important;
+  border-color: #01872f;
+  color: #01872f;
+}
+
+.op_do_a_scanbut{
+  display: inline-block;
+  background: #007cba;
+  padding:3px 10px;
+  color:#fff;
+  border-radius: 3px;
+}
+.op_do_a_scanbut:hover{
+  background: #0071a1;
+  color:#fff;
+}
+
 /** button icons **/
-
 .opalbigbutton:after{
       font-family: dashicons;
       display: inline-block;
@@ -71,8 +100,8 @@
 /******************************/
 .opalscanner_results,
 #scanbarcontrols {
-    max-width: 1300px;
-    margin: 20px auto;
+  max-width: 1300px;
+  margin: 20px auto;
 }
 /********/
 
@@ -136,8 +165,15 @@
 	font-weight: 900;
 	line-height: 22px;
 }
-.opalsitescannerpage .op_alertbox h2{margin: 0;padding:0 0 10px 0;line-height: normal;}
-.opalsitescannerpage .op_alertbox p {margin:0 0 5px 0;line-height: normal;}
+.opalsitescannerpage .op_alertbox h2{
+  margin: 0;
+  padding:0 0 10px 0;
+  line-height: normal;
+}
+.opalsitescannerpage .op_alertbox p {
+  margin:0 0 5px 0;
+  line-height: normal;
+}
 .opalsitescannerpage .op_alertbox.success{
   background:
   #74d583;
@@ -158,15 +194,14 @@
 }
 
 .opalsitescannerpage .opal_status .statusmessage {
-padding:20px;
-position: absolute;
-top:0;
-left:0;
+  padding:20px;
+  position: absolute;
+  top:0;
+  left:0;
 }
 
 
 /* ----- Tabs and panes  ----- */
-
 .opal_tabber_link{
   cursor: pointer;
 }
@@ -180,7 +215,6 @@ left:0;
 	display: inherit;
 }
 #opalsummary.opal_pane{
-
 }
 
 .opal_tab_bar{
@@ -194,8 +228,6 @@ left:0;
   display: inline-block;
   padding: 10px 30px;
   border:2px solid  rgba(200,200,200,0);
-/*  background: #ccc;
-  color:#aaa;*/
   margin-right: 4px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -215,7 +247,7 @@ left:0;
 .opal_tab_bar .opal_tab.active:hover{
   background: white;
    border:2px solid #0071a1;
-     border-bottom-color: #fff;
+   border-bottom-color: #fff;
    color:#0071a1;
 }
 .opal_tab_bar .opal_tab:hover{
@@ -225,8 +257,8 @@ left:0;
 }
 /***** SCORES *****/
 
-.opalsitescannerpage .score{display: block;position:relative;
-/*  width:150px;*/
+.opalsitescannerpage .score{
+  display: block;position:relative;
   width:100%;
   height:60px;
   background: #dadada;
@@ -327,18 +359,34 @@ td.opfullscanbar .scanbar{
 }
 
 /***** content styles *****/
-.opalscanner_results h2{font-size: 30px;font-weight: normal; line-height:normal; margin:20px 0 0.3em 0;}
-.opalscanner_results p{ line-height:normal; margin:0 0 0.7em 0;}
-.opalscanner_results .opal_dimmed{ color:#7d8fa1;}
-
+.opalscanner_results h2{
+  font-size: 30px;
+  font-weight: normal;
+  line-height:normal;
+  margin:20px 0 0.3em 0;
+}
+.opalscanner_results p{
+  line-height:normal;
+   margin:0 0 0.7em 0;
+ }
+.opalscanner_results .opal_dimmed{
+  color:#7d8fa1;
+}
 
 /*****  TABLE STYLES *****/
 
 .opalscan_results_table{
-  width:100%; margin: 20px 0 30px 0;
+  width:100%;
+  margin: 20px 0 30px 0;
 }
-.opalscan_results_table td, .opalscan_results_table th{text-align:left; padding: 8px 15px;}
-.opalscan_results_table th{background: #dadada;}
+.opalscan_results_table td,
+.opalscan_results_table th{
+  text-align:left;
+  padding: 8px 15px;
+}
+.opalscan_results_table th{
+  background: #dadada;
+}
 
 .opalscan_results_table tr:nth-child(odd) {
   background-color: #f9f9f9;
@@ -348,8 +396,11 @@ td.opfullscanbar .scanbar{
 .opalscan_results_table tr td.plugin:before,
 .opalscan_results_table tr td.server:before,
 .opalscan_results_table tr td.theme:before{
-  font-family: dashicons; padding-right:20px;font-size: 22px;
-float: left; line-height:initial;
+  font-family: dashicons;
+  padding-right:20px;
+  font-size: 22px;
+  float: left;
+  line-height:initial;
 }
 
 .opalscan_results_table tr td.wpcore:before {content: "\f324"; }
@@ -365,7 +416,10 @@ float: left; line-height:initial;
   border-top: 2px solid  #d5d3d3;
   font-size: 16px;
 }
-.scoretotal td:first-child{text-align:right;min-width:70%;}
+.scoretotal td:first-child{
+  text-align:right;
+  min-width:70%;
+}
 .opalsitescannerpage  .opalbigtable td{
   font-size: 18px;
   padding: 15px 20px;
@@ -373,7 +427,6 @@ float: left; line-height:initial;
 .op_badbar{border:1px solid red;}
 
 /*****  SPINNY LOADER *****/
-
   .lds-hourglass {
     display: inline-block;
     position: relative;
@@ -416,7 +469,11 @@ float: left; line-height:initial;
       margin-top: 10px;
     }
     .wp-core-ui .button.bigbutton.opalsend{float: none;margin: 0px;}
-    .opal_tab_bar {height:auto; padding:0px 0 0 0; margin: 0px 0 -2px 0;clear:both;
+    .opal_tab_bar {
+      height:auto; 
+      padding:0px 0 0 0;
+      margin: 0px 0 -2px 0;
+      clear:both;
       min-width: 330px;
     }
     .opal_tab_bar  .opal_tab,
