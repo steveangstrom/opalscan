@@ -321,7 +321,7 @@
     content:'MAINTENANCE';
 }
 .opalsitescannerpage #score-other .opbar:after{
-    content:'STABILITY';
+    content:'STABILITY & SPEED';
 }
 #opalreportgraph{
   float: left;
@@ -470,7 +470,7 @@ td.opfullscanbar .scanbar{
     }
     .wp-core-ui .button.bigbutton.opalsend{float: none;margin: 0px;}
     .opal_tab_bar {
-      height:auto; 
+      height:auto;
       padding:0px 0 0 0;
       margin: 0px 0 -2px 0;
       clear:both;

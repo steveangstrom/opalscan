@@ -80,10 +80,11 @@ if(is_admin()) {
     $out.='<tr><td>Abandoned Plugins ('.$decoded_scan['plugin_noupdates'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
     $out.='<tr><td>Outdated Plugins ('.$decoded_scan['plugin_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
     $out.='<tr><td>Installed Themes ('.$decoded_scan['theme_amount'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_active'].'</td></tr>';
+    $out.='<tr><td>Outdated Themes ('.$decoded_scan['theme_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($maint_score) .'</td></tr>';
     $out.=('</table>');
 
-    $out.='<h3>Server Stability</h3>';
+    $out.='<h3>Server Stability & Speed</h3>';
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
     $out.='<tr><td>Server PHP ('.$decoded_scan['php_version'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverPHP'].'</td></tr>';

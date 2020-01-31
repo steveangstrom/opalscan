@@ -1,7 +1,7 @@
 <?php
 namespace opalscan;
 /*
-calculate individual scores for :
+This file contains methods which calculate individual scores for :
 > wp Core version lagging too far behing latest.
 > wp security plugin detected
 
@@ -15,7 +15,8 @@ calculate individual scores for :
 > Server SQL version - not used.
 > Server SSL cert.
 
-calculate total score, WP score, Plugins score, Server score.
+calculate total score, also sub scores normalised to 0-100, also
+scores for segments "Security" "Maintenance", "Stability/Speed"
 */
 
 function opal_do_score($decoded_scan){
@@ -51,8 +52,6 @@ function opal_do_score($decoded_scan){
     $maint_score = $decoded_scan['scores']['plugins_outdated'];
   }
 
-
-
   $other_score= (
     $decoded_scan['scores']['serverPHP']*0.8 +
     $decoded_scan['scores']['serverDBsize']*0.8 +
@@ -68,7 +67,7 @@ function opal_do_score($decoded_scan){
   $scores['maintenance']=$maint_score;
   $scores['other']=$other_score;
   $decoded_scan['scores']['analysis'] = $scores;
-  ##  return $scores;
+  # return $scores;
   return $decoded_scan;
 }
 
@@ -85,20 +84,25 @@ function calculate_wp_score($scan_results){
   return $score;
 }
 
+
 function calculate_wpsecurity_score($ssl){
   $sslscore= $ssl*100;
   return   $sslscore;
 }
 
+
 function calculate_server_score($scan_results){
   $sql_version = $scan_results['sql_version'];
 
   $PHPscore =  100;
-  if (version_compare(PHP_VERSION, '7.3.0', '<')) {
+  if (version_compare(PHP_VERSION, '7.4.0', '<')) {
     $PHPscore =   90;
   }
-  if (version_compare(PHP_VERSION, '7.2.0', '<')) {
+  if (version_compare(PHP_VERSION, '7.3.0', '<')) {
       $PHPscore =  80;
+  }
+  if (version_compare(PHP_VERSION, '7.2.0', '<')) {
+      $PHPscore =  70;
   }
   if (version_compare(PHP_VERSION, '5.6.0', '<')) {
     $PHPscore =  30;
@@ -127,7 +131,7 @@ function calculate_server_score($scan_results){
   }
   $scan_results['scores']['serverDBsize'] = $DBscore;
 
-/****** SSL check *****/
+  /****** SSL check *****/
   $ssl_expiry = $scan_results['ssl']['days'];
 
   if(!isset($ssl_expiry) || $ssl_expiry == 0){
@@ -231,7 +235,7 @@ function calculate_server_score($scan_results){
       default:
         $pa_score = 0;
     }
-    $scan_results['scores']['plugins_active'] = $pa_score;
+    $scan_results['scores']['plugins_active'] = $pa_score;# push it into the array
 
     switch(true){ // score the outdated plugins
       case ($p_outdated <1):
@@ -252,7 +256,7 @@ function calculate_server_score($scan_results){
       default:
         $po_score = 0;
     }
-      $scan_results['scores']['plugins_outdated'] = $po_score;
+      $scan_results['scores']['plugins_outdated'] = $po_score;# push it into the array
 
     switch(true){ // score the abandoned plugins
       case ($p_noupdate <1):
@@ -273,9 +277,9 @@ function calculate_server_score($scan_results){
       default:
         $pn_score = 0;
     }
-      $scan_results['scores']['plugins_abandoned'] = $pn_score;
+    $scan_results['scores']['plugins_abandoned'] = $pn_score; # push it into the array
 
-$p_inactive = $p_amount - $p_active;
+    $p_inactive = $p_amount - $p_active;
     switch(true){ // score the outdated of plugins
       case ($p_inactive <1):
         $pi_score=100;
@@ -295,13 +299,13 @@ $p_inactive = $p_amount - $p_active;
       default:
         $pi_score = 0;
     }
-      $scan_results['scores']['plugins_inactive'] = $pi_score;
+      $scan_results['scores']['plugins_inactive'] = $pi_score;# push it into the array
 
     $wp_sec=0;
     if ($scan_results['wp_plugin_security'][1]>0){
       $wp_sec=100;
     }
-    $scan_results['scores']['wp_plugin_security']=$wp_sec;
+    $scan_results['scores']['wp_plugin_security']=$wp_sec; # push it into the array
 
     return $scan_results;
   }
@@ -360,7 +364,7 @@ function detect_plugin_security($slug, $current='',$key){
 }
 
 function op_version_difference($available, $current){
-  // a cheap version compare. uses string subtraction for first two numbers. array only if revision exists.
+  # function serving as a cheap version compare. uses string subtraction for first two numbers. array only if revision exists.
   $availableA = explode(".",$available);
   $currentA = explode(".",$current);
 
@@ -371,6 +375,7 @@ function op_version_difference($available, $current){
   }
   return   $diff;
 }
+
 
 function SSLcheck(){
   # checking the status of the SSL cert and epxpiry  if it exists.
