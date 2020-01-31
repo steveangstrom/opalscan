@@ -24,12 +24,12 @@ function opal_do_score($decoded_scan){
 # so if WPcore and many plugins are out of date, and some plugins are abandoned we can say there's a security risk.
 # the scoring is weighted depending on how vital each element is to the section
   $security_score = (
-    $decoded_scan['scores']['wpcore']*0.7 +
-    $decoded_scan['scores']['plugins_abandoned']*0.7 +
-    $decoded_scan['scores']['plugins_outdated']*0.9 +
-    $decoded_scan['scores']['themes_outdated']*0.9 +
+    $decoded_scan['scores']['wpcore']*1+
+    $decoded_scan['scores']['plugins_abandoned']*1 +
+    $decoded_scan['scores']['plugins_outdated']*1 +
+    $decoded_scan['scores']['themes_outdated']*1 +
     $decoded_scan['scores']['serverSSL']*1 +
-    $decoded_scan['scores']['wp_plugin_security']*0.7
+    $decoded_scan['scores']['wp_plugin_security']*1
   )/6;
 
   if( $decoded_scan['scores']['wpcore'] < 50){
@@ -37,11 +37,11 @@ function opal_do_score($decoded_scan){
   }
 
   $maint_score= (
-    $decoded_scan['scores']['wpcore']*0.7 +
+    $decoded_scan['scores']['wpcore']*1 +
     $decoded_scan['scores']['plugins_active']*1 +
-    $decoded_scan['scores']['plugins_abandoned']*0.8 +
-    $decoded_scan['scores']['plugins_outdated']*0.8 +
-    $decoded_scan['scores']['themes_outdated']*0.8+
+    $decoded_scan['scores']['plugins_abandoned']*1 +
+    $decoded_scan['scores']['plugins_outdated']*1 +
+    $decoded_scan['scores']['themes_outdated']*1+
     $decoded_scan['scores']['themes_active']*1
   )/6;
 
@@ -135,7 +135,7 @@ function calculate_server_score($scan_results){
   }
 
   if ($ssl_expiry >=1){
-    switch(true){ // score the SSL expiry. TODO - add issuer deduction for self-signed. 
+    switch(true){ // score the SSL expiry. TODO - add issuer deduction for self-signed.
       case ($ssl_expiry <1):
         $SSL_score=10;
         break;
