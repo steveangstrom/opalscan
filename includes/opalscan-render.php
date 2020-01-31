@@ -59,7 +59,7 @@ if(is_admin()) {
     $out.=('<thead><tr><th><h3>Security Scanned Item</h3></th><th>Score</th></tr></thead>');
     $out.='<tr><td>Wp Core '.$decoded_scan['wp_version'].' (Available '.$decoded_scan['wp_version_available'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
     if (isset($decoded_scan['ssl'])){
-      $ssl_string = ' - '.round($decoded_scan['ssl']['days']). ' days until expiry, ('.$decoded_scan['ssl']['issuer']['OU'].')';
+      $ssl_string = ' - '.round($decoded_scan['ssl']['days']). ' days until expiry, ('.$decoded_scan['ssl']['issuer']['O'].')';
     }else{
       $ssl_string ='';
     }
@@ -110,8 +110,8 @@ if(is_admin()) {
     $out.=opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 );
 
     $pinstatus = 'OK';
-    if ($decoded_scan['plugin_active_amount']>3){$pinstatus = 'Attention';}
-    if ($decoded_scan['plugin_active_amount']>6){$pinstatus = 'Urgent';}
+    if ($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']>3){$pinstatus = 'Attention';}
+    if ($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']>6){$pinstatus = 'Urgent';}
     $out.=('<tr><td>Plug-ins Inactive</td><td>'.($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']).'</td><td>'.$pinstatus.'</td></tr>');
 
     $pupinstatus = 'OK';

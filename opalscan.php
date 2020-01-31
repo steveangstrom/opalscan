@@ -3,7 +3,7 @@
   Plugin Name: Opal SiteScanner
   Plugin URI: OpalSupport.com
   Author: OpalSphere
-  Version: 1
+  Version: 1.0.1
   Author URI:http://opalsupport.com
  */
 namespace opalscan;

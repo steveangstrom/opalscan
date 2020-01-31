@@ -117,10 +117,10 @@ function calculate_server_score($scan_results){
     case ($sql_size <15):
       $DBscore=100;
       break;
-    case ($sql_size <30):
+    case ($sql_size <50):
       $DBscore=90;
       break;
-    case ($sql_size <60):
+    case ($sql_size <70):
       $DBscore=60;
       break;
     case ($sql_size <90):
@@ -174,9 +174,9 @@ function calculate_server_score($scan_results){
         $ta_score=90;
         break;
       case ($t_amount <8):
-        $ta_score=50;
+        $ta_score=70;
         break;
-      case ($t_amount <11):
+      case ($t_amount <12):
         $ta_score=35;
         break;
       case ($t_amount <18):
