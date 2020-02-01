@@ -1,10 +1,13 @@
 <?php
 /*
-  Plugin Name: Opal SiteScanner
-  Plugin URI: OpalSupport.com
-  Author: OpalSphere
-  Version: 1.0.1
-  Author URI:http://opalsupport.com
+  * Plugin Name: Opal SiteScanner
+  * Plugin URI: OpalSupport.com
+  * Author: OpalSupport
+  * Version: 1.0.1
+  * Description: Checks the health of your WordPress install and allows WP experts to analyse the results
+  * Author URI:http://opalsupport.com
+  * License: GPL v2 or later
+  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 namespace opalscan;
  if ( !defined('ABSPATH') ) {
@@ -20,15 +23,15 @@ if(is_admin()) {
   include_once('includes/opalscan-dashboard-widget.php' );
   include_once('includes/opalscan-scanner.php' );
 
-  function op_plugin_action_links( $links ) {
-    # Puts a custom link "do a scan" into the list of links on the Plugins page (beside the activate/deactivate links).
-  	$links = array_merge( array(
-  		'<a class="op_do_a_scanbut" href="' . esc_url( admin_url( '/admin.php?page=opal-site-scan' ) ) . '">' . __( 'Perform a Scan', 'textdomain' ) . '</a>'
-  	), $links );
-  	return $links;
+  function op_append_plugin_links( $links_array, $plugin_file_name, $plugin_data, $status ) {
+      if ( strpos( $plugin_file_name, basename(__FILE__) ) ) {
+          $links_array[] ='<a class="op_do_a_scanbut" href="' . esc_url( admin_url( '/admin.php?page=opal-site-scan' ) ) . '">' . __( 'Perform a Scan', 'textdomain' ) . '</a>';
+          $links_array[] = '<a href="#">Support</a>';
+          $links_array[] = '<a href="#">FAQ</a>';
+      }
+      return $links_array;
   }
-  add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'opalscan\op_plugin_action_links' );
-
+  add_filter( 'plugin_row_meta', 'opalscan\op_append_plugin_links', 10, 4 );
 
   function opalscan_enqueue_scripts( ) {
     # Adds and localizes the JS file, with a nonce for the two AJAX submissions (scan and mail)
