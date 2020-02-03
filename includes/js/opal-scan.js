@@ -161,13 +161,14 @@ $('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="a
             $('#opalerroraudio')[0].play();
         },
         complete: function(){
+          clearTimeout(statustimer); // stop looking for status.
           $('.opalscannow ').removeClass('deactivated');
+
         }
     });
   } /* END DO SCAN */
 
 function check_status(){
-
   $.ajax({
     url: ajaxurl,
     data: {
@@ -175,34 +176,18 @@ function check_status(){
         'security': thescanobj.security,
     },
     success:function(data) {
+      console.log(data);
       var structureddata = jQuery.parseJSON(data);
+
       var total = structureddata.total;
       var progress = structureddata.progress;
       var percent = progress * (100/total);
       $('.opal_status .statusbar').width(percent+'%');
       $('.opal_status .statusmessage').html('[ '+progress+' of '+total+' ] '+structureddata.slug );
     }
-
   });
 }
 
-/**************************/
-function watchstatus(){
-    console.log('status watching start');
-  $.ajax({
-    url: ajaxurl,
-    data: {
-        'action': 'opalstatus'
-    },
-    success:function(data) {
-      //alert ('status is go ');
-      console.log(data);
-    },
-    error: function(errorThrown){
-        console.log(errorThrown);
-    }
-  });
-} /* END DO status */
 
 
   function drawscorearc(score){
