@@ -468,7 +468,10 @@ td.opfullscanbar .scanbar{
     .opalbigbutton {
       margin-top: 10px;
     }
-    .wp-core-ui .button.bigbutton.opalsend{float: none;margin: 0px;}
+    .wp-core-ui .button.bigbutton.opalsend{
+      float: none;
+      margin: 0px;
+    }
     .opal_tab_bar {
       height:auto;
       padding:0px 0 0 0;
@@ -488,8 +491,8 @@ td.opfullscanbar .scanbar{
     .opalscore_wrap, #op_bar_wrapper {
         width: 100%;
       }
-    .opalscan_results_table th:nth-of-type(2),
-    .opalscan_results_table td:nth-of-type(2){
+    .opalscan_results_table.opalscan_details_table th:nth-of-type(2),
+    .opalscan_results_table.opalscan_details_table td:nth-of-type(2){
       display: none;
     }
   }

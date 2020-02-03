@@ -94,7 +94,7 @@ if(is_admin()) {
     $out.=('</table>');
 
     $out.=('<h2><a name="scoring">Wordpress and Server</a></h2>');
-    $out.=('<table class="opalscan_results_table">');
+    $out.=('<table class="opalscan_results_table opalscan_details_table">');
     $out.=('<thead><tr><th>Element</th> <th>Installed</th><th>Status</th></tr></thead>');
 
     $wp_update_needed = "OK";
@@ -156,7 +156,7 @@ if(is_admin()) {
 
     $allPlugins = $decoded_scan['allPlugins'];
     $out.=('<h2>Plug-in Details</h2>');
-    $out.=('<table class="opalscan_results_table">');
+    $out.=('<table class="opalscan_results_table opalscan_details_table">');
     $out.=('<thead><tr><th>Plugin</th> <th>Installed Version</th> <th>Status</th> <th>Availability</th></tr></thead>');
 
     foreach($allPlugins as $key => $value) {
