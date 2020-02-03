@@ -41,6 +41,7 @@ $(document).on('click','#agreetosend', function(e) {
   if ($('#agreetosend').is(':checked')) {
     $('.op_alertbox .opalsend').removeClass('notagreed');
     $('.op_alertbox .opalsend').addClass('agreed');
+    window.scrollTo(0,0);
   }else{
     $('.op_alertbox .opalsend').addClass('notagreed');
     $('.op_alertbox .opalsend').removeClass('agreed');

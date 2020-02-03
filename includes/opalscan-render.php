@@ -194,7 +194,7 @@ if(is_admin()) {
   function opalscan_show_scan(){
     # Go and get a previous scan from the log  including summary
     # the reason we do this is to cache a scan, and prevent site slowdown.
-    # I could cron-job the scans but I want users to feel in control of this
+    # We could cron-job the scans but I want users to feel in control of this
     $randomised_filename = get_option( 'opalsupport_log_location' );
     $logfile=plugin_dir_path( __DIR__ ) . "reports/opalscan-$randomised_filename.log";
     if (file_exists($logfile)) {
