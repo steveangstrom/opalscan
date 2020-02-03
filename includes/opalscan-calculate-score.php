@@ -348,7 +348,11 @@ function detect_plugin_security($slug, $current='',$key){
     'sucuri-scanner',
     'wp-cerber',
     'wp-simple-firewall',
-    'wordfence'
+    'wordfence',
+    'bulletproof-security',
+    'malcare',
+    'webarx',
+    'wp-fail2ban'
   );
 
   if (in_array($slug, $haystack)) {
