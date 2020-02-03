@@ -170,8 +170,9 @@ if(is_admin()) {
 
   //  $scan_results['scores']['serverPHP'] = calculate_serverPHP_score($scan_results);
     opal_save_to_log($scan_results);//saves the log to a file for cache, and distribution to opalsupport
+    //unlink(plugin_dir_path( __DIR__ ) . 'reports/scanstatus.txt'); // empty the scan status file.
 
-    unlink(plugin_dir_path( __DIR__ ) . 'reports/scanstatus.txt'); // empty the scan status file.
+    delete_option('opalsupport_scan_status',' ');# empty the scan status bar option.
 		return $scan_results;
 	}  //  ----------end opalscan_get_scan() ---------------------
 
@@ -183,12 +184,22 @@ if(is_admin()) {
     $status_array['progress']= $progress;
     $status_array['total']= $total;
     $JSON_status = json_encode($status_array);
-    file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $JSON_status);
+    update_option('opalsupport_scan_status',$JSON_status);
+    //file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $JSON_status);
   }
+
+  function opal_get_scan_status(){
+    # get the option for the status of this scan. then send it back to the AJAX for UI of status bar
+    # this returns a JSON array, so we can see the name of the plugin being scanned.
+    $out = get_option( 'opalsupport_scan_status' );
+    echo $out;
+    die();
+  }
+  add_action( 'wp_ajax_opalscan_scanstatus_request', 'opalscan\opal_get_scan_status' );
+
 
   function opal_save_to_log($scan_results){
     # Writes the current scan to a text log file and an HTML version.
-
     $old_filename = get_option( 'opalsupport_log_location' );
     unlink(plugin_dir_path( __DIR__ ) . "reports/opal-scanner-report-$old_filename.html"); // delete the old HTML file
     unlink(plugin_dir_path( __DIR__ ) . "reports/opalscan-$old_filename.log"); // delete the old log file

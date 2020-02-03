@@ -167,14 +167,22 @@ $('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="a
   } /* END DO SCAN */
 
 function check_status(){
-  $.get( "https://testingzone.local/wp-content/plugins/opalscanner/reports/scanstatus.txt", function( data ) {
-    //console.log(pluginpath);
-    var structureddata = jQuery.parseJSON(data);
-    var total = structureddata.total;
-    var progress = structureddata.progress;
-    var percent = progress * (100/total);
-    $('.opal_status .statusbar').width(percent+'%');
-    $('.opal_status .statusmessage').html('[ '+progress+' of '+total+' ] '+structureddata.slug );
+
+  $.ajax({
+    url: ajaxurl,
+    data: {
+        'action': 'opalscan_scanstatus_request',
+        'security': thescanobj.security,
+    },
+    success:function(data) {
+      var structureddata = jQuery.parseJSON(data);
+      var total = structureddata.total;
+      var progress = structureddata.progress;
+      var percent = progress * (100/total);
+      $('.opal_status .statusbar').width(percent+'%');
+      $('.opal_status .statusmessage').html('[ '+progress+' of '+total+' ] '+structureddata.slug );
+    }
+
   });
 }
 

@@ -216,6 +216,7 @@ if(is_admin()) {
              wp_send_json_error( 'Invalid security token sent.' );
              wp_die();
            }
+           # clear the previous scan bar statusbar
 
           $JSON_results = opalscan_get_scan(); // go get the scan results for a basic check.
           $decoded_scan = json_encode($JSON_results);
@@ -233,13 +234,6 @@ if(is_admin()) {
   }
   add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan\opalscan_ajax_request' );
 
-  function opal_statusbar($status=''){
-    # status bar updating function
-    # this is called on a timer from JS via AJAX when the scan starts,
-    echo $status;
-    die();
-  }
-  add_action( 'wp_ajax_opal_statusbar', 'opalscan\opalstatus' );
 }
 
 function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
