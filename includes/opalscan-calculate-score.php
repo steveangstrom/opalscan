@@ -25,17 +25,18 @@ function opal_do_score($decoded_scan){
 # so if WPcore and many plugins are out of date, and some plugins are abandoned we can say there's a security risk.
 # the scoring is weighted depending on how vital each element is to the section
   $security_score = (
-    $decoded_scan['scores']['wpcore']*1+
-    $decoded_scan['scores']['plugins_abandoned']*1 +
-    $decoded_scan['scores']['plugins_outdated']*1 +
-    $decoded_scan['scores']['themes_outdated']*1 +
-    $decoded_scan['scores']['serverSSL']*1 +
-    $decoded_scan['scores']['wp_plugin_security']*1
+    $decoded_scan['scores']['wpcore']+
+    $decoded_scan['scores']['plugins_abandoned'] +
+    $decoded_scan['scores']['plugins_outdated'] +
+    $decoded_scan['scores']['themes_outdated'] +
+    $decoded_scan['scores']['serverSSL'] +
+    $decoded_scan['scores']['wp_plugin_security']
   )/6;
 
-  if( $decoded_scan['scores']['wpcore'] < 50){
-    $security_score = $decoded_scan['scores']['wpcore'];
-  }
+    # WP core has a major effect on security so we use that to weight the security score.
+    $sec_mult = $decoded_scan['scores']['wpcore']/90;
+    $security_score *= $sec_mult;  # will use WP core to scale the total score.
+
 
   $maint_score= (
     $decoded_scan['scores']['wpcore']*1 +
@@ -53,14 +54,15 @@ function opal_do_score($decoded_scan){
   }
 
   $other_score= (
-    $decoded_scan['scores']['serverPHP']*0.8 +
-    $decoded_scan['scores']['serverDBsize']*0.8 +
+    $decoded_scan['scores']['serverPHP'] +
+    $decoded_scan['scores']['serverDBsize'] +
     $decoded_scan['scores']['serverSSL']
   )/3;
 
-  if( $decoded_scan['scores']['serverPHP'] < 30){
-    $other_score = $decoded_scan['scores']['serverPHP'];
-  }
+  # PHP version has a major effect on speed so we use that to weight the  score.
+  $speed_mult = $decoded_scan['scores']['serverPHP']/90;
+  $other_score *= $speed_mult;  # will use WP core to scale the total score.
+
 
   $scores['total']=round(($security_score+$maint_score+$other_score)/3);
   $scores['security']=$security_score;
