@@ -34,8 +34,15 @@
   color:#fcfdf9;
   margin-right:20px;
 }
+.opalbigbutton.opalscannow.deactivated,
+.opalbigbutton.opalscannow.deactivated:hover{
+  cursor:none;
+  background:#95b0bb;
+  color:#fcfdf9;
+  border-color: #95b0bb;
+}
 .opalbigbutton.opalscannow:hover{
-  background: #caeed0 !important;
+  background: #caeed0;
   border-color: #01872f;
   color: #01872f;
 }
@@ -43,7 +50,6 @@
 .opalbigbutton.opalsend{
   display:none;
 }
-
 .opalbigbutton.opalsend.logpresent{
   background: #74d583;
   border-color:#74d583;

@@ -101,28 +101,32 @@ function doReportMail(){
       }
   });
 
-} /* mail */
+} /* end of mail and GDPR functions */
 
 /*****************/
+/*some audio for alerts, success fail, etc.*/
 
 $('<audio id="opalalertaudio"><source src="'+path+'scan-complete.mp3" type="audio/mpeg"><source src="'+path+'scan-complete.wav" type="audio/wav"></audio>').appendTo('body');
 $('<audio id="opalerroraudio"><source src="'+path+'scan-error.mp3" type="audio/mpeg"></audio>').appendTo('body');
 $('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="audio/mpeg"></audio>').appendTo('body');
 
+
+/***** SCAN BUTTON FUNCTION *******/
   $(document).on('click','.opalscannow, .opaldoscan', function(e) {
-    $('.opalspinnerlocation').addClass("lds-hourglass");
+    if ($( this ).hasClass('deactivated')){
+      return;
+    }
+    $('.opalspinnerlocation').addClass('lds-hourglass');
+    $('.opalbigbutton.opalscannow').addClass('deactivated');// prevent double scanning.
     $('.opalsend').addClass('opalhide'); // hide the send buttons while in action.
     $(".opalspinnerlocation").after('<div class="opal_status"><div class="statusbar"></div><div class="statusmessage">Waiting for status ...</div></div>');///  ADD THIS status display zone.
     $( "#opalscanner_results" ).fadeOut(900, function() { $("#opalscanner_results").remove(); });
     doScan();
   });
 
-    // We'll pass this variable to the PHP function
-    var scan = 'startscan';
-
 /***** AJAX FUNCTION *******/
-
   function doScan(){
+    var scan = 'startscan';
     var statustimer = window.setInterval(function(){  check_status();}, 250); // got check to see whats happening on the server.
       $.ajax({
         url: ajaxurl,
@@ -155,6 +159,9 @@ $('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="a
             $('.opalspinnerlocation').removeClass("lds-hourglass");
             $('#opalscan_displayarea').html('<div class="opbox"><h2>Sorry, there\'s something preventing the scanning of your site</h2>The error we got was : '+ errorThrown.statusText + ' |  Status Code : ' +errorThrown.status+'<br>Contact us and we\'ll try to help out<div>');
             $('#opalerroraudio')[0].play();
+        },
+        complete: function(){
+          $('.opalscannow ').removeClass('deactivated');
         }
     });
   } /* END DO SCAN */
