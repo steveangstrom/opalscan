@@ -34,7 +34,7 @@ function opal_do_score($decoded_scan){
   )/6;
 
     # WP core has a major effect on security so we use that to weight the security score.
-    $sec_mult = $decoded_scan['scores']['wpcore']/90;
+    $sec_mult = $decoded_scan['scores']['wpcore']/100;
     $security_score *= $sec_mult;  # will use WP core to scale the total score.
 
 

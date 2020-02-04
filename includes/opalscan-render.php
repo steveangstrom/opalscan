@@ -151,7 +151,7 @@ if(is_admin()) {
 
     $ssldays = round($decoded_scan['ssl']['days']);
     $sslstatus = ($ssldays>30) ? 'OK' : 'Attention';
-    $out.=('<tr><td>SSL Security</td><td>'.$ssldays.' Days ('.$decoded_scan['ssl']['issuer']['OU'].')</td><td>'.$sslstatus.'</td></tr>');
+    $out.=('<tr><td>SSL Security</td><td>'.$ssldays.' Days ('.$decoded_scan['ssl']['issuer']['O'].')</td><td>'.$sslstatus.'</td></tr>');
     $out.=('</table>');
 
     $allPlugins = $decoded_scan['allPlugins'];
@@ -182,9 +182,9 @@ if(is_admin()) {
       # if this is a display of an archived  log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
         # handy debug function left here because we all like to debug
-        /*$out.=('<pre>');
+        $out.=('<pre>');
         $out.=( print_r($decoded_scan, true));
-        $out.=('</pre>');*/
+        $out.=('</pre>');
         echo $out;
       }else{
         return $out;
@@ -270,7 +270,7 @@ function opalscan_render_summarytable($decoded_scan){
       $out.='<tr><td class="warn server">Your security certificate has major problems</td></tr>';
     }
     $serverPHP= $decoded_scan['scores']['serverPHP'];
-    if($serverPHP>50 && $serverPHP<100){
+    if($serverPHP>50 && $serverPHP<90){
       $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
     }elseif($serverPHP<50){
       $out.='<tr><td class="warn server">Your server core components are very outdated</td></tr>';
@@ -310,7 +310,9 @@ function opalscan_render_summarytable($decoded_scan){
     }elseif($themes_outdated<50){
       $out.='<tr><td class="warn theme">'.$decoded_scan['theme_outdated'].' themes are outdated</td></tr>';
     }
-
+    if($decoded_scan['scores']['analysis']['total']>90){
+    $out.='<tr><td class="">Your site is healthy, remember to check often</td></tr>';
+    }
     $out.=('</table>');
     return $out;
 }
