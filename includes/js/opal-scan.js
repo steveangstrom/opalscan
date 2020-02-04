@@ -23,6 +23,7 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
 
 
 /*-----------------Send mail---------------------------------*/
+
 $(document).on('click','.opalsendGDPR', function(e) {
   console.log ('send open GDPR');
   var yourmail = $('.thissite_admin_email').text();
@@ -136,11 +137,11 @@ $('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="a
             'security': thescanobj.security,
         },
         success:function(data) {
-        clearTimeout(statustimer); // stop looking for status.
+          clearTimeout(statustimer); // stop looking for status.
         $('.opalsend').removeClass('opalhide');
         $('.opalsend').addClass('logpresent');// there should be a log available to send if success.
         $('#opalalertaudio')[0].play();
-        //  console.log(data);
+         console.log(data);
         $('.opal_status ').remove();
         $('.opalspinnerlocation').removeClass("lds-hourglass");
 
@@ -153,7 +154,7 @@ $('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="a
           op_dobars();
         },
         error: function(errorThrown){
-            clearTimeout(statustimer); // stop looking for status.
+          //  clearTimeout(statustimer); // stop looking for status.
             console.log(errorThrown);
             $('.opal_status ').remove();
             $('.opalspinnerlocation').removeClass("lds-hourglass");
@@ -161,7 +162,7 @@ $('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="a
             $('#opalerroraudio')[0].play();
         },
         complete: function(){
-          clearTimeout(statustimer); // stop looking for status.
+             clearTimeout(statustimer); // stop looking for status.
           $('.opalscannow ').removeClass('deactivated');
 
         }

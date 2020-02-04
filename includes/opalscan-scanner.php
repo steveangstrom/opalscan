@@ -156,7 +156,7 @@ if(is_admin()) {
       }// is the installed theme in need of updating from the repo.
 
       $theme_info[$slug]['theme_noupdates']='1'; // make use of the date elapsed since repo update code from plugin
-      # if plugin_outdated then push   plugin_outdated
+      # if plugin_outdated then push plugin_outdated
     }
     $scan_results["allThemes"] =  $theme_info;
 
@@ -192,7 +192,7 @@ if(is_admin()) {
     # get the option for the status of this scan. then send it back to the AJAX for UI of status bar
     # this returns a JSON array, so we can see the name of the plugin being scanned.
     $out = get_option( 'opalsupport_scan_status' );
-    echo $out;
+      echo $out;
     die();
   }
   add_action( 'wp_ajax_opalscan_scanstatus_request', 'opalscan\opal_get_scan_status' );
@@ -201,8 +201,12 @@ if(is_admin()) {
   function opal_save_to_log($scan_results){
     # Writes the current scan to a text log file and an HTML version.
     $old_filename = get_option( 'opalsupport_log_location' );
-    unlink(plugin_dir_path( __DIR__ ) . "reports/opal-scanner-report-$old_filename.html"); // delete the old HTML file
-    unlink(plugin_dir_path( __DIR__ ) . "reports/opalscan-$old_filename.log"); // delete the old log file
+    if (  isset($old_filename)   &&   file_exists(plugin_dir_path( __DIR__ ) . "reports/opalscan-$old_filename.log")){
+      # has there ever been a scan previously? If so there's an option saved and we should delete the files before proceeding.
+      unlink(plugin_dir_path( __DIR__ ) . "reports/opal-scanner-report-$old_filename.html"); // delete the old HTML file
+      unlink(plugin_dir_path( __DIR__ ) . "reports/opalscan-$old_filename.log"); // delete the old log file
+    }
+
 
     //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED OR POSTED **/
     $randomised_filename = wp_generate_password( 8, false );

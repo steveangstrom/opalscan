@@ -222,12 +222,12 @@ if(is_admin()) {
           $decoded_scan = json_encode($JSON_results);
           $rendered_scan = opalscan_render_html($decoded_scan, true);
 
+
           // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
           if ( $scan== 'startscan' ) {
-
-          $out['html']= $rendered_scan;
-          $out['scansuccess']= true;
-	        echo json_encode($out);
+            $out['html']= $rendered_scan;
+            $out['scansuccess']= true;
+  	        echo json_encode($out);
           }
       }
      die();
