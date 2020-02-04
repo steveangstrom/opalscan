@@ -36,11 +36,9 @@ function opal_summary($score){
   'is doing great, well done!',
   );
 
-  $out='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.$score_words[round($score/10)-1].'</h2>';
-  $out.='<p>Your site scored '.$score.' out of a possible 100. This means your site '.$attentionphrases[round($score/10)-1].'</p>';
-
+  $out='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.$score_words[round($score/10)].'</h2>';
+  $out.='<p>Your site scored '.$score.' out of a possible 100. This means your site '.$attentionphrases[round($score/10)].'</p>';
   $out.='</div>';
-
   return $out;
 }
 
@@ -71,9 +69,9 @@ $what_to_do_words =Array(
 
   $advice = '<div class="opaladvice_wrap">';
   $advice .= '<h2>Security Advice</h2>';
-  $advice .='<p>Your site has '.$severity_words[round($score/10)-1].' security and maintenance problems '.$what_to_do_words[round($score/10)-1].'.<br> Your scan score is rated as '.$score.' out of 100 and this means ';
+  $advice .='<p>Your site has '.$severity_words[round($score/10)].' security and maintenance problems '.$what_to_do_words[round($score/10)].'.<br> Your scan score is rated as '.$score.' out of 100 and this means ';
 
-  $advice .=  $issues_words[round($score/10)-1];
+  $advice .=  $issues_words[round($score/10)];
 
 if ($score <70){
   $advice .='</p><h3>Self-Repair</h3><p>If you feel confident you may update all components detailed in the <a class="opal_tabber_link" data-tab="opalreport">Full Report</a> yourself but we caution that updating multiple components synchronously without testing often reveals code incompatibilities which may render your site inoperable.<br> If you decide to proceed yourself please back up your site and data before proceeding.

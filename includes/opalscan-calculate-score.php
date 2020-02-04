@@ -54,10 +54,11 @@ function opal_do_score($decoded_scan){
   }
 
   $other_score= (
+    $decoded_scan['scores']['wpcore']+
     $decoded_scan['scores']['serverPHP'] +
     $decoded_scan['scores']['serverDBsize'] +
     $decoded_scan['scores']['serverSSL']
-  )/3;
+  )/4;
 
   # PHP version has a major effect on speed so we use that to weight the  score.
   $speed_mult = $decoded_scan['scores']['serverPHP']/90;

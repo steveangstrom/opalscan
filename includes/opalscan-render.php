@@ -87,6 +87,7 @@ if(is_admin()) {
     $out.='<h3>Server Stability & Speed</h3>';
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
+    $out.='<tr><td>Wp Core '.$decoded_scan['wp_version'].' (Available '.$decoded_scan['wp_version_available'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
     $out.='<tr><td>Server PHP ('.$decoded_scan['php_version'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
     $out.='<tr><td>Server Database size ('.$decoded_scan['sql_size'].' Mb)</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
     $out.='<tr><td>Server SSL '.$ssl_string.'</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
@@ -182,9 +183,9 @@ if(is_admin()) {
       # if this is a display of an archived  log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
         # handy debug function left here because we all like to debug
-        $out.=('<pre>');
+      /*  $out.=('<pre>');
         $out.=( print_r($decoded_scan, true));
-        $out.=('</pre>');
+        $out.=('</pre>');*/
         echo $out;
       }else{
         return $out;
