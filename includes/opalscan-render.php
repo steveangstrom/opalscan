@@ -176,7 +176,7 @@ if(is_admin()) {
       $out.=('</table>');
 
       $out.=('<p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to '.get_option('admin_email').'</p>');
-      $out.=('<a class="opalbigbutton opalsend logpresent">Send Report</a>');
+      $out.=('<a class="opalbigbutton opalsend logpresent opalsendGDPR">Send Report</a>');
 
       $out.='</div>'; //  END OF report pane
 

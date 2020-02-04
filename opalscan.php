@@ -1,7 +1,7 @@
 <?php
 /*
   * Plugin Name: Opal Scan and Support
-  * Plugin URI: OpalSupport.com
+  * Plugin URI: https://opalsupport.com/wordpress-scan-and-support-plugin/
   * Author: OpalSupport
   * Version: 1.0.1
   * Description: Checks the health of your WordPress and allows WP experts to analyse the results
