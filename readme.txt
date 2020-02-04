@@ -36,13 +36,11 @@ No, this plugin profiles themes, plugins and server components to see how up-to-
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
+1. After scanning your site you will see an overall score and a breakdown for Security, Maintenance, Stability and Speed. These are aggregated scores from the detailed report.
 
-2. This is the second screen shot
+2. This is the breakdown of what elements are used to calculate the Security score, as shown in the Full Report tab
 
+3. Here we look at some of the elements which relate to the current WordPress and Server environment. Theses details are useful for technicians to trouble shoot your issues and if you click Send Report they will be passed to us.
 
 == Changelog ==
 
