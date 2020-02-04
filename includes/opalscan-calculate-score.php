@@ -363,7 +363,7 @@ function detect_plugin_security($slug, $current='',$key){
       $active = 1;
     }
 
-    $out = [$slug,$active];
+    $out = Array($slug,$active);
       return $out;
   }
 
