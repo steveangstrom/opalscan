@@ -1,10 +1,10 @@
 <?php
 /*
-  * Plugin Name: Opal SiteScanner
+  * Plugin Name: Opal Scan and Support
   * Plugin URI: OpalSupport.com
   * Author: OpalSupport
   * Version: 1.0.1
-  * Description: Checks the health of your WordPress install and allows WP experts to analyse the results
+  * Description: Checks the health of your WordPress and allows WP experts to analyse the results
   * Author URI:http://opalsupport.com
   * License: GPL v2 or later
   * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -49,7 +49,7 @@ if(is_admin()) {
 
   function register_opalscan_menu() {
     # Adds the admin menu for this plugin
-  	add_menu_page( 'Opal Site Scan', 'Opal Site Scan', 'manage_options', 'opal-site-scan', 'opalscan\opalscan_admin_page_output' );
+  	add_menu_page( 'Opal Scan & Support', 'Opal Scan & Support', 'manage_options', 'opal-site-scan', 'opalscan\opalscan_admin_page_output' );
   }
   add_action('admin_menu', 'opalscan\register_opalscan_menu');
 

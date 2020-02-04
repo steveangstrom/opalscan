@@ -56,7 +56,7 @@ function opal_advice($decoded_scan, $score){
 'you have no issues and everything looks good',
 );
 $what_to_do_words =Array(
-'which must be repaired very urgently, your site is in grave peril and we stronly advise you contact a competent web technician to recover it and a plan is put in place to secure your site in future',
+'which must be repaired very urgently, your site is in grave peril and we strongly advise you contact an experienced web technician to recover it, and a plan is put in place to secure your site',
 'which must be analysed and repaired by a competent web technician very urgently, with a plan put in place to secure your site in future',
 'which must be analysed and repaired by a competent web technician very urgently, with a plan put in place to secure your site in future',
 'which must be analysed and repaired, with a plan put in place to secure and maintain your site',
