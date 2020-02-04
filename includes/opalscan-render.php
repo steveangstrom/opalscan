@@ -26,9 +26,9 @@ if(is_admin()) {
     </div>';
     $out.='<div id = "opalsummary" class= "opal_pane active">';
 
-    $scandate = date('dS \o\f F Y g:i A', $log_date);
+    $scandate = date('jS \o\f F Y g:i A', $log_date);
     if($livescan===false){
-        $out.='<div class="opal_infobox"><p>Displaying previous scan ('.$scandate.') <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
+        $out.='<div class="opal_infobox"><p>Displaying previous scan ( '.$scandate.' ) <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
     }
     $out.='<canvas id ="opalreportgraph" data-score="'.$score_total.'" width="250px" height="200px"></canvas>';# the speedo display
     $out .='<div id="op_bar_wrapper">';

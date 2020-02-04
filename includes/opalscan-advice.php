@@ -31,7 +31,7 @@ function opal_summary($score){
   'has security and update problems and needs attention in several crucial areas',
   'has security and update problems and needs attention in several areas',
   'has some problems and needs attention',
-  'needs attention to prevent issues',
+  ' is doing well in most areas but needs attention to prevent issues. Check below for why.',
   'is OK but some areas need attention',
   'is doing great, well done!',
   );
