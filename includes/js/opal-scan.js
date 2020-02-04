@@ -25,7 +25,7 @@ $(document).on('click','.opal_tab, .opal_tabber_link', function(e) {
 /*-----------------Send mail---------------------------------*/
 
 $(document).on('click','.opalsendGDPR', function(e) {
-  console.log ('send open GDPR');
+  //console.log ('send open GDPR');
   var yourmail = $('.thissite_admin_email').text();
   $('#wpwrap').prepend('<div id="op_dim_everything"></div>');
   out='<div class="op_alertbox info"><h2>Send a Report to us</h2>';
@@ -83,7 +83,7 @@ function doReportMail(){
           'security': thescanobj.security,
       },
       success:function(data) {
-          console.log(data);
+        //  console.log(data);
         $('.opalspinnerlocation').removeClass("lds-hourglass");
         $('.bigbutton.opalsend').removeClass("sendingmail");
         $('#opalmailsendaudio')[0].play();
@@ -141,7 +141,7 @@ $('<audio id="opalmailsendaudio"><source src="'+path+'scan-mailsend.mp3" type="a
         $('.opalsend').removeClass('opalhide');
         $('.opalsend').addClass('logpresent');// there should be a log available to send if success.
         $('#opalalertaudio')[0].play();
-         console.log(data);
+         //console.log(data);
         $('.opal_status ').remove();
         $('.opalspinnerlocation').removeClass("lds-hourglass");
 
@@ -177,7 +177,7 @@ function check_status(){
         'security': thescanobj.security,
     },
     success:function(data) {
-      console.log(data);
+    //  console.log(data);
       var structureddata = jQuery.parseJSON(data);
 
       var total = structureddata.total;
