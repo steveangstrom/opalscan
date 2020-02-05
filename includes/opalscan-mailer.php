@@ -36,7 +36,7 @@ function opalreportmail() {
 
           $c_message .="<h2 $h_css>Here's the scan of your site</h2>";
           $c_message .= "<p $p_css>Hi,<br>thanks for using our scanner. Our team will aim to be in touch with you ASAP so we can advise on securing and speeding up your site.</p>";
-          $c_message .= "<p $p_css>Just like offices all professional sites need maintenance and security to keep things in tip top condition. You've engaged us to take a quick no-cost & no-obligation assesment of your needs. You wouldn't leave your office door unlocked, or your premises in disrepair - your website needs the same care to keep it safe, secure and speedy.</p>";
+        //  $c_message .= "<p $p_css>Just like offices all professional sites need maintenance and security to keep things in tip top condition. You've engaged us to take a quick no-cost & no-obligation assesment of your needs. You wouldn't leave your office door unlocked, or your premises in disrepair - your website needs the same care to keep it safe, secure and speedy.</p>";
           $c_message .= "<p $p_css>We'll take a look at your scan results and provide an initial analysis in a follow up mail. We'll explain what the problems are, whether the tasks are technical, and what your risks currently are. We may advise you engage a professional to resolve any issues, but you are under no obligation to do so.</p>";
           $c_message .= "<p $p_css>The attached log is for your information only.</p>";
           $c_message .= "<p $p_css>Best regards,<br> Steve and the Team at OpalSupport</p>";
