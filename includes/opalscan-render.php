@@ -2,7 +2,7 @@
 namespace opalscan;
 if(is_admin()) {
   /****** RENDER THE DATA AS HTML ********/
-  function opalscan_render_html($JSON_scan, $livescan=false){
+  function opalscan_render_html($JSON_scan, $livescan=false,$mailmode=false){
   	# This function renders the html from the scan.
     # it takes the JSON passed to it and accepts a flag to switch between a HTML echo, or a return
     # it can be called from the AJAX from where it returns to be rendered to the page by JS
@@ -17,6 +17,23 @@ if(is_admin()) {
     $decoded_scan = opal_do_score($decoded_scan);
     $scores = $decoded_scan['scores']['analysis'];
     $score_total=$scores['total'];
+
+
+
+    if($mailmode===true){
+      $mail_css = file_get_contents(plugin_dir_url( __FILE__ ) . 'css/mail_style.css');
+      $out.='<!DOCTYPE html>
+        <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Opal Scan &amp; Support WordPress Report</title>
+        <style type="text/css">'.$mail_css.'
+        </style>
+        </head>
+        <body>
+        <h1><a href="https://opalsupport.com">OpalSupport</a> : Report For '.get_bloginfo('name').'</h1>
+        <p>We will be in touch with you to advise on the next steps to take</p>';
+      }
+
 
     # Display results
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">

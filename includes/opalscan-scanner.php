@@ -218,7 +218,7 @@ if(is_admin()) {
 
     /** HTML file **/
     $htmlfile = fopen(plugin_dir_path( __DIR__ ) . "reports/opal-scanner-report-$randomised_filename.html", "w"); // store a raw copy.
-    $html_content =   opalscan_render_html($JSON_scan, true);
+    $html_content =   opalscan_render_html($JSON_scan, true, true);
     fwrite($htmlfile, $html_content);
     fclose($htmlfile);
   }

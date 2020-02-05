@@ -1,0 +1,174 @@
+body{padding:20px;}
+body, h1,h2,h3,h4,h5,p{font-family: Arial, Helvetica Neue, Helvetica, sans-serif;}
+.opal_tab_bar, #opalreportgraph{display:none;}
+h1{
+  font-weight: 300;
+  color: #999;
+  font-size: 44px;
+}
+h1 a{
+  color:blueviolet;
+}
+.opalsitescannerpage .score{
+  display: block;position:relative;
+  width:100%;
+  height:60px;
+  background: #dadada;
+}
+.opalsitescannerpage .score span{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+}
+.opalscore_wrap{
+  position: relative;
+  width:50%;
+  float:right;
+  padding:0 0 20px 0;
+  margin-left: 20px;
+}
+.opaladvice_wrap{
+  clear:both;
+  margin: 20px 0 0 0 ;
+  border-top:4px solid #f1f1f1;
+  padding:20px;
+}
+.opalscore_wrap .deco{
+  width:10%;height:20px;
+  background:#fafafa;
+  display: inline-block;
+  margin: 0;
+}
+.opalsitescannerpage .scorebar{
+  width:100%;
+  max-width: 1000px;
+  background:#dfdfdf;
+  border-radius: 5px;
+  height:30px;
+  margin-bottom:5px;
+  position: relative;
+}
+.opalsitescannerpage .scorebar .opbar{
+  display:block;
+  position: absolute;box-sizing: border-box;
+  content:'';
+  color:#ffEDEF;
+  width:100%;
+  height:100%;
+  background:#dadada;
+  top:0;left: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding:5px 5px 5px 15px;
+  text-align: left;
+  transition:all 0.9s;
+  font-size: larger;
+}
+.opalsitescannerpage #score-secure .opbar:after{
+    content:'SECURITY';
+}
+.opalsitescannerpage #score-maintain .opbar:after{
+    content:'MAINTENANCE';
+}
+.opalsitescannerpage #score-other .opbar:after{
+    content:'STABILITY & SPEED';
+}
+#opalreportgraph{
+  float: left;
+  width: 30%;
+  padding-right:10px;
+  box-sizing: border-box;
+  min-width:300px;
+ }
+#op_bar_wrapper{
+  padding: 50px 20px;
+  float: left;
+  width: 68%;
+  box-sizing: border-box;
+}
+.opbar.bad{ background:#df3e3e!important;}
+.opbar.ok{ background:#dfa825!important;}
+.opbar.good{ background-color:#49a41e!important;}
+
+/******FULL REPORT BAR GRAPH*******/
+td.opfullscanbar{
+  position: relative;
+  display: block;
+  width: auto;
+}
+td.opfullscanbar .scanbar{
+  content: '';
+  background:  #daa;
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  mix-blend-mode: darken;
+}
+
+/***** content styles *****/
+.opalscanner_results h2{
+  font-size: 30px;
+  font-weight: normal;
+  line-height:normal;
+  margin:20px 0 0.3em 0;
+}
+.opalscanner_results p{
+  line-height:normal;
+   margin:0 0 0.7em 0;
+ }
+.opalscanner_results .opal_dimmed{
+  color:#7d8fa1;
+}
+
+/*****  TABLE STYLES *****/
+
+.opalscan_results_table{
+  width:100%;
+  margin: 20px 0 30px 0;
+}
+.opalscan_results_table td,
+.opalscan_results_table th{
+  text-align:left;
+  padding: 8px 15px;
+}
+.opalscan_results_table th{
+  background: #dadada;
+}
+
+.opalscan_results_table tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.opalscan_results_table tr td.wpcore:before,
+.opalscan_results_table tr td.plugin:before,
+.opalscan_results_table tr td.server:before,
+.opalscan_results_table tr td.theme:before{
+
+  padding-right:20px;
+
+}
+
+
+.opalscan_results_table tr td.warn {border-left: solid 4px red;}
+.opalscan_results_table tr td.inform {border-left: solid 4px orange;}
+
+.scoretotal td{
+  background:#fff;
+  font-weight: bold;
+  border-top: 2px solid  #d5d3d3;
+  font-size: 16px;
+}
+.scoretotal td:first-child{
+  text-align:right;
+  min-width:70%;
+}
+.opalsitescannerpage  .opalbigtable td{
+  font-size: 18px;
+  padding: 15px 20px;
+}
+.op_badbar{border:1px solid red;}
