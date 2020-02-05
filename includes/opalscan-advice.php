@@ -22,7 +22,7 @@ If plugins on the repo have not been updated in >2 years then strongly Advise
 */
 # just a basic assessment of the overal score. the score total is worked out in the function opal_do_score() \includes\opalscan-calculate-score.php
 function opal_summary($score){
-  $score_words= Array('Extremely bad','Extremely bad', 'Very bad','Bad','Insecure','Needs Attention','Needs Attention','Good','Very Good','Excellent');
+  $score_words= Array('Extremely bad','Extremely bad', 'Very bad','Bad','Bad','Needs Urgent Attention','Needs Attention','Needs Attention','Good','Excellent');
   $attentionphrases=Array(
   'is extremely vulnerable to attack and data loss and needs urgent attention in all areas.',
   'is very vulnerable to attack and data loss  and needs attention in many areas urgently',
