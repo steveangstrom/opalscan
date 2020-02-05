@@ -3,7 +3,7 @@ Contributors:  opalsupport
 Tags: support, site help
 Requires at least: 4.4
 Tested up to: 5.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 5.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,5 +44,5 @@ No, this plugin profiles themes, plugins and server components to see how up-to-
 
 == Changelog ==
 
-= 1.0.1 =
+= 1.0.2 =
 * First release

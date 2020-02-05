@@ -53,9 +53,11 @@ function opal_advice($decoded_scan, $score){
 'you have some issues and may be vulnerable to common hack attacks, additionally due to the problems you may experience stablility and speed issues. We advise you to ask a web specialist or competent IT team member secure, update and optimise your site.',
 'you have a few issues and might be vulnerable to common hack attacks, you can ask a specialist to look at how you can update, optimise and repair the issues. ',
 'you have one or two issues and should address them',
+'you have few urgent issues and everything looks good, though you may wish to update the noted items',
 'you have no issues and everything looks good',
 );
 $what_to_do_words =Array(
+'which must be repaired very urgently, your site is in grave peril and we strongly advise you contact an experienced web technician to recover it, and a plan is put in place to secure your site',
 'which must be repaired very urgently, your site is in grave peril and we strongly advise you contact an experienced web technician to recover it, and a plan is put in place to secure your site',
 'which must be analysed and repaired by a competent web technician very urgently, with a plan put in place to secure your site in future',
 'which must be analysed and repaired by a competent web technician very urgently, with a plan put in place to secure your site in future',

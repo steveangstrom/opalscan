@@ -44,10 +44,16 @@ function opalreportmail() {
           $c_mailout = wp_mail($client_mail, $c_subject, $c_message, $c_headers, $attachments);
 
           /* CREATE A TICKET */
-          $a_headers = array('Content-Type: text/html; charset=UTF-8' );
+          $current_user = wp_get_current_user();
+          $user_nicename = esc_html( $current_user->display_name);
+          $clientmail = get_option('admin_email');
+          $c_user_mail = esc_html( $current_user->user_email );
+
+          $a_headers = array('Content-Type: text/html; charset=UTF-8','From: '.$sitename.' <'.$clientmail.'>' );
           $opal_subject = 'Scanned site '.$sitename.' requests analysis';
           $opal_message .="<h2 $h_css>Scan Analysis Request for $sitename</h2>";
           $opal_message .= "<p $p_css>Please check these logs for $siteURL and analyse this website for maintenance and security to keep it safe, secure and speedy.</p>";
+          $opal_message .= "<p $p_css>The requesting user was $user_nicename and their email is $c_user_mail </p>";
           $opal_mail = 'wpscansupport@opalsphere.com';
           $a_mailout = wp_mail($opal_mail, $opal_subject, $opal_message, $a_headers, $attachments);
 
