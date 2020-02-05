@@ -26,8 +26,8 @@ if(is_admin()) {
   function op_append_plugin_links( $links_array, $plugin_file_name, $plugin_data, $status ) {
       if ( strpos( $plugin_file_name, basename(__FILE__) ) ) {
           $links_array[] ='<a class="op_do_a_scanbut" href="' . esc_url( admin_url( '/admin.php?page=opal-site-scan' ) ) . '">' . __( 'Perform a Scan', 'textdomain' ) . '</a>';
-          $links_array[] = '<a href="#">Support</a>';
-          $links_array[] = '<a href="#">FAQ</a>';
+        #  $links_array[] = '<a href="#">Support</a>';
+        #  $links_array[] = '<a href="#">FAQ</a>';
       }
       return $links_array;
   }

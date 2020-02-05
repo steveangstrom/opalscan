@@ -9,13 +9,13 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-This plug-in allows you to scan your site to detect common issues which may be causing your site to run slowly or have missing content.
+This plug-in allows you to scan your site to detect common issues which may be causing your site to run slowly or have missing content such as white screens, database errors, and other problems with your WordPress site.
 An easy readable scoring system shows non-technical users how your site is doing for Security, Maintenance, Speed and stability.
 The plug-in allows you to send the report to yourself and also to our analysis team for a no-obligation assessment and advice regarding how you can repair, secure and speed up your WordPress site.
 
 == Installation ==
 
-1. Install the plug-in through the WordPress plug-ins screen
+1. Install the plug-in through the WordPress plug-ins screen of your wp-admin, or download the plugin from the Worpdress.org repository and upload via the "add new plugin" option.
 2. Activate the plug-in through the 'Plug-ins' screen in WordPress
 3. Run your first scan either from the 'Perform  Scan' link in the Plug-ins page list, or from the Dashboard Widget.
 4. Visit the scan results page to see the scan.

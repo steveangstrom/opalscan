@@ -30,7 +30,7 @@ function opalreportmail() {
           $h_css= 'style="font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 24px;"';
           $p_css= 'style="font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 16px;"';
           $c_subject = 'You scanned your site '.$sitename;
-          $headers = array('Content-Type: text/html; charset=UTF-8','From: Opal Web Support <wpscansupport@opalsphere.com>' );
+          $c_headers = array('Content-Type: text/html; charset=UTF-8','From: Opal Web Support <wpscansupport@opalsphere.com>' );
           // $headers = 'From: My Name <pheriche@pheriche.com>' . "\r\n";
           $message ='';
 
@@ -41,14 +41,15 @@ function opalreportmail() {
           $c_message .= "<p $p_css>The attached log is for your information only.</p>";
           $c_message .= "<p $p_css>Best regards,<br> Steve and the Team at OpalSupport</p>";
           $client_mail = get_option('admin_email');
-          $c_mailout = wp_mail($client_mail, $c_subject, $c_message, $headers, $attachments);
+          $c_mailout = wp_mail($client_mail, $c_subject, $c_message, $c_headers, $attachments);
 
           /* CREATE A TICKET */
+          $a_headers = array('Content-Type: text/html; charset=UTF-8' );
           $opal_subject = 'Scanned site '.$sitename.' requests analysis';
           $opal_message .="<h2 $h_css>Scan Analysis Request for $sitename</h2>";
           $opal_message .= "<p $p_css>Please check these logs for $siteURL and analyse this website for maintenance and security to keep it safe, secure and speedy.</p>";
           $opal_mail = 'wpscansupport@opalsphere.com';
-          $a_mailout = wp_mail($opal_mail, $opal_subject, $opal_message, $headers, $attachments);
+          $a_mailout = wp_mail($opal_mail, $opal_subject, $opal_message, $a_headers, $attachments);
 
           /* return a console.log message to the front end */
           echo 'we just tried to send a mail,'. $attfile.', if it failed there should be an error ' .$c_mailout;
