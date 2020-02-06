@@ -8,6 +8,12 @@
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Opera and Firefox */
 }
+.opalsitescannerpage,
+.opalscanner_results,
+#scanbarcontrols {
+    max-width: 1400px;
+    margin: 20px auto;
+}
 .opalsitescannerpage h1{font-size: 34px;}
 .opalsitescannerpage p{font-size: 16px;}
 .opalsitescannerpage .opaldoscan{cursor: pointer;}
@@ -102,14 +108,10 @@
   color:#4dA254;
   cursor: wait;
 }
-
+#agreetosend{}
+.agreetosendlabel{margin:0 20px 0 10px;}
 /******************************/
-.opalscanner_results,
-#scanbarcontrols {
-  max-width: 1300px;
-  margin: 20px auto;
-}
-/********/
+
 
 .opalsitescannerpage .opal_status{
   display: block;

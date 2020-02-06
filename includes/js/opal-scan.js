@@ -32,7 +32,7 @@ $(document).on('click','.opalsendGDPR', function(e) {
   out+='<div class="op_alertbox_close">X</div>';
   out+='<p>The report will be sent to us, and to you at <b class="op_youremail">'+yourmail+'</b> <p>We delete all reports and emails after 7 days and we don\'t retain your details, nor offer them to anyone for any purpose.<div>';
   out+='<p>If you agree to send us the report and wish us to reply with solutions then please check Agree<p><div>';
-  out+='<hr><input type="checkbox" name="agree" id="agreetosend" value="agree"><label for="agreetosend"  class="noselect">Agree</label> &nbsp;';
+  out+='<hr><input type="checkbox" name="agree" id="agreetosend" value="agree"><label for="agreetosend"  class="noselect agreetosendlabel">Agree</label> &nbsp;';
   out+='<a class="opalbigbutton opalsend logpresent notagreed noselect">Send Report</a>';
   out+='<div>';
   $('#opalscan_displayarea').prepend(out);
