@@ -186,7 +186,7 @@ if(is_admin()) {
 
       $updstatus = 'OK';
       if ($value['plugin_noupdates'] >11){$updstatus = 'Outdated';}
-      if ($value['plugin_noupdates'] >20){$updstatus = 'Abandoned!';}
+      if ($value['plugin_noupdates'] >20){$updstatus = 'Abandoned';}
 
         $out.= '<td>'.$updstatus.'</td></tr>';
     }
