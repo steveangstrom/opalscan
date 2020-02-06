@@ -84,7 +84,7 @@ if ($score <70){
   $advice .= '<div class="opaladvice_wrap"><h2>Summary Report</h2><p>Here is a brief summary of the key issues we found</p></div>';
   $advice .= opalscan_render_summarytable($decoded_scan);
 
-  $advice.=('<p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to <span class="thissite_admin_email">'.get_option('admin_email').'</span></p>');
-  $advice.=('<a class="opalbigbutton opalsend opalsendGDPR logpresent">Send Report</a>');
+  $advice.=('<div class="hideinmail"><p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to <span class="thissite_admin_email">'.get_option('admin_email').'</span></p>');
+  $advice.=('<a class="opalbigbutton opalsend opalsendGDPR logpresent">Send Report</a></div>');
  return $advice ;
 }

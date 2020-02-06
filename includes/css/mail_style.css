@@ -1,3 +1,4 @@
+.hideinmail{display:none;}
 body{padding:20px;}
 body, h1,h2,h3,h4,h5,p{font-family: Arial, Helvetica Neue, Helvetica, sans-serif;}
 .opal_tab_bar, #opalreportgraph{display:none;}
