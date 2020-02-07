@@ -200,7 +200,7 @@ if(is_admin()) {
       # if this is a display of an archived  log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
         # handy debug function left here because we all like to debug
-      /*  $out.=('<pre>');
+      /* $out.=('<pre>');
         $out.=( print_r($decoded_scan, true));
         $out.=('</pre>');*/
         echo $out;
@@ -225,33 +225,26 @@ if(is_admin()) {
 
 
   function opalscan_ajax_request() {
-      // The $_REQUEST contains all the data sent via ajax
-      if ( isset($_REQUEST['scan']) ) {
-          $scan= $_REQUEST['scan'];
+    #Security: check for a nonce, and also for user capabilities.
+    if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) && !current_user_can( 'edit_posts' )) {
+      wp_send_json_error( 'Invalid security token sent.' );
+      wp_die();
+    }
 
-          #Security: check for a nonce, and also for user capabilities.
-          if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) && !current_user_can( 'edit_posts' )) {
-             wp_send_json_error( 'Invalid security token sent.' );
-             wp_die();
-           }
-           # clear the previous scan bar statusbar
+    # query the environment and populates an array and writes it to a log to parsed by other functions.
+    $JSON_results = opalscan_get_scan();
+    $decoded_scan = json_encode($JSON_results);
 
-          $JSON_results = opalscan_get_scan(); // go get the scan results for a basic check.
-          $decoded_scan = json_encode($JSON_results);
-          $rendered_scan = opalscan_render_html($decoded_scan, true);
+    # take the array and render it as HTML but put it into a variable to send it to AJAX for JS "live" render
+    $rendered_scan = opalscan_render_html($decoded_scan, true);
 
-
-          // if we are down with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
-          if ( $scan== 'startscan' ) {
-            $out['html']= $rendered_scan;
-            $out['scansuccess']= true;
-  	        echo json_encode($out);
-          }
-      }
-     die();
+    // if we are do with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
+    $out['html']= $rendered_scan;
+    $out['scansuccess']= true;
+    echo json_encode($out);
+    die();
   }
   add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan\opalscan_ajax_request' );
-
 }
 
 function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
