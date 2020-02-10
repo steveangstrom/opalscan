@@ -279,9 +279,9 @@ function opalscan_render_summarytable($decoded_scan){
     }
     $serverPHP= $decoded_scan['scores']['serverPHP'];
     if($serverPHP>50 && $serverPHP<90){
-      $out.='<tr><td class="inform server">Your server core components are outdated</td></tr>';
+      $out.='<tr><td class="inform server">Your server software would benefit from updating (PHP)</td></tr>';
     }elseif($serverPHP<50){
-      $out.='<tr><td class="warn server">Your server core components are very outdated</td></tr>';
+      $out.='<tr><td class="warn server">Your server core components are very outdated (PHP)</td></tr>';
     }
 
     $plugins_active = $decoded_scan['scores']['plugins_active'];
