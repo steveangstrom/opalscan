@@ -204,7 +204,6 @@ if(is_admin()) {
       unlink(plugin_dir_path( __DIR__ ) . "reports/opalscan-$old_filename.log"); // delete the old log file
     }
 
-
     //  SAVE RESULTS TO A LOG FILE WHICH CAN BE PARSED, RENDERED OR POSTED **/
     $randomised_filename = wp_generate_password( 8, false );
     update_option('opalsupport_log_location',$randomised_filename, false);
@@ -213,9 +212,10 @@ if(is_admin()) {
     fwrite($scanlog, $JSON_scan);
     fclose($scanlog);
 
-    /** HTML file **/
+    /** Write a HTML file **/
     $htmlfile = fopen(plugin_dir_path( __DIR__ ) . "reports/opal-scanner-report-$randomised_filename.html", "w"); // store a raw copy.
     $html_content =   opalscan_render_html($JSON_scan, true, true);
+    
     fwrite($htmlfile, $html_content);
     fclose($htmlfile);
   }
