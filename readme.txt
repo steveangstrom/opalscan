@@ -48,5 +48,7 @@ No, this plugin profiles themes, plugins and server components to see how up-to-
 * Preliminary submission
 
 = 1.0.3 =
-* removed unnecessary POST and REQUEST variables because user var input isnt required. 
+* removed unnecessary POST and REQUEST variables because user var input isnt required.
+* many escaped variables
+* used wp_send_json($return) wherever possible
 

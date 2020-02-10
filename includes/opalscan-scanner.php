@@ -188,7 +188,7 @@ if(is_admin()) {
     # get the option for the status of this scan. then send it back to the AJAX for UI of status bar
     # this returns a JSON array, so we can see the name of the plugin being scanned.
     $out = get_option( 'opalsupport_scan_status' );
-    echo $out;
+    wp_send_json($out);
     die();
   }
   add_action( 'wp_ajax_opalscan_scanstatus_request', 'opalscan\opal_get_scan_status' );

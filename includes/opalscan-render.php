@@ -18,8 +18,6 @@ if(is_admin()) {
     $scores = $decoded_scan['scores']['analysis'];
     $score_total=$scores['total'];
 
-
-
     if($mailmode===true){
       $mail_css = file_get_contents(plugin_dir_url( __FILE__ ) . 'css/mail_style.css');
       $out.='<!DOCTYPE html>
@@ -241,7 +239,8 @@ if(is_admin()) {
     // if we are do with that scan function, then display the results. it takes a while, so within that func we call more AJAX for status updates
     $out['html']= $rendered_scan;
     $out['scansuccess']= true;
-    echo json_encode($out);
+    $return = json_encode($out);
+    wp_send_json($return);
     die();
   }
   add_action( 'wp_ajax_opalscan_ajax_request', 'opalscan\opalscan_ajax_request' );
