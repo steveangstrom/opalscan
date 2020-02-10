@@ -223,8 +223,12 @@ if(is_admin()) {
 
   function opalscan_ajax_request() {
     #Security: check for a nonce, and also for user capabilities.
-    if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) && !current_user_can( 'edit_posts' )) {
+    if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
       wp_send_json_error( 'Invalid security token sent.' );
+      wp_die();
+    }
+    if ( !current_user_can( 'edit_posts' )) {
+      wp_send_json_error( 'Invalid user.' );
       wp_die();
     }
 
