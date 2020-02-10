@@ -46,12 +46,12 @@ function opalreportmail() {
     $opal_message = "<h2 $h_css>Scan Analysis Request for $sitename</h2>";
     $opal_message .= "<p $p_css>Please check these logs for $siteURL and analyse this website for maintenance and security to keep it safe, secure and speedy.</p>";
     $opal_message .= "<p $p_css>The requesting user was $user_nicename and their email is $c_user_mail </p>";
-    $opal_mail = 'wpscansupport@opalsphere.com';
+    $opal_mail = 'wpscansupport@opalsphere.com'; // this sends to our ticket system
+
     $a_mailout = wp_mail($opal_mail, $opal_subject, $opal_message, $a_headers, $attachments);
 
     /* return a console.log message to the front end */
-    echo 'we just tried to send a mail,'. $attfile.', if it failed there should be an error ' .$c_mailout;
-
+    echo 'we just tried to send a mail, if it failed there should be an error : ' .esc_html($c_mailout);
    die();
 }
 add_action( 'wp_ajax_opalreportmail', 'opalscan\opalreportmail' );
