@@ -132,7 +132,7 @@ if(is_admin()) {
     $scan_results["activePlugins"] =  $activePlugins;
     $scan_results["allPlugins"] =  $allPlugins; // add all the changes and additions to the plugin array.
 
-    /***** SCAN THEMES   *****************************************************/
+    /***** SCAN THE THEMES   *****************************************************/
     $all_themes =  wp_get_themes();// associative array of all installed themes
     $how_many_themes = count($all_themes);
     $scan_results["theme_amount"] = $how_many_themes;
