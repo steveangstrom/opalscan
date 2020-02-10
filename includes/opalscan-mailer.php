@@ -18,8 +18,8 @@ function opalreportmail() {
     $attfile = plugin_dir_path( __DIR__  ) ."reports/opalscan-$randomised_filename.log";
     $html_log_file = plugin_dir_path( __DIR__  ) . "reports/opal-scanner-report-$randomised_filename.html";
 
-    $sitename = get_bloginfo('name');
-    $siteURL = get_bloginfo('wpurl');
+    $sitename = esc_html(get_bloginfo('name'));
+    $siteURL = esc_url(get_bloginfo('wpurl'));
 
     $attachments = array($attfile, $html_log_file);
     $h_css= 'style="font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 24px;"';

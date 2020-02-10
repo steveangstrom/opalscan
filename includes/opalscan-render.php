@@ -45,13 +45,13 @@ if(is_admin()) {
 
     $scandate = date('jS \o\f F Y g:i A', $log_date);
     if($livescan===false){
-        $out.='<div class="opal_infobox"><p>Displaying previous scan ( '.$scandate.' ) <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
+        $out.='<div class="opal_infobox"><p>Displaying previous scan ( '.esc_html( $scandate).' ) <a class="opaldoscan">scan again</a> to update</p></div>'; // a  conditional checks if this display is from an old log, or a live AJAX request.
     }
-    $out.='<canvas id ="opalreportgraph" data-score="'.$score_total.'" width="250px" height="200px"></canvas>';# the speedo display
+    $out.='<canvas id ="opalreportgraph" data-score="'.esc_html($score_total).'" width="250px" height="200px"></canvas>';# the speedo display
     $out .='<div id="op_bar_wrapper">';
-    $out .='<div id="score-secure" class="scorebar" data-score="'.$scores['security'].'"><div class="opbar"></div></div>';
-    $out .='<div id="score-maintain" class="scorebar" data-score="'.$scores['maintenance'].'"><div class="opbar"></div></div>';
-    $out .='<div id="score-other" class="scorebar" data-score="'.$scores['other'].'"><div class="opbar"></div></div>';
+    $out .='<div id="score-secure" class="scorebar" data-score="'.esc_html($scores['security']).'"><div class="opbar"></div></div>';
+    $out .='<div id="score-maintain" class="scorebar" data-score="'.esc_html($scores['maintenance']).'"><div class="opbar"></div></div>';
+    $out .='<div id="score-other" class="scorebar" data-score="'.esc_html($scores['other']).'"><div class="opbar"></div></div>';
     $out .= opal_summary($score_total);
     $out .='</div>';
 
@@ -74,41 +74,41 @@ if(is_admin()) {
 
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Security Scanned Item</h3></th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Wp Core '.$decoded_scan['wp_version'].' (Available '.$decoded_scan['wp_version_available'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
+    $out.='<tr><td>Wp Core '.esc_html($decoded_scan['wp_version']).' (Available '.esc_html($decoded_scan['wp_version_available']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['wpcore']).'</td></tr>';
     if (isset($decoded_scan['ssl'])){
-      $ssl_string = ' - '.round($decoded_scan['ssl']['days']). ' days until expiry, ('.$decoded_scan['ssl']['issuer']['O'].')';
+      $ssl_string = esc_html(' - '.round($decoded_scan['ssl']['days']). ' days until expiry, ('.esc_html($decoded_scan['ssl']['issuer']['O']).')');
     }else{
       $ssl_string ='';
     }
-    $out.='<tr><td>Server SSL '.$ssl_string.'</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
-    $out.='<tr><td>Abandoned Plugins ('.$decoded_scan['plugin_noupdates'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
-    $out.='<tr><td>Outdated Plugins ('.$decoded_scan['plugin_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
-    $out.='<tr><td>Outdated Themes ('.$decoded_scan['theme_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
+    $out.='<tr><td>Server SSL '.esc_html($ssl_string).'</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['serverSSL']).'</td></tr>';
+    $out.='<tr><td>Abandoned Plugins ('.esc_html($decoded_scan['plugin_noupdates']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['plugins_abandoned']).'</td></tr>';
+    $out.='<tr><td>Outdated Plugins ('.esc_html($decoded_scan['plugin_outdated']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['plugins_outdated']).'</td></tr>';
+    $out.='<tr><td>Outdated Themes ('.esc_html($decoded_scan['theme_outdated']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['themes_outdated']).'</td></tr>';
     $activestatus = ' - <b>inactive</b>';
     if($decoded_scan['wp_plugin_security'][1] =='1'){$activestatus = '';}
-    $out.='<tr><td>Wp Security Plugin ('.$decoded_scan['wp_plugin_security'][0].''.$activestatus.')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wp_plugin_security'].'</td></tr>';
-    $out.='<tr class="scoretotal"><td>Score</td><td >'. round($security_score) .'</td></tr>';
+    $out.='<tr><td>Wp Security Plugin ('.esc_html($decoded_scan['wp_plugin_security'][0]).''.wp_kses($activestatus,$allowed_html).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['wp_plugin_security']).'</td></tr>';
+    $out.='<tr class="scoretotal"><td>Score</td><td >'. esc_html(round($security_score)) .'</td></tr>';
     $out.=('</table>');
 
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th><h3>Maintenance Scanned Item</h3></th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Wp Core '.$decoded_scan['wp_version'].' (Available '.$decoded_scan['wp_version_available'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
-    $out.='<tr><td>Plugins active ('.$decoded_scan['plugin_amount'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_active'].'</td></tr>';
-    $out.='<tr><td>Abandoned Plugins ('.$decoded_scan['plugin_noupdates'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_abandoned'].'</td></tr>';
-    $out.='<tr><td>Outdated Plugins ('.$decoded_scan['plugin_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['plugins_outdated'].'</td></tr>';
-    $out.='<tr><td>Installed Themes ('.$decoded_scan['theme_amount'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_active'].'</td></tr>';
-    $out.='<tr><td>Outdated Themes ('.$decoded_scan['theme_outdated'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['themes_outdated'].'</td></tr>';
+    $out.='<tr><td>Wp Core '.esc_html($decoded_scan['wp_version']).' (Available '.esc_html($decoded_scan['wp_version_available']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['wpcore']).'</td></tr>';
+    $out.='<tr><td>Plugins active ('.esc_html($decoded_scan['plugin_amount']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['plugins_active']).'</td></tr>';
+    $out.='<tr><td>Abandoned Plugins ('.esc_html($decoded_scan['plugin_noupdates']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['plugins_abandoned']).'</td></tr>';
+    $out.='<tr><td>Outdated Plugins ('.esc_html($decoded_scan['plugin_outdated']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['plugins_outdated']).'</td></tr>';
+    $out.='<tr><td>Installed Themes ('.esc_html($decoded_scan['theme_amount']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['themes_active']).'</td></tr>';
+    $out.='<tr><td>Outdated Themes ('.esc_html($decoded_scan['theme_outdated']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['themes_outdated']).'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td>'. round($maint_score) .'</td></tr>';
     $out.=('</table>');
 
     $out.='<h3>Server Stability & Speed</h3>';
     $out.=('<table class="opalscan_results_table">');
     $out.=('<thead><tr><th>Scanned Item</th><th>Score</th></tr></thead>');
-    $out.='<tr><td>Wp Core '.$decoded_scan['wp_version'].' (Available '.$decoded_scan['wp_version_available'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['wpcore'].'</td></tr>';
-    $out.='<tr><td>Server PHP ('.$decoded_scan['php_version'].')</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverPHP'].'</td></tr>';
-    $out.='<tr><td>Server Database size ('.$decoded_scan['sql_size'].' Mb)</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverDBsize'].'</td></tr>';
-    $out.='<tr><td>Server SSL '.$ssl_string.'</td><td class="opfullscanbar">'.$decoded_scan['scores']['serverSSL'].'</td></tr>';
-    $out.='<tr class="scoretotal"><td>Score</td><td>'. round($other_score) .'</td></tr>';
+    $out.='<tr><td>Wp Core '.esc_html($decoded_scan['wp_version']).' (Available '.esc_html($decoded_scan['wp_version_available']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['wpcore']).'</td></tr>';
+    $out.='<tr><td>Server PHP ('.esc_html($decoded_scan['php_version']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['serverPHP']).'</td></tr>';
+    $out.='<tr><td>Server Database size ('.esc_html($decoded_scan['sql_size']).' Mb)</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['serverDBsize']).'</td></tr>';
+    $out.='<tr><td>Server SSL '.esc_html($ssl_string).'</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['serverSSL']).'</td></tr>';
+    $out.='<tr class="scoretotal"><td>Score</td><td>'. esc_html(round($other_score)) .'</td></tr>';
     $out.=('</table>');
 
     $out.=('<h2><a name="scoring">Wordpress and Server</a></h2>');
@@ -121,44 +121,44 @@ if(is_admin()) {
     }elseif($decoded_scan['scores']['wpcore'] <75){
       $wp_update_needed = "Urgent";
     }
-    $out.=('<tr><td>Wordpress Core Version</td><td>'.$decoded_scan['wp_version'].' Available ('.$decoded_scan['wp_version_available'].')</td><td>'.$wp_update_needed.'</td></tr>');
+    $out.=('<tr><td>Wordpress Core Version</td><td>'.esc_html($decoded_scan['wp_version']).' Available ('.esc_html($decoded_scan['wp_version_available']).')</td><td>'.$wp_update_needed.'</td></tr>');
 
     if (strlen($decoded_scan['wp_plugin_security'][0])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
-    $out.=('<tr><td>Wordpress Security</td><td>'.$decoded_scan['wp_plugin_security'].' </td><td>'.$secstatus.'</td></tr>');
-    $out.=opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 );
+    $out.=('<tr><td>Wordpress Security</td><td>'.esc_html($decoded_scan['wp_plugin_security']).' </td><td>'.$secstatus.'</td></tr>');
+    $out.=opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 ); # go get a row render.
 
     $pinstatus = 'OK';
     if ($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']>3){$pinstatus = 'Attention';}
     if ($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']>6){$pinstatus = 'Urgent';}
-    $out.=('<tr><td>Plug-ins Inactive</td><td>'.($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']).'</td><td>'.$pinstatus.'</td></tr>');
+    $out.=('<tr><td>Plug-ins Inactive</td><td>'.esc_html(($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount'])).'</td><td>'.$pinstatus.'</td></tr>');
 
     $pupinstatus = 'OK';
     if ($decoded_scan['plugin_outdated']>3){$pupinstatus = 'Attention';}
     if ($decoded_scan['plugin_outdated']>6){$pupinstatus = 'Urgent';}
-    $out.=('<tr><td>Plug-ins Outdated</td><td>'.$decoded_scan['plugin_outdated'].'</td><td>'.$pupinstatus.'</td></tr>');
+    $out.=('<tr><td>Plug-ins Outdated</td><td>'.esc_html($decoded_scan['plugin_outdated']).'</td><td>'.$pupinstatus.'</td></tr>');
 
     $pabinstatus = 'OK';
     if ($decoded_scan['plugin_noupdates']>3){$pabinstatus = 'Attention';}
     if ($decoded_scan['plugin_noupdates']>6){$pabinstatus = 'Urgent';}
-    $out.=('<tr><td>Plug-ins Abandoned</td><td>'.$decoded_scan['plugin_noupdates'].'</td><td>'.$pabinstatus.'</td></tr>');
+    $out.=('<tr><td>Plug-ins Abandoned</td><td>'.esc_html($decoded_scan['plugin_noupdates']).'</td><td>'.$pabinstatus.'</td></tr>');
 
     /********** DISPLAY THEMES INFO ************/
    $themc_status =$thmout_status = 'OK';
    if ($decoded_scan['theme_amount'] > 6){$themc_status = 'Attention';}
    if($decoded_scan['theme_amount'] > 15){ $themc_status = 'Urgent'; }
-   $out.=('<tr><td>Themes Installed</td><td>'.$decoded_scan['theme_amount'].'</td><td>'.$themc_status.'</td></tr>');
+   $out.=('<tr><td>Themes Installed</td><td>'.esc_html($decoded_scan['theme_amount']).'</td><td>'.$themc_status.'</td></tr>');
 
    if ($decoded_scan['theme_outdated'] > 2){$thmout_status = 'Attention';}
    if($decoded_scan['theme_outdated'] > 4){ $thmout_status = 'Urgent'; }
-   $out.=('<tr><td>Themes Outdated</td><td>'.$decoded_scan['theme_outdated'].'</td><td>'.$thmout_status.'</td></tr>');
+   $out.=('<tr><td>Themes Outdated</td><td>'.esc_html($decoded_scan['theme_outdated']).'</td><td>'.$thmout_status.'</td></tr>');
 
     $phpstatus = 'OK';
     if ($decoded_scan['scores']['serverPHP']<95){$phpstatus = 'Attention';}
     if ($decoded_scan['scores']['serverPHP']<70){$phpstatus = 'Urgent';}
-    $out.=('<tr><td>Web Server PHP</td><td>PHP Version '.$decoded_scan['php_version'].'</td><td>'.$phpstatus.'</td></tr>');
+    $out.=('<tr><td>Web Server PHP</td><td>PHP Version '.esc_html($decoded_scan['php_version']).'</td><td>'.$phpstatus.'</td></tr>');
 
     $sqlstatus = 'OK';
-    $out.=('<tr><td>SQL Server</td><td>SQL Version '.$decoded_scan['sql_version'].'</td><td>'.$sqlstatus.'</td></tr>');
+    $out.=('<tr><td>SQL Server</td><td>SQL Version '.esc_html($decoded_scan['sql_version']).'</td><td>'.$sqlstatus.'</td></tr>');
 
     $databasesize = 'OK';
     $dbSize= $decoded_scan['sql_size'];
@@ -169,7 +169,7 @@ if(is_admin()) {
 
     $ssldays = round($decoded_scan['ssl']['days']);
     $sslstatus = ($ssldays>30) ? 'OK' : 'Attention';
-    $out.=('<tr><td>SSL Security</td><td>'.$ssldays.' Days ('.$decoded_scan['ssl']['issuer']['O'].')</td><td>'.$sslstatus.'</td></tr>');
+    $out.=('<tr><td>SSL Security</td><td>'.esc_html($ssldays).' Days ('.esc_html($decoded_scan['ssl']['issuer']['O']).')</td><td>'.$sslstatus.'</td></tr>');
     $out.=('</table>');
 
     $allPlugins = $decoded_scan['allPlugins'];
@@ -290,37 +290,37 @@ function opalscan_render_summarytable($decoded_scan){
 
     $plugins_active = $decoded_scan['scores']['plugins_active'];
       if($plugins_active>50 && $plugins_active<80){
-      $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_amount'].'  plugins active</td></tr>';
+      $out.='<tr><td class="inform plugin">There are '.esc_html($decoded_scan['plugin_amount']).'  plugins active</td></tr>';
     }elseif($plugins_active<50){
-      $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_amount'].'  plugins active, that is too many</td></tr>';
+      $out.='<tr><td class="warn plugin">There are '.esc_html($decoded_scan['plugin_amount']).'  plugins active, that is too many</td></tr>';
     }
 
     $plugins_outdated= $decoded_scan['scores']['plugins_outdated'];
       if($plugins_outdated>50 && $plugins_outdated<80){
-      $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_outdated'].' plugins needing updates</td></tr>';
+      $out.='<tr><td class="inform plugin">There are '.esc_html($decoded_scan['plugin_outdated']).' plugins needing updates</td></tr>';
     }elseif($plugins_outdated<50){
-      $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_outdated'].' plugins needing updates, that is too many</td></tr>';
+      $out.='<tr><td class="warn plugin">There are '.esc_html($decoded_scan['plugin_outdated']).' plugins needing updates, that is too many</td></tr>';
     }
 
     $plugins_abandoned= $decoded_scan['scores']['plugins_abandoned'];
     if($plugins_abandoned>50 && $plugins_abandoned<90){
-    $out.='<tr><td class="inform plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td></tr>';
+    $out.='<tr><td class="inform plugin">There are '.esc_html($decoded_scan['plugin_noupdates']).' plugins which may have been abandoned by their authors</td></tr>';
     }elseif($plugins_abandoned<50){
-      $out.='<tr><td class="warn plugin">There are '.$decoded_scan['plugin_noupdates'].' plugins which may have been abandoned by their authors</td></tr>';
+      $out.='<tr><td class="warn plugin">There are '.esc_html($decoded_scan['plugin_noupdates']).' plugins which may have been abandoned by their authors</td></tr>';
     }
 
     $themes_active= $decoded_scan['scores']['themes_active'];
     if($themes_active>50 && $themes_active<90){
-    $out.='<tr><td class="inform theme">There are '.$decoded_scan['theme_amount'].' themes installed</td></tr>';
+    $out.='<tr><td class="inform theme">There are '.esc_html($decoded_scan['theme_amount']).' themes installed</td></tr>';
     }elseif($themes_active<50){
-      $out.='<tr><td class="warn theme">There are '.$decoded_scan['theme_amount'].' themes installed</td></tr>';
+      $out.='<tr><td class="warn theme">There are '.esc_html($decoded_scan['theme_amount']).' themes installed</td></tr>';
     }
 
     $themes_outdated= $decoded_scan['scores']['themes_outdated'];
     if($themes_outdated>50 && $themes_outdated<90){
-    $out.='<tr><td class="inform theme">'.$decoded_scan['theme_outdated'].' themes are outdated</td></tr>';
+    $out.='<tr><td class="inform theme">'.esc_html($decoded_scan['theme_outdated']).' themes are outdated</td></tr>';
     }elseif($themes_outdated<50){
-      $out.='<tr><td class="warn theme">'.$decoded_scan['theme_outdated'].' themes are outdated</td></tr>';
+      $out.='<tr><td class="warn theme">'.esc_html($decoded_scan['theme_outdated']).' themes are outdated</td></tr>';
     }
     if($decoded_scan['scores']['analysis']['total']>90){
     $out.='<tr><td class="">Your site is healthy, remember to check often</td></tr>';
@@ -328,3 +328,18 @@ function opalscan_render_summarytable($decoded_scan){
     $out.=('</table>');
     return $out;
 }
+/* some escaping help */
+function opal_allowed_html() {
+	return array (
+		'a' => array (
+			'href' => array(),
+			'class' => array(),
+		),
+    'br' => array(),
+    'em' => array(),
+    'strong' => array(),
+    'i' => array(),
+    'p' => array(),
+	);
+}
+$allowed_html = opal_allowed_html();
