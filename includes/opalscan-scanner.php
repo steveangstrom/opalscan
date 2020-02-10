@@ -54,23 +54,22 @@ if(is_admin()) {
     $json = $response['body'];
     $obj = json_decode($json);
     $scan_results["wp_version_available"] = $obj->offers[0]->version;
+
     /*-----------*/
-    //if (is_ssl()){$ssl=1;}else{$ssl=0;}
-  //  $scan_results["ssl"] = $ssl;
+    /* populate the SSL sub-array with data about the cert, expiry, issuer, etc */
     $scan_results["ssl"] = SSLcheck();
 
 		/* get SQL version */
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$SQLversion = mysqli_get_server_info($connection);
 
-		/***********/
+		/* get SQL WP database size just to see if there's size creep from a bad plugin, or options */
     $dbSize = calculate_database_size();
     $dbsizestring = $dbSize['size'];
-    //$dbsizestring.=$dbSize['size'].$dbSize['type'];
     $scan_results["sql_size"] = $dbsizestring;
 
     /***** SCAN PLUGINS *****************************************************/
-    $allPlugins =  get_plugins();// associative array of all installed plugins
+    $allPlugins =  get_plugins();// WPs own func getting an associative array of all installed plugins
     $how_many_plugins = count($allPlugins);
     $progress=1;
 
@@ -84,7 +83,7 @@ if(is_admin()) {
       $sluga = explode('/',$key); // get active plugin's slug
   		$slug = $sluga[0]; // get active plugin's slug
 
-      # As we itterate through this loop, go and update the status, this status can be checked by AJAX for UI
+      # As we iterate through this loop, go and update the status, this status can be checked by AJAX for UI
       opal_update_status($slug, $progress, $how_many_plugins);
       $progress++;
 
