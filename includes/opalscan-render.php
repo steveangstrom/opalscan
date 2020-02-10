@@ -178,21 +178,20 @@ if(is_admin()) {
     $out.=('<thead><tr><th>Plugin</th> <th>Installed Version</th> <th>Status</th> <th>Availability</th></tr></thead>');
 
     foreach($allPlugins as $key => $value) {
-        $out.='<tr><td>'.$value['Title'].'</td>';
-        $out.= '<td>'.$value['Version'].'</td>';
+      $out.='<tr><td>'.$value['Title'].'</td>';
+      $out.= '<td>'.$value['Version'].'</td>';
 
-        $outstatus = $value['plugin_outdated']? 'Needs Update' : 'Most Recent';
-        $out.= '<td>'.$outstatus.'</td>';
+      $outstatus = $value['plugin_outdated']? 'Needs Update' : 'Most Recent';
+      $out.= '<td>'.$outstatus.'</td>';
 
       $updstatus = 'OK';
       if ($value['plugin_noupdates'] >11){$updstatus = 'Outdated';}
       if ($value['plugin_noupdates'] >20){$updstatus = 'Abandoned';}
-
         $out.= '<td>'.$updstatus.'</td></tr>';
-    }
+      }
       $out.=('</table>');
 
-      $out.=('<div class="hideinmail"><p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to '.get_option('admin_email').'</p>');
+      $out.=('<div class="hideinmail"><p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to '.esc_url(get_option('admin_email')).'</p>');
       $out.=('<a class="opalbigbutton opalsend logpresent opalsendGDPR">Send Report</a></div>');
 
       $out.='</div>'; //  END OF report pane
