@@ -176,20 +176,19 @@ if(is_admin()) {
 
 
   function opal_update_status($slug,$progress, $total){
-    # Writes the current scan status to a file.
+    # Writes the current scan status to an ioption in the DB, which can be queried via AJAX to show a status bar UI
     $status_array['slug']= $slug;
     $status_array['progress']= $progress;
     $status_array['total']= $total;
     $JSON_status = json_encode($status_array);
     update_option('opalsupport_scan_status',$JSON_status);
-    //file_put_contents(plugin_dir_path( __DIR__ ) . "reports/scanstatus.txt", $JSON_status);
   }
 
   function opal_get_scan_status(){
     # get the option for the status of this scan. then send it back to the AJAX for UI of status bar
     # this returns a JSON array, so we can see the name of the plugin being scanned.
     $out = get_option( 'opalsupport_scan_status' );
-      echo $out;
+    echo $out;
     die();
   }
   add_action( 'wp_ajax_opalscan_scanstatus_request', 'opalscan\opal_get_scan_status' );
@@ -198,8 +197,9 @@ if(is_admin()) {
   function opal_save_to_log($scan_results){
     # Writes the current scan to a text log file and an HTML version.
     $old_filename = get_option( 'opalsupport_log_location' );
+
+    # Check - has there ever been a scan previously? If so there's probably an Option saved and we should delete the files before proceeding.
     if (  isset($old_filename)   &&   file_exists(plugin_dir_path( __DIR__ ) . "reports/opalscan-$old_filename.log")){
-      # has there ever been a scan previously? If so there's an option saved and we should delete the files before proceeding.
       unlink(plugin_dir_path( __DIR__ ) . "reports/opal-scanner-report-$old_filename.html"); // delete the old HTML file
       unlink(plugin_dir_path( __DIR__ ) . "reports/opalscan-$old_filename.log"); // delete the old log file
     }
