@@ -199,27 +199,24 @@ if(is_admin()) {
 
       # if this is a display of an archived  log then print it, otherwise we are in an AJAX situation, so return it.
       if ($livescan==false){
-        # handy debug function left here because we all like to debug
-      /* $out.=('<pre>');
-        $out.=( print_r($decoded_scan, true));
-        $out.=('</pre>');*/
-        echo $out;
+        echo $out; // HTML echo to page, for PHP
       }else{
-        return $out;
+        return $out; // AJAX return, for JS
       }
   }
 
   function opalscan_show_scan(){
-    # Go and get a previous scan from the log  including summary
+    # Go and get a previous scan from the log
     # the reason we do this is to cache a scan, and prevent site slowdown.
     # We could cron-job the scans but I want users to feel in control of this
+
+    # the filename of the JSON log is randomised and deleted then generated on each scan, to prevent bad bot crawling behaviour
     $randomised_filename = get_option( 'opalsupport_log_location' );
     $logfile=plugin_dir_path( __DIR__ ) . "reports/opalscan-$randomised_filename.log";
+
     if (file_exists($logfile)) {
       $JSON_scan = file_get_contents($logfile);
       opalscan_render_html($JSON_scan);// render the array as HTML table.
-    } else {
-      # nothing yet
     }
   }
 
@@ -231,7 +228,7 @@ if(is_admin()) {
       wp_die();
     }
 
-    # query the environment and populates an array and writes it to a log to parsed by other functions.
+    # Query the environment and populate an array and write it to a log to be parsed by other functions.
     $JSON_results = opalscan_get_scan();
     $decoded_scan = json_encode($JSON_results);
 
