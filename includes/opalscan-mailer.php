@@ -33,7 +33,13 @@ function opalreportmail() {
     $c_message .= "<p $p_css>The attached log is for your information only.</p>";
     $c_message .= "<p $p_css>Best regards,<br> Steve and the Team at OpalSupport</p>";
     $client_mail = get_option('admin_email');
-    $c_mailout = wp_mail($client_mail, $c_subject, $c_message, $c_headers, $attachments);
+
+    if(is_email($client_mail)){
+      $c_mailout = wp_mail($client_mail, $c_subject, $c_message, $c_headers, $attachments);
+    }else{
+      echo 'the client email address didnt validate as in the right format';
+    }
+
 
     /* CREATE A TICKET */
     $current_user = wp_get_current_user();
@@ -48,10 +54,14 @@ function opalreportmail() {
     $opal_message .= "<p $p_css>The requesting user was $user_nicename and their email is $c_user_mail </p>";
     $opal_mail = 'wpscansupport@opalsphere.com'; // this sends to our ticket system
 
-    $a_mailout = wp_mail($opal_mail, $opal_subject, $opal_message, $a_headers, $attachments);
+    if(is_email($opal_mail)){
+      $a_mailout = wp_mail($opal_mail, $opal_subject, $opal_message, $a_headers, $attachments);
+    }else{
+      echo 'the opal email address didnt validate as in the right format';
+    }
 
     /* return a console.log message to the front end */
-    echo 'we just tried to send a mail, if it failed there should be an error : ' .esc_html($c_mailout);
+    echo 'we just tried to send a mail and hopefully it succeeded with a boolean true : ' .esc_html($c_mailout);
    die();
 }
 add_action( 'wp_ajax_opalreportmail', 'opalscan\opalreportmail' );
