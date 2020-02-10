@@ -223,7 +223,7 @@ if(is_admin()) {
 
   function opalscan_ajax_request() {
     #Security: check for a nonce, and also for user capabilities.
-    if ( ! check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
+    if ( !check_ajax_referer( 'opalscan-security-nonce', 'security' ) ) {
       wp_send_json_error( 'Invalid security token sent.' );
       wp_die();
     }
