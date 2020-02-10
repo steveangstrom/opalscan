@@ -44,9 +44,9 @@ No, this plugin profiles themes, plugins and server components to see how up-to-
 
 == Changelog ==
 
-= 1.0.2 =
-* Preliminary submissions
+= 1.0.0 =
+* Preliminary submission
 
-= 1.0.3 =
-* removed unnecessary POST variables
+= 1.0.1 =
+* removed unnecessary POST / REQUEST variables, user input isnt required
 
