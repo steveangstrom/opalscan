@@ -19,6 +19,7 @@ if(is_admin()) {
     $score_total=$scores['total'];
 
     if($mailmode===true){
+      # the $mail_css appends some simple css to the saved html file version of the output of this parent function
       $mail_css = file_get_contents(plugin_dir_url( __FILE__ ) . 'css/mail_style.css');
       $out.='<!DOCTYPE html>
         <head>
@@ -28,12 +29,13 @@ if(is_admin()) {
         </style>
         </head>
         <body>
-        <h1><a href="https://opalsupport.com">OpalSupport</a> : Report For '.get_bloginfo('name').'</h1>
+        <h1><a href="https://opalsupport.com">OpalSupport</a> : Report For '.esc_html(get_bloginfo('name')).'</h1>
         <p>We will be in touch with you to advise on the next steps to take</p>';
       }
 
 
-    # Display results
+    # Display results in tabbed interface
+
     $out.= '<div id = "opalscanner_results" class="opalscanner_results">
     <div class="opal_tab_bar noselect">
       <div class="opal_tab active" data-tab="opalsummary">Summary</div>
@@ -50,12 +52,13 @@ if(is_admin()) {
     $out .='<div id="score-secure" class="scorebar" data-score="'.esc_html($scores['security']).'"><div class="opbar"></div></div>';
     $out .='<div id="score-maintain" class="scorebar" data-score="'.esc_html($scores['maintenance']).'"><div class="opbar"></div></div>';
     $out .='<div id="score-other" class="scorebar" data-score="'.esc_html($scores['other']).'"><div class="opbar"></div></div>';
+    #  print a textual summary -  function is in Opalscan-advice.php
     $out .= opal_summary($score_total);
     $out .='</div>';
 
     /****** top score and summary block *****/
 
-    # opal_advice function is passed the entire decoded scan so it can render advice in natural language.
+    # opal_advice function is passed the entire decoded scan so it can render advice in natural language. function is in Opalscan-advice.php
     $out .= opal_advice($decoded_scan, $score_total);
     $out.= '</div>';// end summary tab content
 
@@ -122,8 +125,8 @@ if(is_admin()) {
     $out.=('<tr><td>Wordpress Core Version</td><td>'.esc_html($decoded_scan['wp_version']).' Available ('.esc_html($decoded_scan['wp_version_available']).')</td><td>'.$wp_update_needed.'</td></tr>');
 
     if (strlen($decoded_scan['wp_plugin_security'][0])>2){$secstatus = 'OK';}else{ $secstatus = 'Attention';}
-    $out.=('<tr><td>Wordpress Security</td><td>'.esc_html($decoded_scan['wp_plugin_security']).' </td><td>'.$secstatus.'</td></tr>');
-    $out.=opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 ); # go get a row render.
+    $out.= ('<tr><td>Wordpress Security</td><td>'.esc_html($decoded_scan['wp_plugin_security']).' </td><td>'.$secstatus.'</td></tr>');
+    $out.= opal_rendertablerow('Plug-ins Installed',$decoded_scan['plugin_amount'],$decoded_scan['plugin_amount'], 10, 15 ); # go get a row render, escaping is done there.
 
     $pinstatus = 'OK';
     if ($decoded_scan['plugin_amount'] - $decoded_scan['plugin_active_amount']>3){$pinstatus = 'Attention';}
@@ -163,7 +166,7 @@ if(is_admin()) {
     $status='OK';
     if ($dbSize > 30){$status = 'Attention';}
     if ($dbSize > 80){$status = 'Urgent';}
-    $out.=('<tr><td>SQL Database Size</td><td> '.$dbSize.' MB</td><td> '.$status.' </td></tr>');
+    $out.=('<tr><td>SQL Database Size</td><td> '.esc_html($dbSize).' MB</td><td> '.$status.' </td></tr>');
 
     $ssldays = round($decoded_scan['ssl']['days']);
     $sslstatus = ($ssldays>30) ? 'OK' : 'Attention';
@@ -176,11 +179,11 @@ if(is_admin()) {
     $out.=('<thead><tr><th>Plugin</th> <th>Installed Version</th> <th>Status</th> <th>Availability</th></tr></thead>');
 
     foreach($allPlugins as $key => $value) {
-      $out.='<tr><td>'.$value['Title'].'</td>';
-      $out.= '<td>'.$value['Version'].'</td>';
+      $out.='<tr><td>'.esc_html($value['Title']).'</td>';
+      $out.= '<td>'.esc_html($value['Version']).'</td>';
 
       $outstatus = $value['plugin_outdated']? 'Needs Update' : 'Most Recent';
-      $out.= '<td>'.$outstatus.'</td>';
+      $out.= '<td>'.esc_html($outstatus).'</td>';
 
       $updstatus = 'OK';
       if ($value['plugin_noupdates'] >11){$updstatus = 'Outdated';}
@@ -255,7 +258,7 @@ function opal_rendertablerow($label='',$installed='',$match='',$bp1=0,$bp2=10){
   if ($match>$bp2){
     $status = 'Urgent';
   }
-  $out=("<tr><td>$label</td><td>$installed</td><td>$status</td></tr>");
+  $out=('<tr><td>'.esc_html($label).'</td><td>'.esc_html($installed).'</td><td>'.esc_html($status).'</td></tr>');
   return $out;
 }
 

@@ -36,8 +36,8 @@ function opal_summary($score){
   'is doing great, well done!',
   );
 
-  $out='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.$score_words[floor($score/10)].'</h2>';
-  $out.='<p>Your site scored '.$score.' out of a possible 100. This means your site '.$attentionphrases[floor($score/10)].'</p>';
+  $out='<div class="rated_summary"><h2><span class="opal_dimmed">Rated:</span> '.esc_html($score_words[floor($score/10)]).'</h2>';
+  $out.='<p>Your site scored '.$score.' out of a possible 100. This means your site '.esc_html($attentionphrases[floor($score/10)]).'</p>';
   $out.='</div>';
   return $out;
 }
@@ -71,7 +71,7 @@ $what_to_do_words =Array(
 
   $advice = '<div class="opaladvice_wrap">';
   $advice .= '<h2>Security Advice</h2>';
-  $advice .='<p>Your site has '.$severity_words[floor($score/10)].' security and maintenance problems '.$what_to_do_words[floor($score/10)].'.<br> Your scan score is rated as '.$score.' out of 100 and this means ';
+  $advice .='<p>Your site has '.esc_html($severity_words[floor($score/10)]).' security and maintenance problems '.esc_html($what_to_do_words[floor($score/10)]).'.<br> Your scan score is rated as '.esc_html($score).' out of 100 and this means ';
 
   $advice .=  $issues_words[floor($score/10)];
 
@@ -82,9 +82,11 @@ if ($score <70){
   $advice .= '</p></div>';
 
   $advice .= '<div class="opaladvice_wrap"><h2>Summary Report</h2><p>Here is a brief summary of the key issues we found</p></div>';
+
+  # add the summary table to this advice, this is used a couple of places so it's found in opalscan-render.php
   $advice .= opalscan_render_summarytable($decoded_scan);
 
-  $advice.=('<div class="hideinmail"><p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to <span class="thissite_admin_email">'.get_option('admin_email').'</span></p>');
+  $advice.=('<div class="hideinmail"><p><br>Send your report to Opal Support and we will give you a free analysis.<br>A copy of the full report and our security analysis will be sent to <span class="thissite_admin_email">'.sanitize_email(get_option('admin_email')).'</span></p>');
   $advice.=('<a class="opalbigbutton opalsend opalsendGDPR logpresent">Send Report</a></div>');
  return $advice ;
 }
