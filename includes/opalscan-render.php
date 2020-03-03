@@ -87,7 +87,7 @@ if(is_admin()) {
     $out.='<tr><td>Outdated Themes ('.esc_html($decoded_scan['theme_outdated']).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['themes_outdated']).'</td></tr>';
     $activestatus = ' - <b>inactive</b>';
     if($decoded_scan['wp_plugin_security'][1] =='1'){$activestatus = '';}
-    $out.='<tr><td>Wp Security Plugin ('.esc_html($decoded_scan['wp_plugin_security'][0]).''.wp_kses($activestatus,$allowed_html).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['wp_plugin_security']).'</td></tr>';
+    $out.='<tr><td>Wp Security Plugin ('.esc_html($decoded_scan['wp_plugin_security'][0]).''.wp_strip_all_tags($activestatus).')</td><td class="opfullscanbar">'.esc_html($decoded_scan['scores']['wp_plugin_security']).'</td></tr>';
     $out.='<tr class="scoretotal"><td>Score</td><td >'. esc_html(round($security_score)) .'</td></tr>';
     $out.=('</table>');
 

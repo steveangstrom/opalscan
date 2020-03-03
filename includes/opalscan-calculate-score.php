@@ -375,7 +375,7 @@ function op_version_difference($available, $current){
   $availableA = explode(".",$available);
   $currentA = explode(".",$current);
 
-  $diff=$available-$current;
+  $diff=(float)$available-(float)$current;
   if (array_key_exists('2',$availableA) && $diff ==0){
     # if theres a Revision then calculate it.
     return ($availableA[2] - $currentA[2])*0.01;
