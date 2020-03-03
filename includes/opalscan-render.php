@@ -182,12 +182,12 @@ if(is_admin()) {
       $out.='<tr><td>'.esc_html($value['Title']).'</td>';
       $out.= '<td>'.esc_html($value['Version']).'</td>';
 
-      $outstatus = $value['plugin_outdated']? 'Needs Update' : 'Most Recent';
+      $outstatus = isset($value['plugin_outdated'])? 'Needs Update' : 'Most Recent';
       $out.= '<td>'.esc_html($outstatus).'</td>';
 
       $updstatus = 'OK';
-      if ($value['plugin_noupdates'] >11){$updstatus = 'Outdated';}
-      if ($value['plugin_noupdates'] >20){$updstatus = 'Abandoned';}
+      if (isset($value['plugin_noupdates']) && $value['plugin_noupdates'] >11){$updstatus = 'Outdated';}
+      if (isset($value['plugin_noupdates']) && $value['plugin_noupdates'] >20){$updstatus = 'Abandoned';}
         $out.= '<td>'.$updstatus.'</td></tr>';
       }
       $out.=('</table>');
