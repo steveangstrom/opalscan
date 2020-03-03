@@ -1,9 +1,9 @@
-=== Plugin Name ===
+=== Opal scan and support ===
 Contributors:  opalsupport
 Tags: support, site help
 Requires at least: 4.4
 Tested up to: 5.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 Requires PHP: 5.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,11 +44,11 @@ No, this plugin profiles themes, plugins and server components to see how up-to-
 
 == Changelog ==
 
-= 1.0.2 =
-* Preliminary submission
-
 = 1.0.3 =
-* removed unnecessary POST and REQUEST variables because user var input isnt required.
-* many escaped variables
-* used wp_send_json($return) wherever possible
+* First version of the plug-in made available via the WP Plug-ins page
+= 1.0.3 =
+* Fix: An edge case over-estimation for speed and stability calculation.
 
+== Upgrade Notice ==
+= 1.0.4 =
+Fixes for speed calculation. 

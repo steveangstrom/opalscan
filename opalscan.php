@@ -3,9 +3,10 @@
   * Plugin Name: Opal Scan and Support
   * Plugin URI: https://opalsupport.com/wordpress-scan-and-support-plugin/
   * Author: OpalSupport
-  * Version: 1.0.3
+  * Version: 1.0.4
   * Description: Checks the health of your WordPress and allows WP experts to analyse the results
   * Author URI:http://opalsupport.com
+  * Text Domain: opal-scan-and-support
   * License: GPL v2 or later
   * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -60,11 +61,12 @@ if(is_admin()) {
     $randomised_filename = get_option( 'opalsupport_log_location' );
   	$logfile=plugin_dir_path( __FILE__ ) . "reports/opalscan-$randomised_filename.log";
   	$sendvisibility = '';
-    
+
   	if (file_exists($logfile)) {$sendvisibility = 'logpresent';}
-  	echo('<hr>');	echo '<div id="scanbarcontrols" class="noselect"><a class="opalbigbutton opalscannow">Scan your site</a><a class="opalbigbutton opalsend opalsendGDPR '.$sendvisibility.'">Send Report</a><div class="opalspinnerlocation"></div></div><hr>';
-  	echo '<div id="opalscan_displayarea"> </div>'; // the scan gets written to here by AJAX.
+  	_e('<hr>');
+    _e('<div id="scanbarcontrols" class="noselect"><a class="opalbigbutton opalscannow">Scan your site</a><a class="opalbigbutton opalsend opalsendGDPR '.$sendvisibility.'">Send Report</a><div class="opalspinnerlocation"></div></div><hr>');
+  	_e('<div id="opalscan_displayarea"> </div>'); // the scan gets written to here by AJAX.
   	opalscan_show_scan(); // show the previous scan on load.
-  	echo('</div>');// close the main site scanner page pane
+  	_e('</div>');// close the main site scanner page pane
   }
 }

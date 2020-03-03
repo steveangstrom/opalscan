@@ -88,7 +88,7 @@ if(is_admin()) {
       $progress++;
 
       $call_api = getPluginVersionFromRepository($slug); // go check this particular plugin. // takes time, so comment out for debug.
-      $repoversion = $call_api->version;
+      $repoversion = isset($call_api->version)? $call_api->version : ''; // not available (eg for purchased and not repo plugins)
       $allPlugins[$key]['plugin_repo_version']= $repoversion;
       $allPlugins[$key]['plugin_installed_version']= $value['Version'];
 
@@ -102,7 +102,7 @@ if(is_admin()) {
 
       /* Date and update status of plugins compared to repo */
 
-      $last_updated = $call_api->last_updated;
+      $last_updated = isset($call_api->last_updated)? $call_api->last_updated : ''; // not available (eg for purchased and not repo plugins)
       $last_updated_date = new DateTime($last_updated );
       $interval = $today->diff($last_updated_date);
       $intervalstring= $interval->format('%R%a');
@@ -142,7 +142,7 @@ if(is_admin()) {
       $sluga = explode('/',$key);
       $slug = $sluga[0]; // get theme's slug this compat for old php version
       $call_api = getThemeVersionFromRepository($slug); // go check this particular theme.
-      $repoversion = $call_api->version;
+      $repoversion = isset($call_api->version)? $call_api->version : ''; // set if available.
       $theme_data = wp_get_theme($slug);// Iterate thru the themes
       $theme_version = $theme_data->get( 'Version' );
 

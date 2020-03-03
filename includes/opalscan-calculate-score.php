@@ -39,12 +39,12 @@ function opal_do_score($decoded_scan){
 
 
   $maint_score= (
-    $decoded_scan['scores']['wpcore']*1 +
-    $decoded_scan['scores']['plugins_active']*1 +
-    $decoded_scan['scores']['plugins_abandoned']*1 +
-    $decoded_scan['scores']['plugins_outdated']*1 +
-    $decoded_scan['scores']['themes_outdated']*1+
-    $decoded_scan['scores']['themes_active']*1
+    $decoded_scan['scores']['wpcore'] +
+    $decoded_scan['scores']['plugins_active'] +
+    $decoded_scan['scores']['plugins_abandoned'] +
+    $decoded_scan['scores']['plugins_outdated'] +
+    $decoded_scan['scores']['themes_outdated'] +
+    $decoded_scan['scores']['themes_active']
   )/6;
 
   if( $decoded_scan['scores']['wpcore'] < 50){
@@ -61,8 +61,8 @@ function opal_do_score($decoded_scan){
   )/4;
 
   # PHP version has a major effect on speed so we use that to weight the  score.
-  $speed_mult = $decoded_scan['scores']['serverPHP']/90;
-  $other_score *= $speed_mult;  # will use WP core to scale the total score.
+  $speed_mult = 100/$decoded_scan['scores']['serverPHP']; // produce a reciprocal
+  $other_score *= $speed_mult;  # will use reciprocal to scale the total score.
 
 
   $scores['total']=round(($security_score+$maint_score+$other_score)/3);
